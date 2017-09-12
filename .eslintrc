@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": 0,
+    "react/require-default-props": 0
+  }
+}

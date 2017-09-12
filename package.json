@@ -27,11 +27,19 @@
   "homepage": "https://github.com/Zetoff/material-ui-layout#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.0",
     "babel-jest": "^21.0.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.3.0",
     "flow-bin": "^0.54.1",
     "jest": "^21.0.2"
+  },
+  "dependencies": {
   }
 }
