@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Icon from 'material-ui/Icon';
@@ -7,6 +8,10 @@ import Icon from 'material-ui/Icon';
 import styles from './styles';
 
 class BasicDrawer extends React.PureComponent {
+  static propTypes = {
+    links: PropTypes.arrayOf(PropTypes.shape({})),
+    classes: PropTypes.shape({}),
+  }
   render() {
     const { links, classes } = this.props;
     return (
