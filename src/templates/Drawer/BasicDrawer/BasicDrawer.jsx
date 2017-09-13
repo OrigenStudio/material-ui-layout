@@ -11,21 +11,21 @@ class BasicDrawer extends React.PureComponent {
   static propTypes = {
     links: PropTypes.arrayOf(PropTypes.shape({})),
     classes: PropTypes.shape({}),
-  }
+  };
   render() {
     const { links, classes } = this.props;
     return (
       <div>
-        {_.map(links, link => (
-          <List className={classes.list}>
-            <ListItem button onClick={link.onClick}>
+        <List className={classes.list}>
+          {_.map(links, link => (
+            <ListItem button onClick={link.onClick} key={`link-${link.label}`}>
               <ListItemIcon>
                 {link.icon ? <Icon>{link.icon}</Icon> : <Icon>arrow_right</Icon>}
               </ListItemIcon>
               <ListItemText primary={link.label} />
             </ListItem>
-          </List>
-        ))}
+          ))}
+        </List>
       </div>
     );
   }
