@@ -1,0 +1,54 @@
+{
+  "name": "material-ui-layout",
+  "version": "0.0.2",
+  "description": "Layout components for material-ui",
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "flow": "flow",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "prepublish": "npm run test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zetoff/material-ui-layout.git"
+  },
+  "keywords": [
+    "material-ui",
+    "layout",
+    "react"
+  ],
+  "author": "polguixe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zetoff/material-ui-layout/issues"
+  },
+  "homepage": "https://github.com/Zetoff/material-ui-layout#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.0",
+    "babel-jest": "^21.0.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.3.0",
+    "flow-bin": "^0.54.1",
+    "jest": "^21.0.2"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "lodash": "^4.17.4",
+    "material-ui": "^1.0.0-beta.9",
+    "material-ui-icons": "^1.0.0-beta.5",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-controllables": "^0.6.0",
+    "react-dom": "^15.6.1",
+    "recompose": "^0.25.0"
+  }
+}
