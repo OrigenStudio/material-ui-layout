@@ -19,7 +19,12 @@ class BasicNavBar extends React.PureComponent {
     classes: PropTypes.shape({}),
     title: PropTypes.string,
     logo: PropTypes.string,
+    onIconClick: PropTypes.func,
   };
+
+  handleIconClick = () => {
+    this.props.onIconClick();
+  }
 
   renderLogo = () => {
     const { classes, title, logo } = this.props;
@@ -37,12 +42,8 @@ class BasicNavBar extends React.PureComponent {
     );
   };
 
-  handleIconClick = () => {
-    this.props.onIconClick();
-  }
-
   render() {
-    const { links, onIconClick } = this.props;
+    const { links } = this.props;
     return (
       <Toolbar>
         <Hidden smUp>
