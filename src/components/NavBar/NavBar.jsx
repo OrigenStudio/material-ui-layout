@@ -12,12 +12,13 @@ class NavBar extends React.PureComponent {
     classes: PropTypes.shape({}),
     children: PropTypes.element,
     navbarPostion: PropTypes.string,
+    color: PropTypes.string,
   };
 
   render() {
-    const { children, navbarPostion, classes, ...other } = this.props;
+    const { children, navbarPostion, classes, color, ...other } = this.props;
     return (
-      <AppBar position={navbarPostion} color="default">
+      <AppBar position={navbarPostion} color={color}>
         {React.cloneElement(children, { ...other })}
       </AppBar>
     );

@@ -14,7 +14,6 @@ import Footer from '../Footer';
 
 class Layout extends React.PureComponent {
   static propTypes = {
-    title: PropTypes.string,
     classes: PropTypes.shape({}),
     children: PropTypes.element.isRequired,
     navbarPostion: PropTypes.string,
@@ -50,8 +49,6 @@ class Layout extends React.PureComponent {
 
   render() {
     const {
-      title,
-      logo, // TODO what kind of logo can we expect?.....
       classes,
       children,
       navbarPostion,
@@ -73,7 +70,7 @@ class Layout extends React.PureComponent {
 
     return (
       <div className={classes.layout}>
-        <NavBar {...navBarProps} title={title} logo={logo} onIconClick={this.toggleDrawer}>
+        <NavBar {...navBarProps} onIconClick={this.toggleDrawer}>
           {navBarContent}
         </NavBar>
         {drawerContent ? (
