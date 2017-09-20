@@ -20,11 +20,11 @@ class Layout extends React.PureComponent {
     navbarPostion: PropTypes.string,
     stickyFooter: PropTypes.bool,
     footerContent: PropTypes.element,
-    navBarContent: PropTypes.element,
+    appBarContent: PropTypes.element,
     drawerOpen: PropTypes.bool.isRequired,
     onDrawerOpenChange: PropTypes.func,
     drawerContent: PropTypes.element,
-    navBarProps: PropTypes.shape({}),
+    appBarProps: PropTypes.shape({}),
     drawerProps: PropTypes.shape({}),
     footerProps: PropTypes.shape({}),
   };
@@ -56,10 +56,10 @@ class Layout extends React.PureComponent {
       navbarPostion,
       stickyFooter,
       footerContent,
-      navBarContent,
+      appBarContent,
       drawerContent,
       drawerOpen,
-      navBarProps,
+      appBarProps,
       drawerProps,
       footerProps,
     } = this.props;
@@ -74,8 +74,8 @@ class Layout extends React.PureComponent {
 
     return (
       <div className={classes.layout}>
-        <NavBar {...navBarProps} onIconClick={this.toggleDrawer}>
-          {navBarContent}
+        <NavBar {...appBarProps} onIconClick={this.toggleDrawer}>
+          {appBarContent}
         </NavBar>
         {drawerContent ? (
           <Drawer {...drawerProps} open={drawerOpen} onRequestClose={this.handleDrawerClose}>
