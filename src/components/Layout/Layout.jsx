@@ -15,6 +15,7 @@ import Footer from '../Footer';
 class Layout extends React.PureComponent {
   static propTypes = {
     classes: PropTypes.shape({}),
+    overrideClasses: PropTypes.shape({}),
     children: PropTypes.element.isRequired,
     navbarPostion: PropTypes.string,
     stickyFooter: PropTypes.bool,
@@ -49,7 +50,8 @@ class Layout extends React.PureComponent {
 
   render() {
     const {
-      classes,
+      classes: defaultClasses,
+      overrideClasses,
       children,
       navbarPostion,
       stickyFooter,
@@ -61,6 +63,8 @@ class Layout extends React.PureComponent {
       drawerProps,
       footerProps,
     } = this.props;
+
+    const classes = { ...defaultClasses, ...overrideClasses };
 
     const mainClassnames = classNames(
       classes.main,
