@@ -13,24 +13,24 @@ export default {
     marginTop: '0',
     marginBottom: '0',
   },
-  topCenter:{
+  topCenter: {
     textAlign: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  bottomCenter:{
+  bottomCenter: {
     textAlign: 'center',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  right:{
+  right: {
     justifyContent: 'flex-end',
     display: 'flex',
   },
-  left:{
+  left: {
     justifyContent: 'flex-start',
     display: 'flex',
-  }
+  },
 };
