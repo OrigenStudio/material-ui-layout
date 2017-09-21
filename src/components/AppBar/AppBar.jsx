@@ -3,23 +3,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import DefaultAppBar from 'material-ui/AppBar';
+import MaterialUIAppBar from 'material-ui/AppBar';
+
 
 import styles from './styles';
 
 class AppBar extends React.PureComponent {
   static propTypes = {
+    classes: PropTypes.shape({}),
     children: PropTypes.element,
-    navbarPostion: PropTypes.string,
+    position: PropTypes.string,
     color: PropTypes.string,
   };
 
   render() {
-    const { children, navbarPostion, color, ...other } = this.props;
+    const { children, position, classes, color, ...other } = this.props;
     return (
-      <DefaultAppBar position={navbarPostion} color={color}>
+      <MaterialUIAppBar position={position} color={color}>
         {React.cloneElement(children, { ...other })}
-      </DefaultAppBar>
+      </MaterialUIAppBar>
     );
   }
 }
