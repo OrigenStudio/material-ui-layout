@@ -9,12 +9,12 @@ import styles from './styles';
 class TwoRowsAppBar extends PureComponent {
   static propTypes = {
     classes: PropTypes.shape({}),
-    topLeftContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf(PropTypes.element)),
-    topCenterContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf(PropTypes.element)),
-    topRightContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf(PropTypes.element)),
-    bottomLeftContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf(PropTypes.element)),
-    bottomCenterContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf(PropTypes.element)),
-    bottomRightContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf(PropTypes.element)),
+    topLeftContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf([PropTypes.element])),
+    topCenterContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf([PropTypes.element])),
+    topRightContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf([PropTypes.element])),
+    bottomLeftContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf([PropTypes.element])),
+    bottomCenterContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf([PropTypes.element])),
+    bottomRightContent: PropTypes.oneOf(PropTypes.element, PropTypes.arrayOf([PropTypes.element])),
   };
 
   static defaultProps = {
@@ -25,7 +25,7 @@ class TwoRowsAppBar extends PureComponent {
     bottomLeftContent: null,
     bottomCenterContent: null,
     bottomRightContent: null,
-  }
+  };
 
   render() {
     const {
