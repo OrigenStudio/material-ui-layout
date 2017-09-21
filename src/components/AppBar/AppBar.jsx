@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import MaterialUIAppBar from 'material-ui/AppBar';
 
+
 import styles from './styles';
 
 class AppBar extends React.PureComponent {

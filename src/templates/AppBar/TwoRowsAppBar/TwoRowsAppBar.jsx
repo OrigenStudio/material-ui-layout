@@ -29,6 +29,7 @@ class TwoRowsAppBar extends PureComponent {
     bottomRightContent: null,
   };
 
+
   render() {
     const {
       classes,
