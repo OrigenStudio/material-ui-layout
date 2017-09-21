@@ -13,7 +13,7 @@ import compose from 'recompose/compose';
 
 import styles from './styles';
 
-class BasicNavBar extends React.PureComponent {
+class BasicAppBar extends React.PureComponent {
   static propTypes = {
     links: PropTypes.arrayOf(PropTypes.shape({})),
     classes: PropTypes.shape({}),
@@ -66,4 +66,4 @@ class BasicNavBar extends React.PureComponent {
   }
 }
 
-export default compose(withStyles(styles), withWidth())(BasicNavBar);
+export default compose(withStyles(styles), withWidth())(BasicAppBar);
