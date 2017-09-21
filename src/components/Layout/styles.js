@@ -8,14 +8,14 @@ const styles = {
     paddingTop: '0px',
     display: 'flex',
   },
-  mainFixedNavbar: {
+  mainFixedAppBar: {
     marginTop: '64px',
   },
   mainStickyFooter: {
     flex: 1,
   },
   '@media (max-width: 599px)': {
-    mainFixedNavbar: {
+    mainFixedAppBar: {
       marginTop: '56px',
     },
   },

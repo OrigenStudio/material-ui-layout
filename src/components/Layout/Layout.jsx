@@ -7,7 +7,7 @@ import controllable from 'react-controllables';
 
 import styles from './styles';
 
-import NavBar from '../NavBar';
+import AppBar from '../AppBar';
 import Footer from '../Footer';
 
 // TODO create Layout Library
@@ -17,7 +17,7 @@ class Layout extends React.PureComponent {
     classes: PropTypes.shape({}),
     overrideClasses: PropTypes.shape({}),
     children: PropTypes.element.isRequired,
-    navbarPostion: PropTypes.string,
+    appBarPosition: PropTypes.string,
     stickyFooter: PropTypes.bool,
     footerContent: PropTypes.element,
     appBarContent: PropTypes.element,
@@ -31,7 +31,7 @@ class Layout extends React.PureComponent {
 
   static defaultProps = {
     title: '',
-    navbarPostion: 'default',
+    appBarPosition: 'default',
     stickyFooter: false,
     drawerOpen: false,
   };
@@ -53,7 +53,7 @@ class Layout extends React.PureComponent {
       classes: defaultClasses,
       overrideClasses,
       children,
-      navbarPostion,
+      appBarPosition,
       stickyFooter,
       footerContent,
       appBarContent,
@@ -68,15 +68,14 @@ class Layout extends React.PureComponent {
 
     const mainClassnames = classNames(
       classes.main,
-      { [`${classes.mainFixedNavbar}`]: navbarPostion === 'fixed' },
+      { [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' },
       { [`${classes.mainStickyFooter}`]: stickyFooter },
     );
-
     return (
       <div className={classes.layout}>
-        <NavBar {...appBarProps} onIconClick={this.toggleDrawer}>
+        <AppBar {...appBarProps} position={appBarPosition} onIconClick={this.toggleDrawer}>
           {appBarContent}
-        </NavBar>
+        </AppBar>
         {drawerContent ? (
           <Drawer {...drawerProps} open={drawerOpen} onRequestClose={this.handleDrawerClose}>
             {drawerContent}
