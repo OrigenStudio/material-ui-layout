@@ -6,15 +6,17 @@ import { withStyles } from 'material-ui/styles';
 
 import styles from './styles';
 
+const contentPropType = PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]);
+
 class TwoRowsAppBar extends PureComponent {
   static propTypes = {
     classes: PropTypes.shape({}),
-    topLeftContent: PropTypes.oneOf([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
-    topCenterContent: PropTypes.oneOf([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
-    topRightContent: PropTypes.oneOf([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
-    bottomLeftContent: PropTypes.oneOf([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
-    bottomCenterContent: PropTypes.oneOf([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
-    bottomRightContent: PropTypes.oneOf([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]),
+    topLeftContent: contentPropType,
+    topCenterContent: contentPropType,
+    topRightContent: contentPropType,
+    bottomLeftContent: contentPropType,
+    bottomCenterContent: contentPropType,
+    bottomRightContent: contentPropType,
   };
 
   static defaultProps = {
