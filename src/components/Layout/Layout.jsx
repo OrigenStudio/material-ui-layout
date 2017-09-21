@@ -7,7 +7,7 @@ import controllable from 'react-controllables';
 
 import styles from './styles';
 
-import NavBar from '../NavBar';
+import AppBar from '../AppBar';
 import Footer from '../Footer';
 
 // TODO create Layout Library
@@ -74,9 +74,9 @@ class Layout extends React.PureComponent {
 
     return (
       <div className={classes.layout}>
-        <NavBar {...appBarProps} onIconClick={this.toggleDrawer}>
+        <AppBar {...appBarProps} onIconClick={this.toggleDrawer}>
           {appBarContent}
-        </NavBar>
+        </AppBar>
         {drawerContent ? (
           <Drawer {...drawerProps} open={drawerOpen} onRequestClose={this.handleDrawerClose}>
             {drawerContent}
