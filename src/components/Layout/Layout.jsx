@@ -31,7 +31,7 @@ class Layout extends React.PureComponent {
 
   static defaultProps = {
     title: '',
-    appBarPosition: 'default',
+    appBarPosition: 'fixed',
     stickyFooter: false,
     drawerOpen: false,
     drawerUnder: false,
