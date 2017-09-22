@@ -1,10 +1,24 @@
 const drawerWidth = 240;
 
-const styles = {
+const styles = theme => ({
   layout: {
     display: 'flex',
     minHeight: '100vh',
     flexDirection: 'column',
+  },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   main: {
     paddingTop: '0px',
@@ -24,6 +38,6 @@ const styles = {
   drawerPaper: {
     width: drawerWidth,
   },
-};
+});
 
 export default styles;

@@ -34,6 +34,7 @@ class Layout extends React.PureComponent {
     appBarPosition: 'default',
     stickyFooter: false,
     drawerOpen: false,
+    drawerUnder: false,
   };
 
   handleDrawerClose = () => {
@@ -53,17 +54,21 @@ class Layout extends React.PureComponent {
       classes: defaultClasses,
       overrideClasses,
       children,
-      appBarPosition,
-      stickyFooter,
-      footerContent,
       appBarContent,
+      appBarPosition,
+      appBarProps,
       drawerContent,
       drawerOpen,
-      appBarProps,
+      drawerType,
+      drawerUnder,
       drawerProps,
+      footerContent,
+      stickyFooter,
       footerProps,
     } = this.props;
 
+    // TODO change the way to overrideClasses
+    // use classes insted of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
     const mainClassnames = classNames(
@@ -71,15 +76,29 @@ class Layout extends React.PureComponent {
       { [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' },
       { [`${classes.mainStickyFooter}`]: stickyFooter },
     );
+
+    const appBarShift =
+      drawerOpen && !drawerUnder && (drawerType === 'permanent' || drawerType === 'persistent');
+    console.log('appBarShift', appBarShift);
+
+    const appBarClassnames = classNames(classes.appBar, {
+      [`${classes.appBarShift}`]: appBarShift,
+    });
     return (
       <div className={classes.layout}>
-        <AppBar {...appBarProps} position={appBarPosition} onIconClick={this.toggleDrawer}>
+        <AppBar
+          position={appBarPosition}
+          onIconClick={this.toggleDrawer}
+          className={appBarClassnames}
+          {...appBarProps}
+        >
           {appBarContent}
         </AppBar>
         {drawerContent ? (
           <Drawer
             open={drawerOpen}
             onRequestClose={this.handleDrawerClose}
+            type={drawerType}
             classes={{ paper: classes.drawerPaper }}
             {...drawerProps}
           >
