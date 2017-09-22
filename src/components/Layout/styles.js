@@ -30,7 +30,15 @@ const styles = theme => ({
   mainStickyFooter: {
     flex: 1,
   },
-  '@media (max-width: 599px)': {
+  mainShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  '@media (max-width: 599px)': { // use mixim
     mainFixedAppBar: {
       marginTop: '56px',
     },

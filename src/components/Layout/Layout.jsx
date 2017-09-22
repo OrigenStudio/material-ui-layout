@@ -71,15 +71,16 @@ class Layout extends React.PureComponent {
     // use classes insted of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
+    const mainShift = drawerOpen && (drawerType === 'permanent' || drawerType === 'persistent');
     const mainClassnames = classNames(
       classes.main,
       { [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' },
       { [`${classes.mainStickyFooter}`]: stickyFooter },
+      { [`${classes.mainShift}`]: mainShift },
     );
 
     const appBarShift =
       drawerOpen && !drawerUnder && (drawerType === 'permanent' || drawerType === 'persistent');
-    console.log('appBarShift', appBarShift);
 
     const appBarClassnames = classNames(classes.appBar, {
       [`${classes.appBarShift}`]: appBarShift,
