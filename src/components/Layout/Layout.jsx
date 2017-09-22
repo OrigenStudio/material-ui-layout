@@ -23,32 +23,35 @@ class Layout extends React.PureComponent {
     stickyFooter: PropTypes.bool,
     footerContent: PropTypes.element,
     appBarContent: PropTypes.element,
-    drawerOpen: PropTypes.bool.isRequired,
-    onDrawerOpenChange: PropTypes.func,
-    drawerContent: PropTypes.element,
+    leftDrawerOpen: PropTypes.bool.isRequired,
+    onLeftDrawerOpenChange: PropTypes.func,
+    leftDrawerContent: PropTypes.element,
+    leftDrawerType: PropTypes.string,
+    leftDrawerUnder: PropTypes.bool,
     appBarProps: PropTypes.shape({}),
-    drawerProps: PropTypes.shape({}),
+    leftDrawerProps: PropTypes.shape({}),
     footerProps: PropTypes.shape({}),
+    width: PropTypes.string,
   };
 
   static defaultProps = {
     title: '',
     appBarPosition: 'fixed',
     stickyFooter: false,
-    drawerOpen: false,
-    drawerUnder: false,
+    leftDrawerOpen: false,
+    leftDrawerUnder: false,
   };
 
-  handleDrawerClose = () => {
-    if (!this.props.onDrawerOpenChange) return;
+  handleLeftDrawerClose = () => {
+    if (!this.props.onLeftDrawerOpenChange) return;
 
-    this.props.onDrawerOpenChange(false);
+    this.props.onLeftDrawerOpenChange(false);
   };
 
-  toggleDrawer = () => {
-    if (!this.props.onDrawerOpenChange) return;
+  toggleLeftDrawer = () => {
+    if (!this.props.onLeftDrawerOpenChange) return;
 
-    this.props.onDrawerOpenChange(!this.props.drawerOpen);
+    this.props.onLeftDrawerOpenChange(!this.props.leftDrawerOpen);
   };
 
   render() {
@@ -59,11 +62,11 @@ class Layout extends React.PureComponent {
       appBarContent,
       appBarPosition,
       appBarProps,
-      drawerContent,
-      drawerOpen,
-      drawerType,
-      drawerUnder,
-      drawerProps,
+      leftDrawerContent,
+      leftDrawerOpen,
+      leftDrawerType,
+      leftDrawerUnder,
+      leftDrawerProps,
       footerContent,
       stickyFooter,
       footerProps,
@@ -78,8 +81,8 @@ class Layout extends React.PureComponent {
 
     const mainShift =
       !smallScreen &&
-      (drawerType === 'permanent' ||
-        (drawerOpen && drawerType === 'persistent'));
+      (leftDrawerType === 'permanent' ||
+        (leftDrawerOpen && leftDrawerType === 'persistent'));
 
     const mainClassnames = classNames(
       classes.main,
@@ -90,40 +93,40 @@ class Layout extends React.PureComponent {
 
     const appBarShift =
       !smallScreen &&
-      (!drawerUnder &&
-        ((drawerOpen && drawerType === 'persistent') ||
-          drawerType === 'permanent'));
+      (!leftDrawerUnder &&
+        ((leftDrawerOpen && leftDrawerType === 'persistent') ||
+          leftDrawerType === 'permanent'));
 
     const appBarClassnames = classNames(classes.appBar, {
       [`${classes.appBarShift}`]: appBarShift,
     });
 
     const drawerPaperClassnames = classNames(classes.drawerPaper, {
-      [`${classes.drawerPaperUnder}`]: !smallScreen && drawerUnder,
+      [`${classes.drawerPaperUnder}`]: !smallScreen && leftDrawerUnder,
     });
 
     return (
       <div className={classes.layout}>
         <AppBar
           position={appBarPosition}
-          onIconClick={this.toggleDrawer}
+          onIconClick={this.toggleLeftDrawer}
           className={appBarClassnames}
           {...appBarProps}
         >
           {appBarContent}
         </AppBar>
-        {drawerContent ? (
+        {leftDrawerContent ? (
           <Drawer
-            open={drawerOpen}
-            onRequestClose={this.handleDrawerClose}
-            type={!smallScreen && drawerType}
+            open={leftDrawerOpen}
+            onRequestClose={this.handleLeftDrawerClose}
+            type={!smallScreen && leftDrawerType}
             classes={{ paper: drawerPaperClassnames }}
-            {...drawerProps}
+            {...leftDrawerProps}
           >
-            {!smallScreen && drawerUnder ? (
+            {!smallScreen && leftDrawerUnder ? (
               <div className={classes.drawerHeader} />
             ) : null}
-            {drawerContent}
+            {leftDrawerContent}
           </Drawer>
         ) : null}
         <main className={mainClassnames}>{children}</main>
@@ -136,5 +139,5 @@ class Layout extends React.PureComponent {
 }
 
 export default controllable(compose(withStyles(styles), withWidth())(Layout), [
-  'drawerOpen',
+  'leftDrawerOpen',
 ]);
