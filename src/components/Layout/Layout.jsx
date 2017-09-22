@@ -75,7 +75,6 @@ class Layout extends React.PureComponent {
     const classes = { ...defaultClasses, ...overrideClasses };
 
     const smallScreen = isWidthDown('xs', width);
-    console.log('smallScreen', smallScreen);
 
     const mainShift =
       !smallScreen &&
@@ -121,7 +120,9 @@ class Layout extends React.PureComponent {
             classes={{ paper: drawerPaperClassnames }}
             {...drawerProps}
           >
-            {!smallScreen && drawerUnder ? <div className={classes.drawerHeader} /> : null}
+            {!smallScreen && drawerUnder ? (
+              <div className={classes.drawerHeader} />
+            ) : null}
             {drawerContent}
           </Drawer>
         ) : null}
@@ -134,7 +135,6 @@ class Layout extends React.PureComponent {
   }
 }
 
-export default controllable(
-  compose(withStyles(styles), withWidth())(Layout),
-  ['drawerOpen'],
-);
+export default controllable(compose(withStyles(styles), withWidth())(Layout), [
+  'drawerOpen',
+]);
