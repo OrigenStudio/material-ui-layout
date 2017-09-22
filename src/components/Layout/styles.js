@@ -30,7 +30,12 @@ const styles = theme => ({
     backgroundColor: 'red',
   },
   mainFixedAppBar: {
-    marginTop: '64px',
+    marginTop: 56,
+  },
+  [theme.breakpoints.up('sm')]: {
+    mainFixedAppBar: {
+      marginTop: 64,
+    },
   },
   mainStickyFooter: {
     flex: 1,
@@ -42,12 +47,6 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  '@media (max-width: 599px)': {
-    // use mixim
-    mainFixedAppBar: {
-      marginTop: '56px',
-    },
   },
   drawerPaper: {
     width: drawerWidth,
