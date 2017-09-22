@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 import MenuIcon from 'material-ui-icons/Menu';
 import Hidden from 'material-ui/Hidden';
 import { withStyles } from 'material-ui/styles';
-import withWidth from 'material-ui/utils/withWidth';
+import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
 import compose from 'recompose/compose';
 
 import styles from './styles';
@@ -20,11 +20,17 @@ class BasicAppBar extends React.PureComponent {
     title: PropTypes.string,
     logo: PropTypes.string,
     onIconClick: PropTypes.func,
+    menuIconAlways: PropTypes.bool,
+    width: PropTypes.string,
+  };
+
+  static defaultProps = {
+    menuIconAlways: false,
   };
 
   handleIconClick = () => {
     this.props.onIconClick();
-  }
+  };
 
   renderLogo = () => {
     const { classes, title, logo } = this.props;
@@ -43,14 +49,18 @@ class BasicAppBar extends React.PureComponent {
   };
 
   render() {
-    const { links } = this.props;
+    const { links, menuIconAlways, width } = this.props;
     return (
       <Toolbar>
-        <Hidden smUp>
-          <IconButton color="inherit" aria-label="Menu" onClick={this.handleIconClick}>
+        {menuIconAlways || isWidthDown('xs', width) ? (
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            onClick={this.handleIconClick}
+          >
             <MenuIcon />
           </IconButton>
-        </Hidden>
+        ) : null}
         {this.renderLogo()}
         <Hidden xsDown>
           <div>
