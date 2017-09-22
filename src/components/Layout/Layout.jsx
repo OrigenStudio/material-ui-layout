@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
+import compose from 'recompose/compose';
+import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
 import controllable from 'react-controllables';
 
 import styles from './styles';
@@ -65,13 +67,21 @@ class Layout extends React.PureComponent {
       footerContent,
       stickyFooter,
       footerProps,
+      width,
     } = this.props;
 
     // TODO change the way to overrideClasses
     // use classes insted of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
-    const mainShift = drawerType === 'permanent' || (drawerOpen && drawerType === 'persistent');
+    const smallScreen = isWidthDown('xs', width);
+    console.log('smallScreen', smallScreen);
+
+    const mainShift =
+      !smallScreen &&
+      (drawerType === 'permanent' ||
+        (drawerOpen && drawerType === 'persistent'));
+
     const mainClassnames = classNames(
       classes.main,
       { [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' },
@@ -80,14 +90,17 @@ class Layout extends React.PureComponent {
     );
 
     const appBarShift =
-      !drawerUnder && ((drawerOpen && drawerType === 'persistent') || drawerType === 'permanent');
+      !smallScreen &&
+      (!drawerUnder &&
+        ((drawerOpen && drawerType === 'persistent') ||
+          drawerType === 'permanent'));
 
     const appBarClassnames = classNames(classes.appBar, {
       [`${classes.appBarShift}`]: appBarShift,
     });
 
     const drawerPaperClassnames = classNames(classes.drawerPaper, {
-      [`${classes.drawerPaperUnder}`]: drawerUnder,
+      [`${classes.drawerPaperUnder}`]: !smallScreen && drawerUnder,
     });
 
     return (
@@ -104,19 +117,24 @@ class Layout extends React.PureComponent {
           <Drawer
             open={drawerOpen}
             onRequestClose={this.handleDrawerClose}
-            type={drawerType}
+            type={!smallScreen && drawerType}
             classes={{ paper: drawerPaperClassnames }}
             {...drawerProps}
           >
-            {drawerUnder ? <div className={classes.drawerHeader} /> : null}
+            {!smallScreen && drawerUnder ? <div className={classes.drawerHeader} /> : null}
             {drawerContent}
           </Drawer>
         ) : null}
         <main className={mainClassnames}>{children}</main>
-        {footerContent ? <Footer {...footerProps}>{footerContent}</Footer> : null}
+        {footerContent ? (
+          <Footer {...footerProps}>{footerContent}</Footer>
+        ) : null}
       </div>
     );
   }
 }
 
-export default controllable(withStyles(styles)(Layout), ['drawerOpen']);
+export default controllable(
+  compose(withStyles(styles), withWidth())(Layout),
+  ['drawerOpen'],
+);
