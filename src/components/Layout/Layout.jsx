@@ -77,7 +77,12 @@ class Layout extends React.PureComponent {
           {appBarContent}
         </AppBar>
         {drawerContent ? (
-          <Drawer {...drawerProps} open={drawerOpen} onRequestClose={this.handleDrawerClose}>
+          <Drawer
+            open={drawerOpen}
+            onRequestClose={this.handleDrawerClose}
+            classes={{ paper: classes.drawerPaper }}
+            {...drawerProps}
+          >
             {drawerContent}
           </Drawer>
         ) : null}

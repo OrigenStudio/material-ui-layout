@@ -1,3 +1,5 @@
+const drawerWidth = 240;
+
 const styles = {
   layout: {
     display: 'flex',
@@ -18,6 +20,9 @@ const styles = {
     mainFixedAppBar: {
       marginTop: '56px',
     },
+  },
+  drawerPaper: {
+    width: drawerWidth,
   },
 };
 
