@@ -23,6 +23,11 @@ const styles = theme => ({
   main: {
     paddingTop: '0px',
     display: 'flex',
+    transition: theme.transitions.create(['margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    backgroundColor: 'red',
   },
   mainFixedAppBar: {
     marginTop: '64px',
@@ -33,7 +38,7 @@ const styles = theme => ({
   mainShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create(['margin'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
