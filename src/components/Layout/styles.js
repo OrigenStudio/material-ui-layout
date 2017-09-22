@@ -43,7 +43,8 @@ const styles = theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  '@media (max-width: 599px)': { // use mixim
+  '@media (max-width: 599px)': {
+    // use mixim
     mainFixedAppBar: {
       marginTop: '56px',
     },
@@ -51,6 +52,10 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
+  drawerPaperUnder: {
+    zIndex: '1000',
+  },
+  drawerHeader: theme.mixins.toolbar,
 });
 
 export default styles;

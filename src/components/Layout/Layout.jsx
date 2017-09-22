@@ -85,6 +85,11 @@ class Layout extends React.PureComponent {
     const appBarClassnames = classNames(classes.appBar, {
       [`${classes.appBarShift}`]: appBarShift,
     });
+
+    const drawerPaperClassnames = classNames(classes.drawerPaper, {
+      [`${classes.drawerPaperUnder}`]: drawerUnder,
+    });
+
     return (
       <div className={classes.layout}>
         <AppBar
@@ -100,9 +105,10 @@ class Layout extends React.PureComponent {
             open={drawerOpen}
             onRequestClose={this.handleDrawerClose}
             type={drawerType}
-            classes={{ paper: classes.drawerPaper }}
+            classes={{ paper: drawerPaperClassnames }}
             {...drawerProps}
           >
+            {drawerUnder ? <div className={classes.drawerHeader} /> : null}
             {drawerContent}
           </Drawer>
         ) : null}
