@@ -1,6 +1,8 @@
 export default {
+  wrapper: {
+    width: '100%',
+  },
   list: {
-    width: 250,
     flex: 'initial',
   },
 };

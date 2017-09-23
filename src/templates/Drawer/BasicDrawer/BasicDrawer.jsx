@@ -15,7 +15,7 @@ class BasicDrawer extends React.PureComponent {
   render() {
     const { links, classes } = this.props;
     return (
-      <div>
+      <div className={classes.wrapper}>
         <List className={classes.list}>
           {_.map(links, link => (
             <ListItem button onClick={link.onClick} key={`link-${link.label}`}>
