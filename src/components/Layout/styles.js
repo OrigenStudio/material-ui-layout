@@ -39,7 +39,6 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    backgroundColor: 'red',
   },
   mainFixedAppBar: {
     marginTop: 56,
