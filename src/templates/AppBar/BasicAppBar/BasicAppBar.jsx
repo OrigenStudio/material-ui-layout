@@ -19,7 +19,7 @@ class BasicAppBar extends React.PureComponent {
     classes: PropTypes.shape({}),
     title: PropTypes.string,
     logo: PropTypes.string,
-    onIconClick: PropTypes.func,
+    toggleLeftDrawer: PropTypes.func,
     menuIconAlways: PropTypes.bool,
     width: PropTypes.string,
   };
@@ -29,7 +29,7 @@ class BasicAppBar extends React.PureComponent {
   };
 
   handleIconClick = () => {
-    this.props.onIconClick();
+    this.props.toggleLeftDrawer();
   };
 
   renderLogo = () => {
