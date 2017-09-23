@@ -47,6 +47,8 @@ class Layout extends React.PureComponent {
     stickyFooter: false,
     leftDrawerOpen: false,
     leftDrawerUnder: false,
+    rightDrawerOpen: false,
+    rightDrawerUnder: false,
   };
 
   handleLeftDrawerClose = () => {
