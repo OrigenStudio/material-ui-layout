@@ -47,6 +47,8 @@ class Layout extends React.PureComponent {
     stickyFooter: false,
     leftDrawerOpen: false,
     leftDrawerUnder: false,
+    rightDrawerOpen: false,
+    rightDrawerUnder: false,
   };
 
   handleLeftDrawerClose = () => {
@@ -144,7 +146,6 @@ class Layout extends React.PureComponent {
     const leftDrawerPaperClassnames = classNames(classes.drawerPaper, {
       [`${classes.drawerPaperUnder}`]: !smallScreen && leftDrawerUnder,
     });
-    console.log(isDocked(rightDrawerType));
     const rightDrawerPaperClassnames = classNames(classes.drawerPaper, {
       [`${classes.drawerPaperUnder}`]: !smallScreen && rightDrawerUnder,
       [`${classes.rightDrawerDockedFix}`]: isDocked(rightDrawerType), // FIXME remove once material-ui drawer style is fixed
