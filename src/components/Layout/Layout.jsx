@@ -12,7 +12,8 @@ import styles from './styles';
 import AppBar from '../AppBar';
 import Footer from '../Footer';
 
-// TODO create Layout Library
+// FIXME remove once material-ui drawer style is fixed
+const isDocked = type => type === 'permanent' || type === 'persistent';
 
 class Layout extends React.PureComponent {
   static propTypes = {
@@ -21,16 +22,22 @@ class Layout extends React.PureComponent {
     children: PropTypes.element.isRequired,
     appBarPosition: PropTypes.string,
     stickyFooter: PropTypes.bool,
-    footerContent: PropTypes.element,
     appBarContent: PropTypes.element,
+    appBarProps: PropTypes.shape({}),
+    footerContent: PropTypes.element,
+    footerProps: PropTypes.shape({}),
     leftDrawerOpen: PropTypes.bool.isRequired,
     onLeftDrawerOpenChange: PropTypes.func,
     leftDrawerContent: PropTypes.element,
     leftDrawerType: PropTypes.string,
     leftDrawerUnder: PropTypes.bool,
-    appBarProps: PropTypes.shape({}),
     leftDrawerProps: PropTypes.shape({}),
-    footerProps: PropTypes.shape({}),
+    rightDrawerOpen: PropTypes.bool.isRequired,
+    onRightDrawerOpenChange: PropTypes.func,
+    rightDrawerContent: PropTypes.element,
+    rightDrawerType: PropTypes.string,
+    rightDrawerUnder: PropTypes.bool,
+    rightDrawerProps: PropTypes.shape({}),
     width: PropTypes.string,
   };
 
@@ -54,6 +61,18 @@ class Layout extends React.PureComponent {
     this.props.onLeftDrawerOpenChange(!this.props.leftDrawerOpen);
   };
 
+  handleRightDrawerClose = () => {
+    if (!this.props.onRightDrawerOpenChange) return;
+
+    this.props.onRightDrawerOpenChange(false);
+  };
+
+  toggleRightDrawer = () => {
+    if (!this.props.onRightDrawerOpenChange) return;
+
+    this.props.onRightDrawerOpenChange(!this.props.rightDrawerOpen);
+  };
+
   render() {
     const {
       classes: defaultClasses,
@@ -67,6 +86,11 @@ class Layout extends React.PureComponent {
       leftDrawerType,
       leftDrawerUnder,
       leftDrawerProps,
+      rightDrawerContent,
+      rightDrawerOpen,
+      rightDrawerType,
+      rightDrawerUnder,
+      rightDrawerProps,
       footerContent,
       stickyFooter,
       footerProps,
@@ -79,37 +103,59 @@ class Layout extends React.PureComponent {
 
     const smallScreen = isWidthDown('xs', width);
 
-    const mainShift =
+    const mainLeftShift =
       !smallScreen &&
       (leftDrawerType === 'permanent' ||
         (leftDrawerOpen && leftDrawerType === 'persistent'));
 
-    const mainClassnames = classNames(
-      classes.main,
-      { [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' },
-      { [`${classes.mainStickyFooter}`]: stickyFooter },
-      { [`${classes.mainShift}`]: mainShift },
-    );
+    const mainRightShift =
+      !smallScreen &&
+      (rightDrawerType === 'permanent' ||
+        (rightDrawerOpen && rightDrawerType === 'persistent'));
 
-    const appBarShift =
+    const mainClassnames = classNames(classes.main, {
+      [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed',
+      [`${classes.mainStickyFooter}`]: stickyFooter,
+      [`${classes.mainShift}`]: mainLeftShift || mainRightShift,
+      [`${classes.mainLeftShift}`]: mainLeftShift,
+      [`${classes.mainRightShift}`]: mainRightShift,
+      [`${classes.mainLeftRightShift}`]: mainLeftShift && mainRightShift,
+    });
+
+    const appBarLeftShift =
       !smallScreen &&
       (!leftDrawerUnder &&
         ((leftDrawerOpen && leftDrawerType === 'persistent') ||
           leftDrawerType === 'permanent'));
 
+    const appBarRightShift =
+      !smallScreen &&
+      (!rightDrawerUnder &&
+        ((rightDrawerOpen && rightDrawerType === 'persistent') ||
+          rightDrawerType === 'permanent'));
+
     const appBarClassnames = classNames(classes.appBar, {
-      [`${classes.appBarShift}`]: appBarShift,
+      [`${classes.appBarShift}`]: appBarLeftShift || appBarRightShift,
+      [`${classes.appBarLeftShift}`]: appBarLeftShift,
+      [`${classes.appBarRightShift}`]: appBarRightShift,
+      [`${classes.appBarLeftRightShift}`]: appBarLeftShift && appBarRightShift,
     });
 
-    const drawerPaperClassnames = classNames(classes.drawerPaper, {
+    const leftDrawerPaperClassnames = classNames(classes.drawerPaper, {
       [`${classes.drawerPaperUnder}`]: !smallScreen && leftDrawerUnder,
+    });
+    console.log(isDocked(rightDrawerType));
+    const rightDrawerPaperClassnames = classNames(classes.drawerPaper, {
+      [`${classes.drawerPaperUnder}`]: !smallScreen && rightDrawerUnder,
+      [`${classes.rightDrawerDockedFix}`]: isDocked(rightDrawerType), // FIXME remove once material-ui drawer style is fixed
     });
 
     return (
       <div className={classes.layout}>
         <AppBar
           position={appBarPosition}
-          onIconClick={this.toggleLeftDrawer}
+          toggleLeftDrawer={this.toggleLeftDrawer}
+          toggleRightDrawer={this.toggleRightDrawer}
           className={appBarClassnames}
           {...appBarProps}
         >
@@ -120,13 +166,28 @@ class Layout extends React.PureComponent {
             open={leftDrawerOpen}
             onRequestClose={this.handleLeftDrawerClose}
             type={!smallScreen && leftDrawerType}
-            classes={{ paper: drawerPaperClassnames }}
+            classes={{ paper: leftDrawerPaperClassnames }}
             {...leftDrawerProps}
           >
             {!smallScreen && leftDrawerUnder ? (
               <div className={classes.drawerHeader} />
             ) : null}
             {leftDrawerContent}
+          </Drawer>
+        ) : null}
+        {rightDrawerContent ? (
+          <Drawer
+            anchor="right"
+            open={rightDrawerOpen}
+            onRequestClose={this.handleRightDrawerClose}
+            type={!smallScreen && rightDrawerType}
+            classes={{ paper: rightDrawerPaperClassnames }}
+            {...rightDrawerProps}
+          >
+            {!smallScreen && rightDrawerUnder ? (
+              <div className={classes.drawerHeader} />
+            ) : null}
+            {rightDrawerContent}
           </Drawer>
         ) : null}
         <main className={mainClassnames}>{children}</main>
@@ -140,4 +201,5 @@ class Layout extends React.PureComponent {
 
 export default controllable(compose(withStyles(styles), withWidth())(Layout), [
   'leftDrawerOpen',
+  'rightDrawerOpen',
 ]);

@@ -1,3 +1,4 @@
+// TODO curry drawerWidth?
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -13,12 +14,23 @@ const styles = theme => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  },
+  appBarLeftShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+  },
+  appBarRightShift: {
+    marginRight: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+  },
+  appBarLeftRightShift: {
+    marginLeft: drawerWidth,
+    marginRight: drawerWidth,
+    width: `calc(100% - ${drawerWidth * 2}px)`,
   },
   main: {
     paddingTop: '0px',
@@ -41,12 +53,23 @@ const styles = theme => ({
     flex: 1,
   },
   mainShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['margin'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  },
+  mainLeftShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+  },
+  mainRightShift: {
+    marginRight: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+  },
+  mainLeftRightShift: {
+    marginRight: drawerWidth,
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth * 2}px)`,
   },
   drawerPaper: {
     width: drawerWidth,
@@ -55,6 +78,10 @@ const styles = theme => ({
     zIndex: '1000',
   },
   drawerHeader: theme.mixins.toolbar,
+  rightDrawerDockedFix: {
+    borderLeft: `1px solid ${theme.palette.text.divider}`,
+    borderRight: 'none',
+  },
 });
 
 export default styles;
