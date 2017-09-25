@@ -28,9 +28,11 @@ export default {
   right: {
     justifyContent: 'flex-end',
     display: 'flex',
+    alignItems: 'center',
   },
   left: {
     justifyContent: 'flex-start',
     display: 'flex',
+    alignItems: 'center',
   },
 };
