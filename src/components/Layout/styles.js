@@ -35,7 +35,7 @@ const styles = theme => ({
   main: {
     paddingTop: '0px',
     display: 'flex',
-    transition: theme.transitions.create(['margin'], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -56,23 +56,27 @@ const styles = theme => ({
   },
   [theme.breakpoints.up('sm')]: {
     mainFixedAppBar: {
-      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight}px`,
+      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')]
+        .minHeight}px`,
     },
     mainFixedTwoRowAppBar: {
-      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2}px`,
+      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight *
+        2}px`,
     },
     mainGrow: {
-      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight}px)`,
+      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')]
+        .minHeight}px)`,
     },
     mainGrowTwoRowAppBar: {
-      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2}px)`,
+      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')]
+        .minHeight * 2}px)`,
     },
   },
   mainStickyFooter: {
     flex: 1,
   },
   mainShift: {
-    transition: theme.transitions.create(['margin'], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
