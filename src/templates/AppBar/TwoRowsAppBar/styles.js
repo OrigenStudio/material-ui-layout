@@ -1,15 +1,14 @@
-export default {
+export default theme => ({
   wrapper: {
     marginTop: '0',
     marginBottom: '0',
   },
+  row: theme.mixins.toolbar,
   topRow: {
-    height: '64px',
     marginTop: '0',
     marginBottom: '0',
   },
   bottomRow: {
-    height: '56px',
     marginTop: '0',
     marginBottom: '0',
   },
@@ -25,12 +24,17 @@ export default {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  centerBig: {
+    justifyContent: theme.direction === 'ltr' ? 'flex-start' : 'flex-end',
+  },
   right: {
     justifyContent: 'flex-end',
     display: 'flex',
+    alignItems: 'center',
   },
   left: {
     justifyContent: 'flex-start',
     display: 'flex',
+    alignItems: 'center',
   },
-};
+});
