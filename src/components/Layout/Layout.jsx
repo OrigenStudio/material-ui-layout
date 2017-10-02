@@ -21,9 +21,10 @@ class Layout extends React.PureComponent {
     overrideClasses: PropTypes.shape({}),
     children: PropTypes.element.isRequired,
     appBarPosition: PropTypes.string,
-    stickyFooter: PropTypes.bool,
     appBarContent: PropTypes.element,
     appBarProps: PropTypes.shape({}),
+    mainGrow: PropTypes.bool,
+    stickyFooter: PropTypes.bool,
     footerContent: PropTypes.element,
     footerProps: PropTypes.shape({}),
     leftDrawerOpen: PropTypes.bool.isRequired,
@@ -39,6 +40,7 @@ class Layout extends React.PureComponent {
     rightDrawerUnder: PropTypes.bool,
     rightDrawerProps: PropTypes.shape({}),
     width: PropTypes.string,
+    usingTwoRowAppBar: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -49,6 +51,8 @@ class Layout extends React.PureComponent {
     leftDrawerUnder: false,
     rightDrawerOpen: false,
     rightDrawerUnder: false,
+    mainGrow: true,
+    usingTwoRowAppBar: false,
   };
 
   handleLeftDrawerClose = () => {
@@ -83,6 +87,7 @@ class Layout extends React.PureComponent {
       appBarContent,
       appBarPosition,
       appBarProps,
+      mainGrow,
       leftDrawerContent,
       leftDrawerOpen,
       leftDrawerType,
@@ -97,6 +102,7 @@ class Layout extends React.PureComponent {
       stickyFooter,
       footerProps,
       width,
+      usingTwoRowAppBar,
     } = this.props;
 
     // TODO change the way to overrideClasses
@@ -116,7 +122,10 @@ class Layout extends React.PureComponent {
         (rightDrawerOpen && rightDrawerType === 'persistent'));
 
     const mainClassnames = classNames(classes.main, {
-      [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed',
+      [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' && !usingTwoRowAppBar,
+      [`${classes.mainFixedTwoRowAppBar}`]: appBarPosition === 'fixed' && usingTwoRowAppBar,
+      [`${classes.mainGrow}`]: mainGrow && !usingTwoRowAppBar,
+      [`${classes.mainGrowTwoRowAppBar}`]: mainGrow && usingTwoRowAppBar,
       [`${classes.mainStickyFooter}`]: stickyFooter,
       [`${classes.mainShift}`]: mainLeftShift || mainRightShift,
       [`${classes.mainLeftShift}`]: mainLeftShift,

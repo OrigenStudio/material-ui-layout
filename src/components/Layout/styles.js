@@ -41,11 +41,31 @@ const styles = theme => ({
     }),
   },
   mainFixedAppBar: {
-    marginTop: 56,
+    marginTop: `${theme.mixins.toolbar.minHeight}px`,
+  },
+  mainFixedTwoRowAppBar: {
+    marginTop: `${theme.mixins.toolbar.minHeight * 2}px`,
+  },
+  mainGrow: {
+    flex: 1,
+    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+  },
+  mainGrowTwoRowAppBar: {
+    flex: 1,
+    height: `calc(100vh - ${theme.mixins.toolbar.minHeight * 2}px)`,
   },
   [theme.breakpoints.up('sm')]: {
     mainFixedAppBar: {
-      marginTop: 64,
+      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight}px`,
+    },
+    mainFixedTwoRowAppBar: {
+      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2}px`,
+    },
+    mainGrow: {
+      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight}px)`,
+    },
+    mainGrowTwoRowAppBar: {
+      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2}px)`,
     },
   },
   mainStickyFooter: {
