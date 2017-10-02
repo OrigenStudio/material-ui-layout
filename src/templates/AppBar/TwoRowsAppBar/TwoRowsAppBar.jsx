@@ -3,10 +3,23 @@ import PropTypes from 'prop-types';
 import Toolbar from 'material-ui/Toolbar';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
+import classNames from 'classnames';
+import compose from 'recompose/compose';
 
 import styles from './styles';
 
-const contentPropType = PropTypes.oneOfType([PropTypes.element, PropTypes.arrayOf(PropTypes.element)]);
+const contentPropType = PropTypes.oneOfType([
+  PropTypes.element,
+  PropTypes.arrayOf(PropTypes.element),
+]);
+
+// TODO find a way to better overwrite the items styles
+const style = {
+  item: {
+    padding: '0px',
+  },
+};
 
 class TwoRowsAppBar extends PureComponent {
   static propTypes = {
@@ -17,6 +30,8 @@ class TwoRowsAppBar extends PureComponent {
     bottomLeftContent: contentPropType,
     bottomCenterContent: contentPropType,
     bottomRightContent: contentPropType,
+    width: PropTypes.string,
+    smallScreenWidth: PropTypes.string,
   };
 
   static defaultProps = {
@@ -27,8 +42,8 @@ class TwoRowsAppBar extends PureComponent {
     bottomLeftContent: null,
     bottomCenterContent: null,
     bottomRightContent: null,
+    smallScreenWidth: 'xs',
   };
-
 
   render() {
     const {
@@ -39,29 +54,94 @@ class TwoRowsAppBar extends PureComponent {
       bottomLeftContent,
       bottomCenterContent,
       bottomRightContent,
+      width,
+      smallScreenWidth = 'xs',
     } = this.props;
+
+    const smallScreen = isWidthDown(smallScreenWidth, width);
+
     return (
       <Toolbar>
         <Grid container direction="column" className={classes.wrapper}>
-          <Grid container className={classes.topRow} justify={'space-between'}>
-            <Grid item xs={2} className={classes.left}>
+          <Grid
+            container
+            className={classNames(classes.row, classes.topRow)}
+            justify={'space-between'}
+          >
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.left}
+            >
               {topLeftContent}
             </Grid>
-            <Grid item xs={8} className={classes.topCenter}>
+            <Grid
+              item
+              style={style.item}
+              xs={8}
+              sm={4}
+              md={6}
+              lg={8}
+              className={classNames(classes.topCenter, {
+                [`${classes.centerBig}`]: !smallScreen,
+              })}
+            >
               {topCenterContent}
             </Grid>
-            <Grid item xs={2} className={classes.right}>
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.right}
+            >
               {topRightContent}
             </Grid>
           </Grid>
-          <Grid container className={classes.bottomRow} justify={'space-between'}>
-            <Grid item xs={2} className={classes.left}>
+          <Grid
+            container
+            className={classNames(classes.row, classes.bottomRow)}
+            justify={'space-between'}
+          >
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.left}
+            >
               {bottomLeftContent}
             </Grid>
-            <Grid item xs={8} className={classes.bottomCenter}>
+            <Grid
+              item
+              style={style.item}
+              xs={8}
+              sm={4}
+              md={6}
+              lg={8}
+              className={classNames(classes.bottomCenter, {
+                [`${classes.centerBig}`]: !smallScreen,
+              })}
+            >
               {bottomCenterContent}
             </Grid>
-            <Grid item xs={2} className={classes.right}>
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.right}
+            >
               {bottomRightContent}
             </Grid>
           </Grid>
@@ -71,4 +151,4 @@ class TwoRowsAppBar extends PureComponent {
   }
 }
 
-export default withStyles(styles)(TwoRowsAppBar);
+export default compose(withStyles(styles), withWidth())(TwoRowsAppBar);
