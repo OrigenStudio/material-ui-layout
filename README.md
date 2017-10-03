@@ -4,7 +4,7 @@
 
 ## Roadmap
 - [] Add tests
-- [] Add better support for two rows AppBars
+- [x] Add better support for two rows AppBars
 - [] Example web
 
 
