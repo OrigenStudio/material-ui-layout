@@ -54,6 +54,10 @@ const styles = theme => ({
     flex: 1,
     height: `calc(100vh - ${theme.mixins.toolbar.minHeight * 2}px)`,
   },
+  drawerHeader: theme.mixins.toolbar,
+  drawerHeaderTwoRowAppBar: {
+    minHeight: `${theme.mixins.toolbar.minHeight * 2}px`,
+  },
   [theme.breakpoints.up('sm')]: {
     mainFixedAppBar: {
       marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')]
@@ -70,6 +74,10 @@ const styles = theme => ({
     mainGrowTwoRowAppBar: {
       height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')]
         .minHeight * 2}px)`,
+    },
+    drawerHeaderTwoRowAppBar: {
+      minHeight: `${theme.mixins.toolbar[theme.breakpoints.up('sm')]
+        .minHeight * 2}px`,
     },
   },
   mainStickyFooter: {
@@ -99,11 +107,6 @@ const styles = theme => ({
   },
   drawerPaperUnder: {
     zIndex: '1000',
-  },
-  drawerHeader: theme.mixins.toolbar,
-  rightDrawerDockedFix: {
-    borderLeft: `1px solid ${theme.palette.text.divider}`,
-    borderRight: 'none',
   },
 });
 
