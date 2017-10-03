@@ -159,6 +159,10 @@ class Layout extends React.PureComponent {
       [`${classes.drawerPaperUnder}`]: !smallScreen && rightDrawerUnder,
       [`${classes.rightDrawerDockedFix}`]: isDocked(rightDrawerType), // FIXME remove once material-ui drawer style is fixed
     });
+    const drawerHeaderClassnames = classNames({
+      [`${classes.drawerHeader}`]: !usingTwoRowAppBar,
+      [`${classes.drawerHeaderTwoRowAppBar}`]: usingTwoRowAppBar,
+    })
 
     return (
       <div className={classes.layout}>
@@ -180,7 +184,7 @@ class Layout extends React.PureComponent {
             {...leftDrawerProps}
           >
             {!smallScreen && leftDrawerUnder ? (
-              <div className={classes.drawerHeader} />
+              <div className={drawerHeaderClassnames} />
             ) : null}
             {leftDrawerContent}
           </Drawer>
@@ -195,7 +199,7 @@ class Layout extends React.PureComponent {
             {...rightDrawerProps}
           >
             {!smallScreen && rightDrawerUnder ? (
-              <div className={classes.drawerHeader} />
+              <div className={drawerHeaderClassnames} />
             ) : null}
             {rightDrawerContent}
           </Drawer>
