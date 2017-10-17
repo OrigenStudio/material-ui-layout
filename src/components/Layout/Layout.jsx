@@ -13,6 +13,7 @@ import AppBar from '../AppBar';
 import Footer from '../Footer';
 
 // FIXME remove once material-ui drawer style is fixed
+// It is fixed... remove it
 const isDocked = type => type === 'permanent' || type === 'persistent';
 
 class Layout extends React.PureComponent {
