@@ -12,15 +12,23 @@ class DrawerItemsList extends React.PureComponent {
     items: PropTypes.arrayOf(PropTypes.shape({})),
     classes: PropTypes.shape({}),
   };
+
+  renderIcon = (item) => {
+    if (item.icon) {
+      return <item.icon />;
+    } else if (item.iconName) {
+      return <Icon>{item.iconName}</Icon>;
+    }
+    return <Icon>arrow_right</Icon>;
+  };
+
   render() {
     const { items, classes } = this.props;
     return (
       <List className={classes.list}>
         {map(items, item => (
           <ListItem button onClick={item.onClick} key={`item-${item.label}`}>
-            <ListItemIcon>
-              {item.icon ? <Icon>{item.icon}</Icon> : <Icon>arrow_right</Icon>}
-            </ListItemIcon>
+            <ListItemIcon>{this.renderIcon(item)}</ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItem>
         ))}
