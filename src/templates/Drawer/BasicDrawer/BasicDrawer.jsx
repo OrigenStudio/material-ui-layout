@@ -15,7 +15,6 @@ class BasicDrawer extends React.PureComponent {
     const { links, classes } = this.props;
     return (
       <div className={classes.wrapper}>
-        hello
         <DrawerItemsList items={links} />
       </div>
     );
