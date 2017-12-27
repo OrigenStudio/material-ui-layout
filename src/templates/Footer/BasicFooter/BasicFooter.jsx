@@ -36,7 +36,7 @@ class BasicFooter extends React.PureComponent {
   render() {
     const { title, classes, smallMessage, bigMessage, links } = this.props;
     return (
-      <Grid container align="flex-end" justify="space-around" spacing={16}>
+      <Grid container alignItems="flex-end" justify="space-around" spacing={16}>
         <Grid item xs={12}>
           <div className={classes.message}>
             <Typography type="display3" color="inherit">
@@ -52,7 +52,7 @@ class BasicFooter extends React.PureComponent {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Grid container direction="column" align="center" spacing={0}>
+          <Grid container direction="column" alignItems="center" spacing={0}>
             <Typography type="body1" color="inherit">
               {smallMessage}
             </Typography>
