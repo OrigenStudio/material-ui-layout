@@ -52,7 +52,7 @@ class BasicAppBar extends React.PureComponent {
     const { links, menuIconAlways, width } = this.props;
     return (
       <Toolbar>
-        {menuIconAlways || isWidthDown('xs', width) ? (
+        {menuIconAlways || isWidthDown('xs', width, true) ? (
           <IconButton
             color="inherit"
             aria-label="Menu"

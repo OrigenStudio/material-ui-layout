@@ -58,7 +58,7 @@ class TwoRowsAppBar extends PureComponent {
       smallScreenWidth = 'xs',
     } = this.props;
 
-    const smallScreen = isWidthDown(smallScreenWidth, width);
+    const smallScreen = isWidthDown(smallScreenWidth, width, true);
 
     return (
       <Toolbar>

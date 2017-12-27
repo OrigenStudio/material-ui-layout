@@ -109,7 +109,7 @@ class Layout extends React.PureComponent {
     // use classes insted of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
-    const smallScreen = isWidthDown('xs', width);
+    const smallScreen = isWidthDown('xs', width, true);
 
     const mainLeftShift =
       !smallScreen &&
