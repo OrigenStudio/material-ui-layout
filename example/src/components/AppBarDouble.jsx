@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   TwoRowsAppBar,
-} from 'material-ui-layout';
+} from '../../../src';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 

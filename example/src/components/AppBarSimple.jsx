@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   BasicAppBar,
-} from 'material-ui-layout';
+}  from '../../../src';
 
 
 

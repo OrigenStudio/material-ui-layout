@@ -12,7 +12,7 @@ import Layout, {
   TwoRowsAppBar,
   BasicDrawer,
   BasicAppBar,
-} from 'material-ui-layout';
+} from '../../../src';
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
 import Radio from 'material-ui/Radio';
@@ -21,6 +21,10 @@ import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 import AppBarSimple from '../components/AppBarSimple';
 import AppBarDouble from '../components/AppBarDouble';
+import SyntaxShow from '../components/SyntaxShow';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/styles/hljs';
+import {Helmet} from 'react-helmet';
 const linkStyle = css({ float: `right` });
 
 
@@ -52,12 +56,12 @@ const Footer = () => (
 );
 const links = [
   {
-    href: 'https://www.google.es',
-    label: 'Google',
+    href: 'https://material-ui-next.com/',
+    label: 'Material-UI',
   },
   {
-    href: 'https://www.facebook.es',
-    label: 'Facebook',
+    href: 'https://github.com/',
+    label: 'GitHub',
   },
   {
     href: 'https://www.twitter.es',
@@ -71,7 +75,6 @@ const variables = {
   tleft: 'left',
   tcenter: 'center',
   tright: 'right',
-
 };
 
 
@@ -183,177 +186,177 @@ class TwoRowsAppBarLayout extends React.Component {
         onRightDrawerOpenChange={this.setRightDrawerState}
 
       >
-      <div className={this.props.classes.wrapper}>
-        <Grid container>
-          <Grid item xs={0} sm={1} md={3} lg={4}>
-          <div style={{paddingLeft:0}}>
-          </div>
-          </Grid>
-          <Grid item xs={12} sm={10} md={6} lg={4}>
-          <Paper style={{maxWidth:1008,marginTop:100,marginBottom:100}}>
-            <Grid container style={{padding:50}}>
-            <Grid item xs={12} sm={12} md={12} lg={12}>
-              <Typography type="headline" gutterBottom>AppBar</Typography>
-               <div style={{paddingLeft:150}}>
-               </div>
+        <div className={this.props.classes.wrapper}>
+          <Grid container>
+            <Grid item xs={12} sm={12} md={6} lg={5}>
+              <Paper style={{maxWidth:1008,marginTop:100,marginBottom:100}}>
+              <Grid container style={{padding:50}}>
+                <Grid item xs={12} sm={12} md={12} lg={12}>
+                  <Typography type="headline" gutterBottom>AppBar</Typography>
+                  <div style={{paddingLeft:150}}>
+                  </div>
+                  </Grid>
+                <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid container style={{paddingBottom:20}}>
+                  <Typography type="body2" gutterBottom style={{marginTop:10}}>Simple AppBar</Typography>
+                  <Radio
+                    checked={this.state.appBarContentType === "Simple" }
+                    onChange={this.setappBarSimple}
+                    value="Simple"
+                    name="radio button demo"
+                    aria-label="D"
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <Grid container style={{paddingBottom:20}}>
+                  <Typography type="body2" gutterBottom style={{marginTop:10}}>Double AppBar</Typography>
+                  <Radio
+                    checked={this.state.appBarContentType === "Double" }
+                    onChange={this.setappBarDoubles}
+                    value="Double"
+                    name="radio button demo"
+                    aria-label="E"
+                  />
+                </Grid>
+              </Grid>
+              <Divider light style={{maxWidth: '757px',width:'100%',backgroundColor: '#DFDFDF' }}/>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Grid container style={{paddingTop:20}}>
+                  <Typography type="headline" gutterBottom style={{maxWidth:200}}>Drawer Left</Typography>
+                  <Button raised color="primary"
+                    disabled={this.state.leftDrawerType === 'permanent' ? true : false}
+                    onClick={this.toggleLeftDrawer}
+                    aria-label="I"
+                    style={{marginLeft:46}}
+                  >
+                    {this.state.leftDrawerOpen === true ? <Typography type="subheadline" gutterBottom>Close</Typography> : <Typography type="subheadline" gutterBottom>Open</Typography>}
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={4} md={4} lg={4}>
+                <Grid container style={{paddingBottom:20}}>
+                  <Typography type="body2" gutterBottom style={{marginTop:10}}>Temporary</Typography>
+                  <Radio
+                    checked={this.state.leftDrawerType === 'temporary'}
+                    onChange={this.setTemporarydrawer}
+                    value="temporary"
+                    name="radio button demo"
+                    aria-label="A"
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12} sm={4} md={4} lg={4}>
+                <Grid container style={{paddingBottom:20}}>
+                  <Typography type="body2" gutterBottom style={{marginTop:10}}>Persistent</Typography>
+                  <Radio
+                    checked={this.state.leftDrawerType  === 'persistent'}
+                    onChange={this.setPersistentdrawer}
+                    value="persistent"
+                    name="radio button demo"
+                    aria-label="B"
+                  />
+                </Grid>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
               <Grid container style={{paddingBottom:20}}>
-                <Typography type="subheadline" gutterBottom style={{marginTop:10}}>Simple AppBar</Typography>
+              <Typography type="body2" gutterBottom style={{marginTop:10}}>Permanent</Typography>
+              <Radio
+                checked={this.state.leftDrawerType === 'permanent'}
+                onChange={this.setPermanentdrawer}
+                value="permanent"
+                name="radio button demo"
+                aria-label="C"
+              />
+              </Grid>
+            </Grid>
+            <Divider light style={{maxWidth: '757px',width:'100%',backgroundColor: '#DFDFDF' }}/>
+            <Grid item xs={12} sm={12} md={12} lg={12}>
+              <Grid container style={{paddingTop:20}}>
+                <Typography type="headline" gutterBottom style={{maxWidth:200}}>Drawer Right</Typography>
+                <Button raised color="primary"
+                  disabled={this.state.rightDrawerType === 'permanent' ? true : false}
+                  onClick={this.toggleRightDrawer}
+                  aria-label="I"
+                  style={{marginLeft:30}}
+                >
+                    {this.state.rightDrawerOpen === true ? <Typography type="subheadline" gutterBottom>Close</Typography> : <Typography type="subheadline" gutterBottom>Open</Typography>}
+                </Button>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+              <Grid container style={{paddingBottom:20}}>
+                <Typography type="body2" gutterBottom style={{marginTop:10}}>Temporary</Typography>
                 <Radio
-                  checked={this.state.appBarContentType === "Simple" }
-                  onChange={this.setappBarSimple}
-                  value="Simple"
+                  checked={this.state.rightDrawerType === 'temporary'}
+                  onChange={this.setRightTemporarydrawer}
+                  value="temporary"
                   name="radio button demo"
-                  aria-label="D"
+                  aria-label="F"
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
               <Grid container style={{paddingBottom:20}}>
-                <Typography type="subheadline" gutterBottom style={{marginTop:10}}>Double AppBar</Typography>
+                <Typography type="body2" gutterBottom style={{marginTop:10}} >Persistent</Typography>
                 <Radio
-                  checked={this.state.appBarContentType === "Double" }
-                  onChange={this.setappBarDoubles}
-                  value="Double"
+                  checked={this.state.rightDrawerType  === 'persistent'}
+                  onChange={this.setRightPersistentdrawer}
+                  value="persistent"
                   name="radio button demo"
-                  aria-label="E"
+                  aria-label="G"
+                />
+              </Grid>
+            </Grid>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
+            <Grid container style={{paddingBottom:20}}>
+                <Typography type="body2" gutterBottom style={{marginTop:10}}>Permanent</Typography>
+                <Radio
+                  checked={this.state.rightDrawerType === 'permanent'}
+                  onChange={this.setRightPermanentdrawer}
+                  value="permanent"
+                  name="radio button demo"
+                  aria-label="H"
                 />
               </Grid>
             </Grid>
             <Divider light style={{maxWidth: '757px',width:'100%',backgroundColor: '#DFDFDF' }}/>
             <Grid item xs={12} sm={12} md={12} lg={12}>
               <Grid container style={{paddingTop:20}}>
-                <Typography type="headline" gutterBottom style={{maxWidth:200}}>Drawer Left</Typography>
-                <Button raised color="primary"
-                  disabled={this.state.leftDrawerType === 'permanent' ? true : false}
-                  onClick={this.toggleLeftDrawer}
+                <Typography type="headline" gutterBottom>Layout Properties</Typography>
+              </Grid>
+            </Grid>
+            <Grid item xs={6} sm={6} md={6} lg={6}>
+              <Grid container style={{paddingBottom:20}}>
+                <Typography type="body2" gutterBottom style={{marginTop:10}}>mainGrow</Typography>
+                <Switch
+                  checked={this.state.mainGrow}
+                  onChange={this.toogleMainGrow}
                   aria-label="I"
-                  style={{marginLeft:46}}
-                >
-                  {this.state.leftDrawerOpen === true ? <Typography type="subheadline" gutterBottom>On</Typography> : <Typography type="subheadline" gutterBottom>Off</Typography>}
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} sm={4} md={4} lg={4}>
-              <Grid container style={{paddingBottom:20}}>
-                <Typography type="subheadline" gutterBottom style={{marginTop:10}}>Temporary</Typography>
-                <Radio
-                  checked={this.state.leftDrawerType === 'temporary'}
-                  onChange={this.setTemporarydrawer}
-                  value="temporary"
-                  name="radio button demo"
-                  aria-label="A"
                 />
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={4} md={4} lg={4}>
+            <Grid item xs={6} sm={6} md={6} lg={6}>
               <Grid container style={{paddingBottom:20}}>
-                <Typography type="subheadline" gutterBottom style={{marginTop:10}}>Persistent</Typography>
-                <Radio
-                  checked={this.state.leftDrawerType  === 'persistent'}
-                  onChange={this.setPersistentdrawer}
-                  value="persistent"
-                  name="radio button demo"
-                  aria-label="B"
+                <Typography type="body2" gutterBottom style={{marginTop:10}}>stickyFooter</Typography>
+                <Switch
+                  checked={this.state.stickyFooter}
+                  onChange={this.toogleStickyFooter}
+                  aria-label="I"
                 />
               </Grid>
-          </Grid>
-          <Grid item xs={12} sm={4} md={4} lg={4}>
-            <Grid container style={{paddingBottom:20}}>
-            <Typography type="subheadline" gutterBottom style={{marginTop:10}}>Permanent</Typography>
-            <Radio
-              checked={this.state.leftDrawerType === 'permanent'}
-              onChange={this.setPermanentdrawer}
-              value="permanent"
-              name="radio button demo"
-              aria-label="C"
-            />
+             </Grid>
             </Grid>
-          </Grid>
-          <Divider light style={{maxWidth: '757px',width:'100%',backgroundColor: '#DFDFDF' }}/>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Grid container style={{paddingTop:20}}>
-              <Typography type="headline" gutterBottom style={{maxWidth:200}}>Drawer Right</Typography>
-              <Button raised color="primary"
-                disabled={this.state.rightDrawerType === 'permanent' ? true : false}
-                onClick={this.toggleRightDrawer}
-                aria-label="I"
-                style={{marginLeft:30}}
-              >
-                {this.state.rightDrawerOpen === true ? <Typography type="subheadline" gutterBottom>On</Typography> : <Typography type="subheadline" gutterBottom>Off</Typography>}
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={4} md={4} lg={4}>
-            <Grid container style={{paddingBottom:20}}>
-              <Typography type="subheadline" gutterBottom style={{marginTop:10}}>Temporary</Typography>
-              <Radio
-                checked={this.state.rightDrawerType === 'temporary'}
-                onChange={this.setRightTemporarydrawer}
-                value="temporary"
-                name="radio button demo"
-                aria-label="F"
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={4} md={4} lg={4}>
-            <Grid container style={{paddingBottom:20}}>
-              <Typography type="subheadline" gutterBottom style={{marginTop:10}} >Persistent</Typography>
-              <Radio
-                checked={this.state.rightDrawerType  === 'persistent'}
-                onChange={this.setRightPersistentdrawer}
-                value="persistent"
-                name="radio button demo"
-                aria-label="G"
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={12} sm={4} md={4} lg={4}>
-          <Grid container style={{paddingBottom:20}}>
-              <Typography type="subheadline" gutterBottom style={{marginTop:10}}>Permanent</Typography>
-              <Radio
-                checked={this.state.rightDrawerType === 'permanent'}
-                onChange={this.setRightPermanentdrawer}
-                value="permanent"
-                name="radio button demo"
-                aria-label="H"
-              />
-            </Grid>
-          </Grid>
-          <Divider light style={{maxWidth: '757px',width:'100%',backgroundColor: '#DFDFDF' }}/>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Grid container style={{paddingTop:20}}>
-              <Typography type="headline" gutterBottom>Layout Properties</Typography>
-            </Grid>
-          </Grid>
-          <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Grid container style={{paddingBottom:20}}>
-              <Typography type="subheadline" gutterBottom style={{marginTop:10}}>mainGrow</Typography>
-              <Switch
-                checked={this.state.mainGrow}
-                onChange={this.toogleMainGrow}
-                aria-label="I"
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={6} sm={6} md={6} lg={6}>
-            <Grid container style={{paddingBottom:20}}>
-              <Typography type="subheadline" gutterBottom style={{marginTop:10}}>stickyFooter</Typography>
-              <Switch
-                checked={this.state.stickyFooter}
-                onChange={this.toogleStickyFooter}
-                aria-label="I"
-              />
-            </Grid>
-          </Grid>
-          </Grid>
           </Paper>
           </Grid>
-          <Grid item xs={0} sm={1} md={3} lg={4}>
-          <div style={{paddingLeft:0}}>
-          </div>
-          </Grid>
+           <Grid item xs={12} sm={12} md={6} lg={7} style={{paddingTop:80}}>
+           <Paper> 
+            <div style={{maxHeight:635,overflow:"scroll"}}>
+              <SyntaxShow gettingState={this.state}/>
+            </div>
+            </Paper>
+           </Grid>
+
           </Grid>
         </div>
     </Layout>
@@ -362,6 +365,7 @@ class TwoRowsAppBarLayout extends React.Component {
 }
 
 export default withStyles(styles)(TwoRowsAppBarLayout);
+
 
 export const query = graphql`
   query LayoutQuery {

@@ -7,7 +7,9 @@
     "gatsby": "^1.9.153",
     "gatsby-link": "^1.6.34",
     "gatsby-plugin-react-helmet": "^2.0.3",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "react-syntax-highlighter": "^6.1.2",
+    "typeface-roboto": "0.0.50"
   },
   "keywords": [
     "gatsby"
