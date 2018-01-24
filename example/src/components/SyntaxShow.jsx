@@ -74,14 +74,12 @@ const SyntaxShow = (props) => {
   const codeString =
   `
   import React from 'react';
-  import AppBarSimple from '../components/AppBarSimple';
-  import AppBarDouble from '../components/AppBarDouble';
   import Layout, {
     BasicFooter,
     TwoRowsAppBar,
     BasicDrawer,
     BasicAppBar,
-  } from '../../../src';
+  } from 'material-ui-layout';
 
   const links = [
     {
@@ -89,12 +87,8 @@ const SyntaxShow = (props) => {
       label: 'Material-UI',
     },
     {
-      href: 'https://github.com/',
+      href: 'https://github.com/OrigenStudio/material-ui-layout/tree/develop/src',
       label: 'GitHub',
-    },
-    {
-      href: 'https://www.twitter.es',
-      label: 'Twitter',
     },
   ];
 
