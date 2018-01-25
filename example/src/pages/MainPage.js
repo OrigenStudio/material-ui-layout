@@ -25,6 +25,13 @@ import SyntaxShow from '../components/SyntaxShow';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
 import {Helmet} from 'react-helmet';
+import MenuIcon from 'material-ui-icons/Menu';
+import ReactCSSTransitionReplace from 'react-css-transition-replace';
+import ExpansionPanel, {
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+} from 'material-ui/ExpansionPanel';
+import ExpandMoreIcon from 'material-ui-icons/Code';
 const linkStyle = css({ float: `right` });
 
 
@@ -34,19 +41,8 @@ const styles =  {
     justifyContent: 'center',
     width:'100%',
   },
-  hideCode:{
-    height:'0px',
-    overflow:'scroll',
-    visibility:'hidden',
-    opacity: 0,
-    transition: 'visibility 1s ease-in 0.5s',
-
-  },
-  showCode:{
-    display:'flex',
-    visibility:'visible',
-    opacity: 1,
-    transition: 'opacity 1s ease-in 0.2s',
+  panelCode:{
+    boxShadow: '0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12)',
   },
 }
 
@@ -104,7 +100,6 @@ class TwoRowsAppBarLayout extends React.Component {
       appBarContentType: "Simple",
       mainGrow: false,
       stickyFooter: false,
-      visibilityCode: false,
     }
   }
   setappBarSimple = (appBarContentType) =>{
@@ -169,11 +164,7 @@ class TwoRowsAppBarLayout extends React.Component {
       stickyFooter: !this.state.stickyFooter
     })
   };
-  toogleVisibilityCode = () =>{
-    this.setState ({
-      visibilityCode: !this.state.visibilityCode
-      })
-  };
+
 
 
 
@@ -209,8 +200,8 @@ class TwoRowsAppBarLayout extends React.Component {
           <Grid item xs={0} sm={1} md={2} lg={3}>
           </Grid>
             <Grid item xs={12} sm={10} md={8} lg={6}>
-              <Paper style={{marginTop:15,marginBottom:10}}>
-                <Grid container style={{paddingBottom:50,paddingTop:50,paddingLeft:100,paddingRight:15}}>
+              <Paper style={{marginTop:50,marginBottom:50}}>
+                <Grid container style={{paddingBottom:50,paddingTop:50,paddingLeft:100,paddingRight:50}}>
                   <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Typography type="headline" gutterBottom>AppBar</Typography>
                     <div style={{paddingLeft:150}}>
@@ -366,18 +357,20 @@ class TwoRowsAppBarLayout extends React.Component {
                     />
                   </Grid>
                 </Grid>
-                <Grid item xs={12} sm={12} md={12} lg={12}>
-                  <Button raised color="primary"
-                    checked={this.state.visibilityCode}
-                    onClick={this.toogleVisibilityCode}
-                    aria-label="I"
-                    style={{marginLeft:30}}
-                  >
-                  {this.state.visibilityCode === true ? <Typography type="subheadline" gutterBottom>Hide Code</Typography> : <Typography type="subheadline" gutterBottom>Show Code</Typography>}
-                  </Button>
+                <Divider light style={{maxWidth: '757px',width:'100%',backgroundColor: '#DFDFDF' }}/>
+                <Grid  item xs={12} sm={12} md={12} lg={12}>
+                  <Grid container style={{paddingTop:20}}>
+                    <Typography type="headline" gutterBottom style={{maxWidth:200}}>Source Code</Typography>
+                  </Grid>
                 </Grid>
-                <Grid className={this.state.visibilityCode === false ? this.props.classes.hideCode : this.props.classes.showCode} item xs={12} sm={12} md={12} lg={12}>
-                   <SyntaxShow gettingState={this.state}/>
+                <Grid  item xs={12} sm={12} md={12} lg={12}>
+                <ExpansionPanel className={this.props.classes.panelCode}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <SyntaxShow gettingState={this.state}/>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
                 </Grid>
                </Grid>
               </Paper>
