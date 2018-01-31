@@ -26,12 +26,12 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
 import {Helmet} from 'react-helmet';
 import MenuIcon from 'material-ui-icons/Menu';
-import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
 } from 'material-ui/ExpansionPanel';
 import ExpandMoreIcon from 'material-ui-icons/Code';
+import UserDrawer from '../components/UserDrawer';
 const linkStyle = css({ float: `right` });
 
 
@@ -186,7 +186,7 @@ class TwoRowsAppBarLayout extends React.Component {
             bigMessage="Demo"
             links={links}
           />}
-        leftDrawerContent={<BasicDrawer links={links} />}
+        leftDrawerContent={<UserDrawer />}
         leftDrawerType={this.state.leftDrawerType}
         leftDrawerOpen={this.state.leftDrawerOpen}
         onLeftDrawerOpenChange={this.setLeftDrawerState}
