@@ -22,12 +22,24 @@ const styles =   {
   subtitleArea:{
     height:56,
   },
-  avatarSmall:{
+  avatarSecondary:{
     width:40,
     height:40,
     marginRight:10,
   },
-
+  avatarPrimary:{
+    width:63,
+    height:63,
+    marginRight:10,
+  },
+  textSecondary:{
+    marginTop:-10
+  },
+  expandMoreIcon:{
+    paddingBottom:0,
+    marginTop:29,
+    paddingTop:0,
+  },
 }
 
 const avatars = [
@@ -44,41 +56,7 @@ const avatars = [
 const avatarsSlice = avatars.slice(0,2);
 
 
-class TextPrimary extends React.Component {
-  render(){
-    return(
-        <Typography  type="body2" gutterBottom >{this.props.textPrimary}</Typography>
-    );
-  }
-}
 
-class TextSecondary extends React.Component {
-  render(){
-    return(
-      <Typography type="body2" style={{marginTop:-10}} gutterBottom>{this.props.textSecondary}</Typography>
-    );
-  }
-}
-
-class AvatarPrimary extends React.Component {
-  render(){
-    return(
-      <Avatar style={{ width:63, height:63, marginRight:10,}} alt="avatarBig" src={this.props.urlAvatar}/>
-    );
-  }
-}
-
-TextPrimary.propTypes = {
-  textPrimary: PropTypes.string
-};
-
-TextSecondary.propTypes = {
-  textSecondary: PropTypes.string
-};
-
-AvatarPrimary.propTypes = {
-  urlAvatar: PropTypes.string
-};
 
 
 
@@ -86,15 +64,15 @@ const UserDrawer = (props) =>(
     <div className={props.classes.divContent}>
       <Grid container>
       <Grid item style={{paddingBottom:0}} xs={6} sm={6} md={6} lg={6}>
-            <AvatarPrimary urlAvatar="https://www.w3schools.com/w3images/avatar2.png" />
+            <Avatar className={props.classes.avatarPrimary} alt="avatarBig" src={props.urlAvatar}/>
       </Grid>
         <Grid item style={{paddingBottom:0,display:'flex'}} xs={6} sm={6} md={6} lg={6}>
-            {avatarsSlice.map(item => <Avatar className={props.classes.avatarSmall}  key={item.id} src={item.href} />)}
+            {avatarsSlice.map(item => <Avatar className={props.classes.avatarSecondary}  key={item.id} src={item.href} />)}
         </Grid>
         <Grid item style={{paddingBottom:0}} className={props.classes.subtitleArea} xs={10} sm={10} md={10} lg={10}>
           <Grid item xs={10} sm={10} md={10} lg={10}>
-            <TextPrimary textPrimary="Person" />
-            <TextSecondary textSecondary="example@email.com" />
+            <Typography  type="body2" gutterBottom >{props.textPrimary}</Typography>
+            <Typography type="body2" className={props.classes.textSecondary} gutterBottom>{props.textSecondary}</Typography>
           </Grid>
           </Grid>
           <Grid item style={{paddingBottom:0,marginTop:29,paddingTop:0}} xs={2} sm={2} md={2} lg={2}>
@@ -103,5 +81,11 @@ const UserDrawer = (props) =>(
       </Grid>
     </div>
 )
+
+UserDrawer.propTypes = {
+  urlAvatar: PropTypes.string,
+  textPrimary: PropTypes.string,
+  textSecondary: PropTypes.string
+};
 
 export default withStyles(styles)(UserDrawer);

@@ -186,7 +186,11 @@ class TwoRowsAppBarLayout extends React.Component {
             bigMessage="Demo"
             links={links}
           />}
-        leftDrawerContent={<UserDrawer />}
+        leftDrawerContent={
+          <UserDrawer
+          urlAvatar="https://www.w3schools.com/w3images/avatar2.png"
+          textPrimary="Person"
+          textSecondary="example@email.com"/>}
         leftDrawerType={this.state.leftDrawerType}
         leftDrawerOpen={this.state.leftDrawerOpen}
         onLeftDrawerOpenChange={this.setLeftDrawerState}
