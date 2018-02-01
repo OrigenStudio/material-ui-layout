@@ -6,12 +6,10 @@ import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Grid from 'material-ui/Grid';
 import {render} from 'react-dom';
+import PropTypes from 'prop-types';
 
 const userInfo ={
   bgDawer:'https://michaelraunhome.files.wordpress.com/2015/04/abstract-white-background.jpg',
-  text1:'Person',
-  text2:'person@email.com',
-  avatarBigImg:'https://www.w3schools.com/howto/img_avatar.png',
 }
 
 const styles =   {
@@ -23,10 +21,6 @@ const styles =   {
   },
   subtitleArea:{
     height:56,
-  },
-  avatarBig:{
-    width:63,
-    height:63,
   },
   avatarSmall:{
     width:40,
@@ -50,21 +44,57 @@ const avatars = [
 const avatarsSlice = avatars.slice(0,2);
 
 
+class TextPrimary extends React.Component {
+  render(){
+    return(
+        <Typography  type="body2" gutterBottom >{this.props.textPrimary}</Typography>
+    );
+  }
+}
+
+class TextSecondary extends React.Component {
+  render(){
+    return(
+      <Typography type="body2" style={{marginTop:-10}} gutterBottom>{this.props.textSecondary}</Typography>
+    );
+  }
+}
+
+class AvatarPrimary extends React.Component {
+  render(){
+    return(
+      <Avatar style={{ width:63, height:63, marginRight:10,}} alt="avatarBig" src={this.props.urlAvatar}/>
+    );
+  }
+}
+
+TextPrimary.propTypes = {
+  textPrimary: PropTypes.string
+};
+
+TextSecondary.propTypes = {
+  textSecondary: PropTypes.string
+};
+
+AvatarPrimary.propTypes = {
+  urlAvatar: PropTypes.string
+};
 
 
-const UserDrawer = ({classes}) =>(
-    <div className={classes.divContent}>
+
+const UserDrawer = (props) =>(
+    <div className={props.classes.divContent}>
       <Grid container>
       <Grid item style={{paddingBottom:0}} xs={6} sm={6} md={6} lg={6}>
-          <Avatar className={classes.avatarBig} alt="avatarBig" src={userInfo.avatarBigImg}/>
+            <AvatarPrimary urlAvatar="https://www.w3schools.com/w3images/avatar2.png" />
       </Grid>
         <Grid item style={{paddingBottom:0,display:'flex'}} xs={6} sm={6} md={6} lg={6}>
-            {avatarsSlice.map(item => <Avatar className={classes.avatarSmall}  key={item.id} src={item.href} />)}
+            {avatarsSlice.map(item => <Avatar className={props.classes.avatarSmall}  key={item.id} src={item.href} />)}
         </Grid>
-        <Grid item style={{paddingBottom:0}} className={classes.subtitleArea} xs={10} sm={10} md={10} lg={10}>
+        <Grid item style={{paddingBottom:0}} className={props.classes.subtitleArea} xs={10} sm={10} md={10} lg={10}>
           <Grid item xs={10} sm={10} md={10} lg={10}>
-            <Typography  type="body2" gutterBottom >{userInfo.text1}</Typography>
-            <Typography type="body2" style={{marginTop:-10}} gutterBottom>{userInfo.text2}</Typography>
+            <TextPrimary textPrimary="Person" />
+            <TextSecondary textSecondary="example@email.com" />
           </Grid>
           </Grid>
           <Grid item style={{paddingBottom:0,marginTop:29,paddingTop:0}} xs={2} sm={2} md={2} lg={2}>

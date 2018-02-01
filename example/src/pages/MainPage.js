@@ -172,7 +172,7 @@ class TwoRowsAppBarLayout extends React.Component {
 
   render() {
     // Calcs for renders
-    console.log(this.state.leftDrawerOpen)
+
     return (
       <Layout
         mainGrow={this.state.mainGrow === false ? false : true}
