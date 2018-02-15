@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import compose from 'recompose/compose';
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
-import compose from 'recompose/compose';
 import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
 import controllable from 'react-controllables';
 
@@ -164,6 +164,14 @@ class Layout extends React.PureComponent {
       [`${classes.drawerHeaderTwoRowAppBar}`]: usingTwoRowAppBar,
     })
 
+    // FIXME find a better way to inject the closeDrawer prop
+    const leftDrawerContentWithProps = leftDrawerContent
+      ? React.cloneElement(leftDrawerContent, { closeDrawer: this.handleLeftDrawerClose })
+      : leftDrawerContent;
+    const rightDrawerContentWithProps = rightDrawerContent
+      ? React.cloneElement(rightDrawerContent, { closeDrawer: this.handleRightDrawerClose })
+      : rightDrawerContent;
+
     return (
       <div className={classes.layout}>
         <AppBar
@@ -183,10 +191,11 @@ class Layout extends React.PureComponent {
             classes={{ paper: leftDrawerPaperClassnames }}
             {...leftDrawerProps}
           >
+            {/* add a header to move content down if screen is not small and under the appbar */}
             {!smallScreen && leftDrawerUnder ? (
               <div className={drawerHeaderClassnames} />
             ) : null}
-            {leftDrawerContent}
+            {leftDrawerContentWithProps}
           </Drawer>
         ) : null}
         {rightDrawerContent ? (
@@ -198,10 +207,11 @@ class Layout extends React.PureComponent {
             classes={{ paper: rightDrawerPaperClassnames }}
             {...rightDrawerProps}
           >
+            {/* add a header to move content down if screen is not small and under the appbar */}
             {!smallScreen && rightDrawerUnder ? (
               <div className={drawerHeaderClassnames} />
             ) : null}
-            {rightDrawerContent}
+            {rightDrawerContentWithProps}
           </Drawer>
         ) : null}
         <main className={mainClassnames}>{children}</main>
