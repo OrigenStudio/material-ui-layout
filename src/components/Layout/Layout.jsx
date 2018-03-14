@@ -186,7 +186,7 @@ class Layout extends React.PureComponent {
         {leftDrawerContent ? (
           <Drawer
             open={leftDrawerOpen}
-            onRequestClose={this.handleLeftDrawerClose}
+            onClose={this.handleLeftDrawerClose}
             type={!smallScreen ? leftDrawerType : 'temporary'}
             classes={{ paper: leftDrawerPaperClassnames }}
             {...leftDrawerProps}
@@ -202,7 +202,7 @@ class Layout extends React.PureComponent {
           <Drawer
             anchor="right"
             open={rightDrawerOpen}
-            onRequestClose={this.handleRightDrawerClose}
+            onClose={this.handleRightDrawerClose}
             type={!smallScreen ? rightDrawerType : 'temporary'}
             classes={{ paper: rightDrawerPaperClassnames }}
             {...rightDrawerProps}
