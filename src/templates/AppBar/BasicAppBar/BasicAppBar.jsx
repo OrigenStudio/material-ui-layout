@@ -42,7 +42,7 @@ class BasicAppBar extends React.PureComponent {
       );
     }
     return (
-      <Typography type="title" color="inherit" className={classes.flex}>
+      <Typography variant="title" color="inherit" className={classes.flex}>
         {title}
       </Typography>
     );
