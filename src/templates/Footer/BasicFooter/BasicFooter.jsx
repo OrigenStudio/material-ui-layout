@@ -27,7 +27,7 @@ class BasicFooter extends React.PureComponent {
       return <img src={logo} alt={title} className={classes.logoImage} />;
     }
     return (
-      <Typography type="title" color="inherit" className={classes.flex}>
+      <Typography variant="title" color="inherit" className={classes.flex}>
         {title}
       </Typography>
     );
@@ -36,10 +36,10 @@ class BasicFooter extends React.PureComponent {
   render() {
     const { title, classes, smallMessage, bigMessage, links } = this.props;
     return (
-      <Grid container align="flex-end" justify="space-around" spacing={16}>
+      <Grid container alignItems="flex-end" justify="space-around" spacing={16}>
         <Grid item xs={12}>
           <div className={classes.message}>
-            <Typography type="display3" color="inherit">
+            <Typography variant="display3" color="inherit">
               {bigMessage}
             </Typography>
           </div>
@@ -52,11 +52,11 @@ class BasicFooter extends React.PureComponent {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Grid container direction="column" align="center" spacing={0}>
-            <Typography type="body1" color="inherit">
+          <Grid container direction="column" alignItems="center" spacing={0}>
+            <Typography variant="body1" color="inherit">
               {smallMessage}
             </Typography>
-            <Typography type="caption" color="inherit">
+            <Typography variant="caption" color="inherit">
               {title} © {new Date().getFullYear()}
             </Typography>
           </Grid>
