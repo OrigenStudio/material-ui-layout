@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthDown } from '@material-ui/core/utils/withWidth';
+import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import classNames from 'classnames';
 import compose from 'recompose/compose';
 

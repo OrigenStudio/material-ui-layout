@@ -5,10 +5,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import MenuIcon from 'material-ui-@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthDown } from '@material-ui/core/utils/withWidth';
+import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
 
 import styles from './styles';

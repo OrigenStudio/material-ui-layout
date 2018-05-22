@@ -4,7 +4,7 @@ import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
-import withWidth, { isWidthDown } from '@material-ui/core/utils/withWidth';
+import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import controllable from 'react-controllables';
 
 import styles from './styles';
