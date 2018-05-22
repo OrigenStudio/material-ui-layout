@@ -1,6 +1,6 @@
-#WIP
+#Material UI Layout
 
-#If you see me REMEMBER ME to add tests please
+This project was born because we were tired of setting up and configuring a layout everytime we were starting a project. 
 
 ## Roadmap
 - [] Add tests
