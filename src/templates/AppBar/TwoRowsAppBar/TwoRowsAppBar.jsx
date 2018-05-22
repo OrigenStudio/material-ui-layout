@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Toolbar from 'material-ui/Toolbar';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
-import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
+import Toolbar from '@material-ui/core/Toolbar';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import withWidth, { isWidthDown } from '@material-ui/core/utils/withWidth';
 import classNames from 'classnames';
 import compose from 'recompose/compose';
 
@@ -62,11 +62,17 @@ class TwoRowsAppBar extends PureComponent {
 
     return (
       <Toolbar>
-        <Grid container direction="column" className={classes.wrapper}>
+        <Grid
+          container
+          direction="column"
+          className={classes.wrapper}
+          spacing={16}
+        >
           <Grid
             container
             className={classNames(classes.row, classes.topRow)}
             justify={'space-between'}
+            spacing={16}
           >
             <Grid
               item
@@ -108,6 +114,7 @@ class TwoRowsAppBar extends PureComponent {
             container
             className={classNames(classes.row, classes.bottomRow)}
             justify={'space-between'}
+            spacing={16}
           >
             <Grid
               item

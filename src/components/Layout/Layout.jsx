@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import Drawer from 'material-ui/Drawer';
-import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
+import Drawer from '@material-ui/core/Drawer';
+import withWidth, { isWidthDown } from '@material-ui/core/utils/withWidth';
 import controllable from 'react-controllables';
 
 import styles from './styles';
@@ -122,8 +122,10 @@ class Layout extends React.PureComponent {
         (rightDrawerOpen && rightDrawerType === 'persistent'));
 
     const mainClassnames = classNames(classes.main, {
-      [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' && !usingTwoRowAppBar,
-      [`${classes.mainFixedTwoRowAppBar}`]: appBarPosition === 'fixed' && usingTwoRowAppBar,
+      [`${classes.mainFixedAppBar}`]:
+        appBarPosition === 'fixed' && !usingTwoRowAppBar,
+      [`${classes.mainFixedTwoRowAppBar}`]:
+        appBarPosition === 'fixed' && usingTwoRowAppBar,
       [`${classes.mainGrow}`]: mainGrow && !usingTwoRowAppBar,
       [`${classes.mainGrowTwoRowAppBar}`]: mainGrow && usingTwoRowAppBar,
       [`${classes.mainStickyFooter}`]: stickyFooter,
@@ -162,14 +164,18 @@ class Layout extends React.PureComponent {
     const drawerHeaderClassnames = classNames({
       [`${classes.drawerHeader}`]: !usingTwoRowAppBar,
       [`${classes.drawerHeaderTwoRowAppBar}`]: usingTwoRowAppBar,
-    })
+    });
 
     // FIXME find a better way to inject the closeDrawer prop
     const leftDrawerContentWithProps = leftDrawerContent
-      ? React.cloneElement(leftDrawerContent, { closeDrawer: this.handleLeftDrawerClose })
+      ? React.cloneElement(leftDrawerContent, {
+          closeDrawer: this.handleLeftDrawerClose,
+        })
       : leftDrawerContent;
     const rightDrawerContentWithProps = rightDrawerContent
-      ? React.cloneElement(rightDrawerContent, { closeDrawer: this.handleRightDrawerClose })
+      ? React.cloneElement(rightDrawerContent, {
+          closeDrawer: this.handleRightDrawerClose,
+        })
       : rightDrawerContent;
 
     return (
