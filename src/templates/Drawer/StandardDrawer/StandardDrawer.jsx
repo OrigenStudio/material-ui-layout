@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Divider from 'material-ui/Divider';
+import { withStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 
 import DrawerItemsList from '../DrawerItemsList';
 
