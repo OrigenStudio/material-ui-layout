@@ -123,9 +123,9 @@ class Layout extends React.PureComponent {
 
     const mainClassnames = classNames(classes.main, {
       [`${classes.mainFixedAppBar}`]:
-        appBarPosition === 'fixed' && !usingTwoRowAppBar,
+        appBarContent && appBarPosition === 'fixed' && !usingTwoRowAppBar,
       [`${classes.mainFixedTwoRowAppBar}`]:
-        appBarPosition === 'fixed' && usingTwoRowAppBar,
+        appBarContent && appBarPosition === 'fixed' && usingTwoRowAppBar,
       [`${classes.mainGrow}`]: mainGrow && !usingTwoRowAppBar,
       [`${classes.mainGrowTwoRowAppBar}`]: mainGrow && usingTwoRowAppBar,
       [`${classes.mainStickyFooter}`]: stickyFooter,
@@ -180,15 +180,17 @@ class Layout extends React.PureComponent {
 
     return (
       <div className={classes.layout}>
-        <AppBar
-          position={appBarPosition}
-          toggleLeftDrawer={this.toggleLeftDrawer}
-          toggleRightDrawer={this.toggleRightDrawer}
-          className={appBarClassnames}
-          {...appBarProps}
-        >
-          {appBarContent}
-        </AppBar>
+        {appBarContent ? (
+          <AppBar
+            position={appBarPosition}
+            toggleLeftDrawer={this.toggleLeftDrawer}
+            toggleRightDrawer={this.toggleRightDrawer}
+            className={appBarClassnames}
+            {...appBarProps}
+          >
+            {appBarContent}
+          </AppBar>
+        ) : null}
         {leftDrawerContent ? (
           <Drawer
             open={leftDrawerOpen}
