@@ -11,6 +11,7 @@ import styles from './styles';
 
 import AppBar from '../AppBar';
 import Footer from '../Footer';
+import LayoutActions from './LayoutActions';
 
 // FIXME remove once material-ui drawer style is fixed
 const isDocked = type => type === 'permanent' || type === 'persistent';
@@ -222,7 +223,16 @@ class Layout extends React.PureComponent {
             {rightDrawerContentWithProps}
           </Drawer>
         ) : null}
-        <main className={mainClassnames}>{children}</main>
+        <LayoutActions.Provider
+          value={{
+            toggleLeftDrawer: this.toggleLeftDrawer,
+            toggleRightDrawer: this.toggleRightDrawer,
+            handleLeftDrawerClose: this.handleLeftDrawerClose,
+            handleRightDrawerClose: this.handleRightDrawerClose,
+          }}
+        >
+          <main className={mainClassnames}>{children}</main>
+        </LayoutActions.Provider>
         {footerContent ? (
           <Footer {...footerProps}>{footerContent}</Footer>
         ) : null}
