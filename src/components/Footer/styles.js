@@ -1,19 +1,25 @@
-const styles = theme => ({
-  footer: {
-    backgroundColor: theme.palette.background.appBar,
-    color: theme.palette.getContrastText(theme.palette.background.appBar),
-    padding: '20px 10px',
-  },
-  message: {
-    textAlign: 'center',
-    marginBottom: '30px',
-  },
-  logoImage: {
-    maxHeight: '50px',
-    maxWidth: '300px',
-    margin: '0',
-    padding: '0',
-  },
-});
+const styles = theme => {
+  const backgroundColorDefault =
+    theme.palette.type === 'light'
+      ? theme.palette.grey[100]
+      : theme.palette.grey[900];
+  return {
+    footer: {
+      padding: '20px 10px', // TODO use units and spacing
+    },
+    colorDefault: {
+      backgroundColor: backgroundColorDefault,
+      color: theme.palette.getContrastText(backgroundColorDefault),
+    },
+    colorPrimary: {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.primary.contrastText,
+    },
+    colorSecondary: {
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
+    },
+  };
+};
 
 export default styles;
