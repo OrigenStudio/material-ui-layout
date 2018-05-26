@@ -4,8 +4,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import MaterialUIAppBar from 'material-ui/AppBar';
+import { withStyles } from '@material-ui/core/styles';
+import MaterialUIAppBar from '@material-ui/core/AppBar';
 
 
 import styles from './styles';

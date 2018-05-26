@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import classNames from 'classnames';
-import Drawer from 'material-ui/Drawer';
 import compose from 'recompose/compose';
-import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
+import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
+import Drawer from '@material-ui/core/Drawer';
+import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import controllable from 'react-controllables';
 
 import styles from './styles';
 
 import AppBar from '../AppBar';
 import Footer from '../Footer';
+import LayoutActions from './LayoutActions';
 
 // FIXME remove once material-ui drawer style is fixed
 const isDocked = type => type === 'permanent' || type === 'persistent';
@@ -122,8 +123,10 @@ class Layout extends React.PureComponent {
         (rightDrawerOpen && rightDrawerType === 'persistent'));
 
     const mainClassnames = classNames(classes.main, {
-      [`${classes.mainFixedAppBar}`]: appBarPosition === 'fixed' && !usingTwoRowAppBar,
-      [`${classes.mainFixedTwoRowAppBar}`]: appBarPosition === 'fixed' && usingTwoRowAppBar,
+      [`${classes.mainFixedAppBar}`]:
+        appBarContent && appBarPosition === 'fixed' && !usingTwoRowAppBar,
+      [`${classes.mainFixedTwoRowAppBar}`]:
+        appBarContent && appBarPosition === 'fixed' && usingTwoRowAppBar,
       [`${classes.mainGrow}`]: mainGrow && !usingTwoRowAppBar,
       [`${classes.mainGrowTwoRowAppBar}`]: mainGrow && usingTwoRowAppBar,
       [`${classes.mainStickyFooter}`]: stickyFooter,
@@ -162,49 +165,74 @@ class Layout extends React.PureComponent {
     const drawerHeaderClassnames = classNames({
       [`${classes.drawerHeader}`]: !usingTwoRowAppBar,
       [`${classes.drawerHeaderTwoRowAppBar}`]: usingTwoRowAppBar,
-    })
+    });
+
+    // FIXME find a better way to inject the closeDrawer prop
+    const leftDrawerContentWithProps = leftDrawerContent
+      ? React.cloneElement(leftDrawerContent, {
+          closeDrawer: this.handleLeftDrawerClose,
+        })
+      : leftDrawerContent;
+    const rightDrawerContentWithProps = rightDrawerContent
+      ? React.cloneElement(rightDrawerContent, {
+          closeDrawer: this.handleRightDrawerClose,
+        })
+      : rightDrawerContent;
 
     return (
       <div className={classes.layout}>
-        <AppBar
-          position={appBarPosition}
-          toggleLeftDrawer={this.toggleLeftDrawer}
-          toggleRightDrawer={this.toggleRightDrawer}
-          className={appBarClassnames}
-          {...appBarProps}
-        >
-          {appBarContent}
-        </AppBar>
+        {appBarContent ? (
+          <AppBar
+            position={appBarPosition}
+            toggleLeftDrawer={this.toggleLeftDrawer}
+            toggleRightDrawer={this.toggleRightDrawer}
+            className={appBarClassnames}
+            {...appBarProps}
+          >
+            {appBarContent}
+          </AppBar>
+        ) : null}
         {leftDrawerContent ? (
           <Drawer
             open={leftDrawerOpen}
-            onRequestClose={this.handleLeftDrawerClose}
-            type={!smallScreen ? leftDrawerType : 'temporary'}
+            onClose={this.handleLeftDrawerClose}
+            variant={!smallScreen ? leftDrawerType : 'temporary'}
             classes={{ paper: leftDrawerPaperClassnames }}
             {...leftDrawerProps}
           >
+            {/* add a header to move content down if screen is not small and under the appbar */}
             {!smallScreen && leftDrawerUnder ? (
               <div className={drawerHeaderClassnames} />
             ) : null}
-            {leftDrawerContent}
+            {leftDrawerContentWithProps}
           </Drawer>
         ) : null}
         {rightDrawerContent ? (
           <Drawer
             anchor="right"
             open={rightDrawerOpen}
-            onRequestClose={this.handleRightDrawerClose}
-            type={!smallScreen ? rightDrawerType : 'temporary'}
+            onClose={this.handleRightDrawerClose}
+            variant={!smallScreen ? rightDrawerType : 'temporary'}
             classes={{ paper: rightDrawerPaperClassnames }}
             {...rightDrawerProps}
           >
+            {/* add a header to move content down if screen is not small and under the appbar */}
             {!smallScreen && rightDrawerUnder ? (
               <div className={drawerHeaderClassnames} />
             ) : null}
-            {rightDrawerContent}
+            {rightDrawerContentWithProps}
           </Drawer>
         ) : null}
-        <main className={mainClassnames}>{children}</main>
+        <LayoutActions.Provider
+          value={{
+            toggleLeftDrawer: this.toggleLeftDrawer,
+            toggleRightDrawer: this.toggleRightDrawer,
+            handleLeftDrawerClose: this.handleLeftDrawerClose,
+            handleRightDrawerClose: this.handleRightDrawerClose,
+          }}
+        >
+          <main className={mainClassnames}>{children}</main>
+        </LayoutActions.Provider>
         {footerContent ? (
           <Footer {...footerProps}>{footerContent}</Footer>
         ) : null}

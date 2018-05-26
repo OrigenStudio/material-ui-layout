@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton';
-import Button from 'material-ui/Button';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import MenuIcon from 'material-ui-icons/Menu';
-import Hidden from 'material-ui/Hidden';
-import { withStyles } from 'material-ui/styles';
-import withWidth, { isWidthDown } from 'material-ui/utils/withWidth';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/icons/Menu';
+import Hidden from '@material-ui/core/Hidden';
+import { withStyles } from '@material-ui/core/styles';
+import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
 
 import styles from './styles';
@@ -42,7 +42,7 @@ class BasicAppBar extends React.PureComponent {
       );
     }
     return (
-      <Typography type="title" color="inherit" className={classes.flex}>
+      <Typography variant="title" color="inherit" className={classes.flex}>
         {title}
       </Typography>
     );

@@ -1,9 +1,12 @@
 import map from 'lodash/map';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Icon from 'material-ui/Icon';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Icon from '@material-ui/core/Icon';
 
 import styles from './styles';
 
@@ -13,7 +16,7 @@ class DrawerItemsList extends React.PureComponent {
     classes: PropTypes.shape({}),
   };
 
-  renderIcon = (item) => {
+  renderIcon = item => {
     if (item.icon) {
       return <item.icon />;
     } else if (item.iconName) {
