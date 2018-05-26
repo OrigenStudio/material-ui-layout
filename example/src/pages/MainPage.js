@@ -1,36 +1,34 @@
 import React from 'react';
-import g from 'glamorous';
-import { css } from 'glamor';
 import Link from 'gatsby-link';
-import Grid from 'material-ui/Grid';
+import Grid from '@material-ui/core/Grid';
 import { rhythm } from '../utils/typography';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Layout, {
   BasicFooter,
   TwoRowsAppBar,
   BasicDrawer,
   BasicAppBar,
 } from '../../../src';
-import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui-icons/Delete';
-import Radio from 'material-ui/Radio';
-import Switch from 'material-ui/Switch';
-import Paper from 'material-ui/Paper';
-import Divider from 'material-ui/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Radio from '@material-ui/core/Radio';
+import Switch from '@material-ui/core/Switch';
+import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import AppBarSimple from '../components/AppBarSimple';
 import AppBarDouble from '../components/AppBarDouble';
 import SyntaxShow from '../components/SyntaxShow';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/styles/hljs';
 import {Helmet} from 'react-helmet';
-import MenuIcon from 'material-ui-icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu';
 import ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
-} from 'material-ui/ExpansionPanel';
-import ExpandMoreIcon from 'material-ui-icons/Code';
+} from '@material-ui/core/ExpansionPanel';
+import ExpandMoreIcon from '@material-ui/icons/Code';
 import UserDrawer from '../components/UserDrawer';
 const linkStyle = css({ float: `right` });
 
