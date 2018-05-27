@@ -1,8 +1,8 @@
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
@@ -10,25 +10,13 @@ import Switch from '@material-ui/core/Switch';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/Code';
-import Link from 'gatsby-link';
 import React from 'react';
-import Layout, { BasicDrawer, BasicFooter } from '../../../src';
-import AppBarDouble from '../components/AppBarDouble';
-import AppBarSimple from '../components/AppBarSimple';
-import SyntaxShow from '../components/SyntaxShow';
-import UserDrawer from '../components/UserDrawer';
+import Layout, { BasicDrawer, BasicFooter } from '../../../../src';
+import AppBarDouble from '../AppBarDouble';
+import AppBarSimple from '../AppBarSimple';
+import SyntaxShow from '../SyntaxShow';
 
-const styles = {
-  wrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  panelCode: {
-    boxShadow:
-      '0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12)',
-  },
-};
+import styles from './styles';
 
 const links = [
   {
@@ -41,6 +29,7 @@ const links = [
   },
 ];
 
+// TODO this need to go out
 const variables = {
   title: 'Material-UI-Layout-Demo',
   smallMessage: 'Material-UI-Layout-Demo',
