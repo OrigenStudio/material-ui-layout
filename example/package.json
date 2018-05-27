@@ -10,7 +10,9 @@
     "google-fonts": "^1.0.0",
     "material-design-icons": "^3.0.1",
     "material-ui": "^1.0.0-beta.30",
+    "react": "^16.4.0",
     "react-css-transition-replace": "^3.0.2",
+    "react-dom": "^16.4.0",
     "react-helmet": "^5.2.0",
     "react-syntax-highlighter": "^6.1.2",
     "typeface-roboto": "0.0.50"
