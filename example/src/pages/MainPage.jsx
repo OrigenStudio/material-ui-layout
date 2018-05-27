@@ -49,7 +49,7 @@ const variables = {
   tright: 'right',
 };
 
-class TwoRowsAppBarLayout extends React.Component {
+class Example extends React.Component {
   constructor(props) {
     super(props);
 
@@ -501,7 +501,7 @@ class TwoRowsAppBarLayout extends React.Component {
   }
 }
 
-export default withStyles(styles)(TwoRowsAppBarLayout);
+export default withStyles(styles)(Example);
 
 export const query = graphql`
   query LayoutQuery {
