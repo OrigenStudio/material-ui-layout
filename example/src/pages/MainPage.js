@@ -1,36 +1,22 @@
-import React from 'react';
-import Link from 'gatsby-link';
-import Grid from '@material-ui/core/Grid';
-import { rhythm } from '../utils/typography';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Layout, {
-  BasicFooter,
-  TwoRowsAppBar,
-  BasicDrawer,
-  BasicAppBar,
-} from '../../../src';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Divider from '@material-ui/core/Divider';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
 import Switch from '@material-ui/core/Switch';
-import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
-import AppBarSimple from '../components/AppBarSimple';
-import AppBarDouble from '../components/AppBarDouble';
-import SyntaxShow from '../components/SyntaxShow';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/styles/hljs';
-import { Helmet } from 'react-helmet';
-import MenuIcon from '@material-ui/icons/Menu';
-import ExpansionPanel, {
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
-} from '@material-ui/core/ExpansionPanel';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/Code';
+import Link from 'gatsby-link';
+import React from 'react';
+import Layout, { BasicDrawer, BasicFooter } from '../../../src';
+import AppBarDouble from '../components/AppBarDouble';
+import AppBarSimple from '../components/AppBarSimple';
+import SyntaxShow from '../components/SyntaxShow';
 import UserDrawer from '../components/UserDrawer';
-const linkStyle = css({ float: `right` });
 
 const styles = {
   wrapper: {
