@@ -163,13 +163,6 @@ class TwoRowsAppBarLayout extends React.Component {
             links={links}
           />
         }
-        leftDrawerContent={
-          <UserDrawer
-            urlAvatar="https://www.w3schools.com/w3images/avatar2.png"
-            textPrimary="Person"
-            textSecondary="example@email.com"
-          />
-        }
         leftDrawerType={this.state.leftDrawerType}
         leftDrawerOpen={this.state.leftDrawerOpen}
         onLeftDrawerOpenChange={this.setLeftDrawerState}
@@ -180,7 +173,6 @@ class TwoRowsAppBarLayout extends React.Component {
       >
         <div className={this.props.classes.wrapper}>
           <Grid container>
-            <Grid item xs={0} sm={1} md={2} lg={3} />
             <Grid item xs={12} sm={10} md={8} lg={6}>
               <Paper style={{ marginTop: 50, marginBottom: 50 }}>
                 <Grid
