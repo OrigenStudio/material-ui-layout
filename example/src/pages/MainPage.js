@@ -30,24 +30,6 @@ const styles = {
   },
 };
 
-const AppBar = ({ data }) => (
-  <div>
-    <Link to={`/`}>
-      <g.H3 marginBottom={rhythm(2)} display={`inline-block`}>
-        {data.site.siteMetadata.title}
-      </g.H3>
-    </Link>
-    <Link className={linkStyle} to={`/about/`}>
-      About
-    </Link>
-  </div>
-);
-
-const Footer = () => (
-  <div>
-    <p>Prueba</p>
-  </div>
-);
 const links = [
   {
     href: 'https://material-ui-next.com/',
