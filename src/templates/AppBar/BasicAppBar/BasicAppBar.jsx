@@ -33,16 +33,21 @@ class BasicAppBar extends React.PureComponent {
   };
 
   renderLogo = () => {
-    const { classes, title, logo } = this.props;
+    const { classes, title, logo, onLogoClick } = this.props;
     if (logo) {
       return (
-        <div className={classes.logo}>
+        <div className={classes.logo} onClick={onLogoClick}>
           <img src={logo} alt={title} className={classes.image} />
         </div>
       );
     }
     return (
-      <Typography variant="title" color="inherit" className={classes.flex}>
+      <Typography
+        variant="title"
+        color="inherit"
+        className={classes.flex}
+        onLogoClick={onLogoClick}
+      >
         {title}
       </Typography>
     );
