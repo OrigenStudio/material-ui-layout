@@ -65,7 +65,12 @@ class BasicAppBar extends React.PureComponent {
         <Hidden xsDown>
           <div>
             {_.map(links, link => (
-              <Button href={link.href} color="inherit" key={link.label}>
+              <Button
+                onClick={link.onClick || null}
+                href={link.href || null}
+                color="inherit"
+                key={link.label}
+              >
                 {link.label}
               </Button>
             ))}
