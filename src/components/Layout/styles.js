@@ -35,6 +35,7 @@ const styles = theme => ({
   main: {
     paddingTop: '0px',
     display: 'flex',
+    width: '100%',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -60,24 +61,26 @@ const styles = theme => ({
   },
   [theme.breakpoints.up('sm')]: {
     mainFixedAppBar: {
-      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')]
-        .minHeight}px`,
+      marginTop: `${
+        theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight
+      }px`,
     },
     mainFixedTwoRowAppBar: {
       marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight *
         2}px`,
     },
     mainGrow: {
-      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')]
-        .minHeight}px)`,
+      height: `calc(100vh - ${
+        theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight
+      }px)`,
     },
     mainGrowTwoRowAppBar: {
       height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')]
         .minHeight * 2}px)`,
     },
     drawerHeaderTwoRowAppBar: {
-      minHeight: `${theme.mixins.toolbar[theme.breakpoints.up('sm')]
-        .minHeight * 2}px`,
+      minHeight: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight *
+        2}px`,
     },
   },
   mainStickyFooter: {
