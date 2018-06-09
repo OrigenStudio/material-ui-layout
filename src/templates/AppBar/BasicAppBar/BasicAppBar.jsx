@@ -33,16 +33,21 @@ class BasicAppBar extends React.PureComponent {
   };
 
   renderLogo = () => {
-    const { classes, title, logo } = this.props;
+    const { classes, title, logo, onLogoClick } = this.props;
     if (logo) {
       return (
-        <div className={classes.logo}>
+        <div className={classes.logo} onClick={onLogoClick}>
           <img src={logo} alt={title} className={classes.image} />
         </div>
       );
     }
     return (
-      <Typography variant="title" color="inherit" className={classes.flex}>
+      <Typography
+        variant="title"
+        color="inherit"
+        className={classes.flex}
+        onLogoClick={onLogoClick}
+      >
         {title}
       </Typography>
     );
@@ -65,7 +70,12 @@ class BasicAppBar extends React.PureComponent {
         <Hidden xsDown>
           <div>
             {_.map(links, link => (
-              <Button href={link.href} color="inherit" key={link.label}>
+              <Button
+                onClick={link.onClick || null}
+                href={link.href || null}
+                color="inherit"
+                key={link.label}
+              >
                 {link.label}
               </Button>
             ))}
