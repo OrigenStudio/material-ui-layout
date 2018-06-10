@@ -1,6 +1,6 @@
 {
   "name": "material-ui-layout",
-  "version": "0.1.0-rc.3",
+  "version": "0.1.0-rc.4",
   "description": "Layout components for material-ui",
   "main": "./lib/index.js",
   "scripts": {
@@ -14,7 +14,11 @@
     "type": "git",
     "url": "git+https://github.com/Zetoff/material-ui-layout.git"
   },
-  "keywords": ["material-ui", "layout", "react"],
+  "keywords": [
+    "material-ui",
+    "layout",
+    "react"
+  ],
   "author": "polguixe",
   "license": "MIT",
   "bugs": {
