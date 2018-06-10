@@ -10,6 +10,8 @@ import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
+import classNames from 'classnames';
+import ButtonBase from '@material-ui/core/ButtonBase';
 
 import styles from './styles';
 
@@ -42,21 +44,18 @@ class BasicAppBar extends React.PureComponent {
       );
     }
     return (
-      <Typography
-        variant="title"
-        color="inherit"
-        className={classes.flex}
-        onLogoClick={onLogoClick}
-      >
-        {title}
-      </Typography>
+      <ButtonBase onClick={onLogoClick} className={classes.titleButton}>
+        <Typography variant="title" color="inherit" className={classes.flex}>
+          {title}
+        </Typography>
+      </ButtonBase>
     );
   };
 
   render() {
-    const { links, menuIconAlways, width } = this.props;
+    const { links, menuIconAlways, width, classes } = this.props;
     return (
-      <Toolbar>
+      <Toolbar className={classes.wrapper}>
         {menuIconAlways || isWidthDown('xs', width) ? (
           <IconButton
             color="inherit"
@@ -68,7 +67,7 @@ class BasicAppBar extends React.PureComponent {
         ) : null}
         {this.renderLogo()}
         <Hidden xsDown>
-          <div>
+          <div className={classes.links}>
             {_.map(links, link => (
               <Button
                 onClick={link.onClick || null}

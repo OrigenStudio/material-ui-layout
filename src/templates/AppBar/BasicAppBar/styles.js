@@ -1,6 +1,13 @@
-const styles = {
+const styles = theme => ({
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   flex: {
     flex: 1,
+  },
+  titleButton: {
+    padding: theme.spacing.unit,
   },
   logo: {
     flex: 1,
@@ -13,6 +20,9 @@ const styles = {
     margin: '0',
     padding: '0',
   },
-};
+  links: {
+    float: 'right',
+  },
+});
 
 export default styles;
