@@ -14,7 +14,11 @@
     "type": "git",
     "url": "git+https://github.com/Zetoff/material-ui-layout.git"
   },
-  "keywords": ["material-ui", "layout", "react"],
+  "keywords": [
+    "material-ui",
+    "layout",
+    "react"
+  ],
   "author": "polguixe",
   "license": "MIT",
   "bugs": {
