@@ -17,11 +17,16 @@ This library uses [Material-UI](https://material-ui.com) and the layout is based
 
 ## Examples
 
-WIP 😅
+Check the examples at [demo page](https://material-ui-layout.origen.studio/)
+
+## Contribute
+
+We would be thrilled if you want to help us build the best Layout component, please do not hesitate to contact us.
 
 ## Roadmap
-- [ ] Add tests
+- [x] Example web
 - [x] Add better support for two rows AppBars
-- [ ] Example web
+- [ ] Add tests
+- [ ] Add some useful components
 
 
