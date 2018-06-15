@@ -30,7 +30,13 @@ class DrawerItemsList extends React.PureComponent {
     return (
       <List className={classes.list}>
         {map(items, item => (
-          <ListItem button onClick={item.onClick} key={`item-${item.label}`}>
+          <ListItem
+            button
+            key={`item-${item.label}`}
+            onClick={item.onClick || null}
+            href={item.href || null}
+            component={item.href ? 'a' : undefined}
+          >
             <ListItemIcon>{this.renderIcon(item)}</ListItemIcon>
             <ListItemText primary={item.label} />
           </ListItem>
