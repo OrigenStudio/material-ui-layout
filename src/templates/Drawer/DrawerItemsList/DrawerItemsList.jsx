@@ -3,10 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Icon from '@material-ui/core/Icon';
+
+import DrawerItem from './DrawerItem';
 
 import styles from './styles';
 
@@ -16,30 +14,16 @@ class DrawerItemsList extends React.PureComponent {
     classes: PropTypes.shape({}),
   };
 
-  renderIcon = item => {
-    if (item.icon) {
-      return <item.icon />;
-    } else if (item.iconName) {
-      return <Icon>{item.iconName}</Icon>;
-    }
-    return <Icon>arrow_right</Icon>;
-  };
-
   render() {
-    const { items, classes } = this.props;
+    const { items, classes, closeDrawer, closeDrawerOnClick } = this.props;
     return (
       <List className={classes.list}>
         {map(items, item => (
-          <ListItem
-            button
+          <DrawerItem
             key={`item-${item.label}`}
-            onClick={item.onClick || null}
-            href={item.href || null}
-            component={item.href ? 'a' : undefined}
-          >
-            <ListItemIcon>{this.renderIcon(item)}</ListItemIcon>
-            <ListItemText primary={item.label} />
-          </ListItem>
+            item={item}
+            closeDrawer={closeDrawerOnClick ? closeDrawer : () => {}}
+          />
         ))}
       </List>
     );
