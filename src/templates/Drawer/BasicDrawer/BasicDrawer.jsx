@@ -12,10 +12,19 @@ class BasicDrawer extends React.PureComponent {
     classes: PropTypes.shape({}),
   };
   render() {
-    const { links, classes } = this.props;
+    const {
+      links,
+      classes,
+      closeDrawer,
+      closeDrawerOnClick = false,
+    } = this.props;
     return (
       <div className={classes.wrapper}>
-        <DrawerItemsList items={links} />
+        <DrawerItemsList
+          items={links}
+          closeDrawer={closeDrawer}
+          closeDrawerOnClick={closeDrawerOnClick}
+        />
       </div>
     );
   }
