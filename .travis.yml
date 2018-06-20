@@ -14,7 +14,7 @@ notifications:
     template:
       - "::::::::::::::::::::::::::::::::::::::::::::"
       - "·········    MATERIAL-UI-LAYOUT    ·········"
-      - "            ---------------------           "
+      - "            --------------------            "
       - "Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{repository_slug}@%{branch} by %{author} %{result} in %{duration}"
       - "::::::::::::::::::::::::::::::::::::::::::::"
 
