@@ -1,17 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import capitalize from 'lodash/capitalize';
 
 import styles from './styles';
 
-class Footer extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.shape({}).isRequired,
-    children: PropTypes.element.isRequired,
-  };
+type Props = {
+  classes: Object,
+  children: React.Element<any>,
+  color: string,
+  className: string,
+};
 
+class Footer extends React.PureComponent<Props> {
   render() {
     const {
       classes, color, className: classNameProp, children,

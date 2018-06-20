@@ -6,15 +6,18 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
 
-type P = {};
+type Props = {
+  item: Object,
+  closeDrawer: Function,
+};
 
-class DrawerItem extends PureComponent<P> {
+class DrawerItem extends PureComponent<Props> {
   handleClick = () => {
     this.props.item.onClick();
     this.props.closeDrawer();
   };
 
-  renderIcon = (item) => {
+  renderIcon = (item: Object) => {
     if (item.icon) {
       return <item.icon />;
     } else if (item.iconName) {

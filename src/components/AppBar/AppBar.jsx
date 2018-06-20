@@ -1,24 +1,22 @@
-// @flow weak
+// @flow
 
 // TODO Is this component required anymore?
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialUIAppBar from '@material-ui/core/AppBar';
 
-
 import styles from './styles';
 
-class AppBar extends React.PureComponent {
-  static propTypes = {
-    classes: PropTypes.shape({}),
-    children: PropTypes.element,
-    position: PropTypes.string,
-    color: PropTypes.string,
-    className: PropTypes.string,
-  };
+type Props = {
+  classes: Object,
+  children: React.Element<any>,
+  position: string,
+  color: string,
+  className: string,
+};
 
+class AppBar extends React.PureComponent<Props> {
   render() {
     const {
       children, position, classes, color, className, ...other

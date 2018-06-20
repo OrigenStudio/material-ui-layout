@@ -1,6 +1,7 @@
+// @flow
+
 import _ from 'lodash';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -8,15 +9,16 @@ import Button from '@material-ui/core/Button';
 
 import styles from './styles';
 
-class BasicFooter extends React.PureComponent {
-  static propTypes = {
-    title: PropTypes.string,
-    smallMessage: PropTypes.string,
-    bigMessage: PropTypes.string,
-    classes: PropTypes.shape({}),
-    logo: PropTypes.string,
-    links: PropTypes.arrayOf(PropTypes.shape({})),
-  };
+type Props = {
+  title: string,
+  smallMessage: string,
+  bigMessage: string,
+  classes: Object,
+  logo: string,
+  links: Array<Object>,
+};
+
+class BasicFooter extends React.PureComponent<Props> {
   static defaultProps = {
     title: 'Brand',
   };

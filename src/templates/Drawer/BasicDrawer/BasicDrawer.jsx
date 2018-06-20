@@ -1,22 +1,26 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 import DrawerItemsList from '../DrawerItemsList';
 
 import styles from './styles';
 
-class BasicDrawer extends React.PureComponent {
-  static propTypes = {
-    links: PropTypes.arrayOf(PropTypes.shape({})),
-    classes: PropTypes.shape({}),
+type Props = {
+  links: Array<Object>,
+  classes: Object,
+  closeDrawer: Function,
+  closeDrawerOnClick: true | false,
+};
+
+class BasicDrawer extends React.PureComponent<Props> {
+  static defaultProps = {
+    closeDrawerOnClick: false,
   };
   render() {
     const {
-      links,
-      classes,
-      closeDrawer,
-      closeDrawerOnClick = false,
+      links, classes, closeDrawer, closeDrawerOnClick,
     } = this.props;
     return (
       <div className={classes.wrapper}>

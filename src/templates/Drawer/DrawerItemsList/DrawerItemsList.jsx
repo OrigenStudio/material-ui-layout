@@ -1,6 +1,7 @@
+// @flow
+
 import map from 'lodash/map';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 
@@ -8,12 +9,14 @@ import DrawerItem from './DrawerItem';
 
 import styles from './styles';
 
-class DrawerItemsList extends React.PureComponent {
-  static propTypes = {
-    items: PropTypes.arrayOf(PropTypes.shape({})),
-    classes: PropTypes.shape({}),
-  };
+type Props = {
+  items: Array<Object>,
+  classes: Object,
+  closeDrawer: Function,
+  closeDrawerOnClick: true | false,
+};
 
+class DrawerItemsList extends React.PureComponent<Props> {
   render() {
     const {
       items, classes, closeDrawer, closeDrawerOnClick,

@@ -1,5 +1,6 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 
@@ -7,17 +8,18 @@ import DrawerItemsList from '../DrawerItemsList';
 
 import styles from './styles';
 
-class StandardDrawer extends React.PureComponent {
-  static propTypes = {
-    secondList: PropTypes.arrayOf(PropTypes.shape({})),
-    firstList: PropTypes.arrayOf(PropTypes.shape({})),
-    classes: PropTypes.shape({}),
-  };
+type Props = {
+  firstList: Array<Object>,
+  secondList: Array<Object>,
+  classes: Object,
+};
 
+class StandardDrawer extends React.PureComponent<Props> {
   static defaultProps = {
     firstList: null,
     secondList: null,
   };
+
   render() {
     const { firstList, secondList, classes } = this.props;
     return (
