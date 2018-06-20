@@ -8,7 +8,8 @@
     "flow": "flow",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "prepublish": "npm run test && npm run build"
+    "prepublish": "npm run test && npm run build",
+    "eslint": "./node_modules/.bin/eslint src/ --ext js,jsx"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "eslint-config-airbnb": "^15.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-flowtype": "^2.49.3",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-meteor": "^4.2.0",
