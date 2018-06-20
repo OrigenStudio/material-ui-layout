@@ -34,7 +34,9 @@ class BasicFooter extends React.PureComponent {
   };
 
   render() {
-    const { title, classes, smallMessage, bigMessage, links } = this.props;
+    const {
+      title, classes, smallMessage, bigMessage, links,
+    } = this.props;
     return (
       <Grid container alignItems="flex-end" justify="space-around" spacing={16}>
         <Grid item xs={12}>

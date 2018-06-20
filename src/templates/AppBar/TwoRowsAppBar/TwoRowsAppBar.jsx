@@ -71,7 +71,7 @@ class TwoRowsAppBar extends PureComponent {
           <Grid
             container
             className={classNames(classes.row, classes.topRow)}
-            justify={'space-between'}
+            justify="space-between"
             spacing={16}
           >
             <Grid
@@ -113,7 +113,7 @@ class TwoRowsAppBar extends PureComponent {
           <Grid
             container
             className={classNames(classes.row, classes.bottomRow)}
-            justify={'space-between'}
+            justify="space-between"
             spacing={16}
           >
             <Grid

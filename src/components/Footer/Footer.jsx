@@ -13,7 +13,9 @@ class Footer extends React.PureComponent {
   };
 
   render() {
-    const { classes, color, className: classNameProp, children } = this.props;
+    const {
+      classes, color, className: classNameProp, children,
+    } = this.props;
     const className = classNames(
       classes.footer,
       {

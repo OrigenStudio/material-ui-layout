@@ -15,7 +15,9 @@ class DrawerItemsList extends React.PureComponent {
   };
 
   render() {
-    const { items, classes, closeDrawer, closeDrawerOnClick } = this.props;
+    const {
+      items, classes, closeDrawer, closeDrawerOnClick,
+    } = this.props;
     return (
       <List className={classes.list}>
         {map(items, item => (

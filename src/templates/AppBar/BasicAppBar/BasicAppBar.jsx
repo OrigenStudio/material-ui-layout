@@ -35,7 +35,9 @@ class BasicAppBar extends React.PureComponent {
   };
 
   renderLogo = () => {
-    const { classes, title, logo, onLogoClick } = this.props;
+    const {
+      classes, title, logo, onLogoClick,
+    } = this.props;
     if (logo) {
       return (
         <div className={classes.logo} onClick={onLogoClick}>
@@ -53,7 +55,9 @@ class BasicAppBar extends React.PureComponent {
   };
 
   render() {
-    const { links, menuIconAlways, width, classes } = this.props;
+    const {
+      links, menuIconAlways, width, classes,
+    } = this.props;
     return (
       <Toolbar className={classes.wrapper}>
         {menuIconAlways || isWidthDown('xs', width) ? (

@@ -20,7 +20,9 @@ class AppBar extends React.PureComponent {
   };
 
   render() {
-    const { children, position, classes, color, className, ...other } = this.props;
+    const {
+      children, position, classes, color, className, ...other
+    } = this.props;
     return (
       <MaterialUIAppBar position={position} color={color} className={className}>
         {React.cloneElement(children, { ...other })}
