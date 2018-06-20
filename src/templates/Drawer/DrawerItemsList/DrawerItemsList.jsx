@@ -7,11 +7,12 @@ import List from '@material-ui/core/List';
 
 import DrawerItem from './DrawerItem';
 
+import { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {
   items: Array<Object>,
-  classes: { [string]: string },
+  classes: Classes,
   closeDrawer: Function,
   closeDrawerOnClick: true | false,
 };

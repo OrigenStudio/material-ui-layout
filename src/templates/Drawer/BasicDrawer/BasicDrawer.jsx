@@ -5,11 +5,12 @@ import { withStyles } from '@material-ui/core/styles';
 
 import DrawerItemsList from '../DrawerItemsList';
 
+import { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {
   links: Array<Object>,
-  classes: { [string]: string },
+  classes: Classes,
   closeDrawer: Function,
   closeDrawerOnClick: true | false,
 };

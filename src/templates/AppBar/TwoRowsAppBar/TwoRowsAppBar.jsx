@@ -8,10 +8,11 @@ import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import classNames from 'classnames';
 import compose from 'recompose/compose';
 
+import { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {
-  classes: { [string]: string },
+  classes: Classes,
   topLeftContent: React.Node,
   topCenterContent: React.Node,
   topRightContent: React.Node,

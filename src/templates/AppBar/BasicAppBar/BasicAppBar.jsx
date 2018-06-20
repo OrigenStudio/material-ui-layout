@@ -13,11 +13,12 @@ import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
+import { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {
   links: Array<Object>,
-  classes: { [string]: string },
+  classes: Classes,
   title: string,
   logo: string,
   toggleLeftDrawer: Function,

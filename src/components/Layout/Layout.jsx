@@ -9,6 +9,7 @@ import Drawer from '@material-ui/core/Drawer';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import controllable from 'react-controllables';
 
+import { Classes } from '../../types';
 import styles from './styles';
 
 import AppBar from '../AppBar';
@@ -16,8 +17,8 @@ import Footer from '../Footer';
 import LayoutActions from './LayoutActions';
 
 type Props = {
-  classes: { [string]: string },
-  overrideclasses: { [string]: string },
+  classes: Classes,
+  overrideClasses: Classes,
   children: React.Node,
   appBarPosition: string,
   appBarContent: React.Element<any>,

@@ -5,10 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import capitalize from 'lodash/capitalize';
 
+import { Classes } from '../../types';
 import styles from './styles';
 
 type Props = {
-  classes: { [string]: string },
+  classes: Classes,
   children: React.Element<any>,
   color: string,
   className: string,
