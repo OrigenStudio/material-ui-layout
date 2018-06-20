@@ -1,4 +1,6 @@
-const styles = () => ({
+// @flow
+
+const styles = (): Object => ({
   message: {
     textAlign: 'center',
     marginBottom: '30px',

@@ -6,9 +6,12 @@
   "scripts": {
     "build": "babel src/ -d lib/",
     "flow": "flow",
-    "test": "jest",
+    "flow:coverage": "flow-coverage-report -i 'src/**/*.js' -i 'src/**/*.jsx'",
+    "test": "npm run eslint && npm run flow && npm run flow:coverage && echo \"Eslint && Flow && Build passed - No jest yet\"",
     "test:coverage": "jest --coverage",
-    "prepublish": "npm run test && npm run build"
+    "prepublishOnly": "npm run test && npm run build",
+    "eslint": "./node_modules/.bin/eslint src/ --ext js,jsx",
+    "eslint-fix": "./node_modules/.bin/eslint src/ --ext js,jsx --fix"
   },
   "repository": {
     "type": "git",
@@ -33,15 +36,17 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "eslint": "^4.6.1",
-    "eslint-config-airbnb": "^15.1.0",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-flowtype": "^2.49.3",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-meteor": "^4.2.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.3.0",
-    "flow-bin": "^0.54.1",
+    "flow-bin": "^0.72.0",
+    "flow-coverage-report": "^0.5.0",
     "jest": "^21.0.2",
     "prettier": "^1.11.1"
   },

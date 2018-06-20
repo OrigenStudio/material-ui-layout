@@ -1,4 +1,5 @@
-export default theme => ({
+// @flow
+export default (theme: Object): Object => ({
   wrapper: {
     marginTop: '0',
     marginBottom: '0',

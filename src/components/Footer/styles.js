@@ -1,8 +1,8 @@
-const styles = theme => {
-  const backgroundColorDefault =
-    theme.palette.type === 'light'
-      ? theme.palette.grey[100]
-      : theme.palette.grey[900];
+// @flow
+
+const styles = (theme: Object): Object => {
+  const backgroundColorDefault: string =
+    theme.palette.type === 'light' ? theme.palette.grey[100] : theme.palette.grey[900];
   return {
     footer: {
       padding: '20px 10px', // TODO use units and spacing

@@ -1,7 +1,9 @@
+// @flow
+
 // TODO curry drawerWidth?
 const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme: Object): Object => ({
   layout: {
     display: 'flex',
     minHeight: '100vh',

@@ -1,3 +1,5 @@
+// @flow
+
 import Layout, { LayoutActions } from './components/Layout';
 
 export { LayoutActions };

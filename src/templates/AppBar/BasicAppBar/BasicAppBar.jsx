@@ -1,6 +1,7 @@
-import _ from 'lodash';
-import React from 'react';
-import PropTypes from 'prop-types';
+// @flow
+
+import map from 'lodash/map';
+import * as React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,22 +11,29 @@ import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
-import classNames from 'classnames';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
+import type { Classes } from '../../../types';
 import styles from './styles';
 
-class BasicAppBar extends React.PureComponent {
-  static propTypes = {
-    links: PropTypes.arrayOf(PropTypes.shape({})),
-    classes: PropTypes.shape({}),
-    title: PropTypes.string,
-    logo: PropTypes.string,
-    toggleLeftDrawer: PropTypes.func,
-    menuIconAlways: PropTypes.bool,
-    width: PropTypes.string,
-  };
+type Props = {
+  links: Array<Object>,
+  classes: Classes,
+  title: string,
+  logo: string,
+  toggleLeftDrawer: Function,
+  menuIconAlways: true | false,
+  width: string,
+  onLogoClick: Function,
+};
 
+type Link = {
+  label: string,
+  href?: string,
+  onClick?: Function,
+};
+
+class BasicAppBar extends React.PureComponent<Props> {
   static defaultProps = {
     menuIconAlways: false,
   };
@@ -35,10 +43,18 @@ class BasicAppBar extends React.PureComponent {
   };
 
   renderLogo = () => {
-    const { classes, title, logo, onLogoClick } = this.props;
+    const {
+      classes, title, logo, onLogoClick,
+    } = this.props;
     if (logo) {
       return (
-        <div className={classes.logo} onClick={onLogoClick}>
+        <div
+          className={classes.logo}
+          onClick={onLogoClick}
+          onKeyPress={onLogoClick}
+          role="button"
+          tabIndex="0"
+        >
           <img src={logo} alt={title} className={classes.image} />
         </div>
       );
@@ -53,25 +69,23 @@ class BasicAppBar extends React.PureComponent {
   };
 
   render() {
-    const { links, menuIconAlways, width, classes } = this.props;
+    const {
+      links, menuIconAlways, width, classes,
+    } = this.props;
     return (
       <Toolbar className={classes.wrapper}>
         {menuIconAlways || isWidthDown('xs', width) ? (
-          <IconButton
-            color="inherit"
-            aria-label="Menu"
-            onClick={this.handleIconClick}
-          >
+          <IconButton color="inherit" aria-label="Menu" onClick={this.handleIconClick}>
             <MenuIcon />
           </IconButton>
         ) : null}
         {this.renderLogo()}
         <Hidden xsDown>
           <div className={classes.links}>
-            {_.map(links, link => (
+            {map(links, (link: Link): React.Element<any> => (
               <Button
                 onClick={link.onClick || null}
-                href={link.href || null}
+                href={link.href || undefined}
                 color="inherit"
                 key={link.label}
               >
