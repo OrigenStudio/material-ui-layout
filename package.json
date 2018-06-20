@@ -9,7 +9,8 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "prepublish": "npm run test && npm run build",
-    "eslint": "./node_modules/.bin/eslint src/ --ext js,jsx"
+    "eslint": "./node_modules/.bin/eslint src/ --ext js,jsx",
+    "eslint-fix": "./node_modules/.bin/eslint src/ --ext js,jsx --fix"
   },
   "repository": {
     "type": "git",

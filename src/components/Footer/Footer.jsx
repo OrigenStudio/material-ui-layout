@@ -19,7 +19,7 @@ class Footer extends React.PureComponent {
       {
         [classes[`color${capitalize(color)}`]]: color !== 'inherit',
       },
-      classNameProp
+      classNameProp,
     );
     return <div className={className}>{children}</div>;
   }

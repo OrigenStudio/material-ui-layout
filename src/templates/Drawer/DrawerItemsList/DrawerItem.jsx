@@ -14,7 +14,7 @@ class DrawerItem extends PureComponent<P> {
     this.props.closeDrawer();
   };
 
-  renderIcon = item => {
+  renderIcon = (item) => {
     if (item.icon) {
       return <item.icon />;
     } else if (item.iconName) {

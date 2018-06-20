@@ -1,4 +1,4 @@
-const styles = theme => {
+const styles = (theme) => {
   const backgroundColorDefault =
     theme.palette.type === 'light'
       ? theme.palette.grey[100]

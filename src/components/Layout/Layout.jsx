@@ -173,17 +173,17 @@ class Layout extends React.PureComponent {
     // FIXME find a better way to inject the closeDrawer prop
     const leftDrawerContentWithProps = leftDrawerContent
       ? React.cloneElement(leftDrawerContent, {
-          closeDrawer: this.handleLeftDrawerClose,
-          closeDrawerOnClick: smallScreen || leftDrawerType === 'temporary',
-          ...leftDrawerContent.props, // This feels a bit of an antipattern, investigate
-        })
+        closeDrawer: this.handleLeftDrawerClose,
+        closeDrawerOnClick: smallScreen || leftDrawerType === 'temporary',
+        ...leftDrawerContent.props, // This feels a bit of an antipattern, investigate
+      })
       : leftDrawerContent;
     const rightDrawerContentWithProps = rightDrawerContent
       ? React.cloneElement(rightDrawerContent, {
-          closeDrawer: this.handleRightDrawerClose,
-          closeDrawerOnClick: smallScreen || rightDrawerType === 'temporary',
-          ...rightDrawerContent.props, // This feels a bit of an antipattern, investigate
-        })
+        closeDrawer: this.handleRightDrawerClose,
+        closeDrawerOnClick: smallScreen || rightDrawerType === 'temporary',
+        ...rightDrawerContent.props, // This feels a bit of an antipattern, investigate
+      })
       : rightDrawerContent;
 
     return (
