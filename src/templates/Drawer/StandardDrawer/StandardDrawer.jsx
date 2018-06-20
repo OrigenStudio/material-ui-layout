@@ -11,7 +11,7 @@ import styles from './styles';
 type Props = {
   firstList: Array<Object>,
   secondList: Array<Object>,
-  classes: Object,
+  classes: { [string]: string },
 };
 
 class StandardDrawer extends React.PureComponent<Props> {

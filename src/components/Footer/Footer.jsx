@@ -8,7 +8,7 @@ import capitalize from 'lodash/capitalize';
 import styles from './styles';
 
 type Props = {
-  classes: Object,
+  classes: { [string]: string },
   children: React.Element<any>,
   color: string,
   className: string,
@@ -19,7 +19,7 @@ class Footer extends React.PureComponent<Props> {
     const {
       classes, color, className: classNameProp, children,
     } = this.props;
-    const className = classNames(
+    const className: string = classNames(
       classes.footer,
       {
         [classes[`color${capitalize(color)}`]]: color !== 'inherit',

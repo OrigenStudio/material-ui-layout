@@ -11,7 +11,7 @@ import compose from 'recompose/compose';
 import styles from './styles';
 
 type Props = {
-  classes: Object,
+  classes: { [string]: string },
   topLeftContent: React.Node,
   topCenterContent: React.Node,
   topRightContent: React.Node,

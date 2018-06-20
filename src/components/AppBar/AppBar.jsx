@@ -9,7 +9,7 @@ import MaterialUIAppBar from '@material-ui/core/AppBar';
 import styles from './styles';
 
 type Props = {
-  classes: Object,
+  classes: { [string]: string },
   children: React.Element<any>,
   position: string,
   color: string,

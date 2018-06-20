@@ -1,4 +1,6 @@
-const styles = theme => ({
+// @flow
+
+const styles = (theme: Object): Object => ({
   wrapper: {
     display: 'flex',
     justifyContent: 'space-between',

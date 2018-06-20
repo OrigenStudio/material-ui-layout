@@ -11,7 +11,7 @@ import styles from './styles';
 
 type Props = {
   items: Array<Object>,
-  classes: Object,
+  classes: { [string]: string },
   closeDrawer: Function,
   closeDrawerOnClick: true | false,
 };

@@ -17,7 +17,7 @@ import styles from './styles';
 
 type Props = {
   links: Array<Object>,
-  classes: Object,
+  classes: { [string]: string },
   title: string,
   logo: string,
   toggleLeftDrawer: Function,

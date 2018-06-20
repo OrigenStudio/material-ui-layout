@@ -16,8 +16,8 @@ import Footer from '../Footer';
 import LayoutActions from './LayoutActions';
 
 type Props = {
-  classes: Object,
-  overrideClasses: Object,
+  classes: { [string]: string },
+  overrideclasses: { [string]: string },
   children: React.Node,
   appBarPosition: string,
   appBarContent: React.Element<any>,

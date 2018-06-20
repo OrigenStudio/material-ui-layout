@@ -13,7 +13,7 @@ type Props = {
   title: string,
   smallMessage: string,
   bigMessage: string,
-  classes: Object,
+  classes: { [string]: string },
   logo: string,
   links: Array<Object>,
 };
