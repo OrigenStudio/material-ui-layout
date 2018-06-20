@@ -113,10 +113,10 @@ class Layout extends React.PureComponent<Props> {
     } = this.props;
 
     // TODO change the way to overrideClasses
-    // use classes insted of overrideClasses as material-ui
+    // use classes instead of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
-    const smallScreen = isWidthDown('xs', width);
+    const smallScreen: Boolean = isWidthDown('xs', width);
 
     const mainLeftShift =
       !smallScreen &&
@@ -126,7 +126,7 @@ class Layout extends React.PureComponent<Props> {
       !smallScreen &&
       (rightDrawerType === 'permanent' || (rightDrawerOpen && rightDrawerType === 'persistent'));
 
-    const mainClassnames = classNames(classes.main, {
+    const mainClassnames: string = classNames(classes.main, {
       [`${classes.mainFixedAppBar}`]:
         appBarContent && appBarPosition === 'fixed' && !usingTwoRowAppBar,
       [`${classes.mainFixedTwoRowAppBar}`]:

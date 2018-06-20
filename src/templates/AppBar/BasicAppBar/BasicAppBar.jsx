@@ -1,7 +1,7 @@
 // @flow
 
 import map from 'lodash/map';
-import React from 'react';
+import * as React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -25,6 +25,12 @@ type Props = {
   menuIconAlways: true | false,
   width: string,
   onLogoClick: Function,
+};
+
+type Link = {
+  label: string,
+  href?: string,
+  onClick?: Function,
 };
 
 class BasicAppBar extends React.PureComponent<Props> {
@@ -76,10 +82,10 @@ class BasicAppBar extends React.PureComponent<Props> {
         {this.renderLogo()}
         <Hidden xsDown>
           <div className={classes.links}>
-            {map(links, link => (
+            {map(links, (link: Link): React.Element<any> => (
               <Button
                 onClick={link.onClick || null}
-                href={link.href || null}
+                href={link.href || undefined}
                 color="inherit"
                 key={link.label}
               >
