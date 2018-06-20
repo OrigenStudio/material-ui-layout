@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 
 import DrawerItemsList from '../DrawerItemsList';
 
-import { Classes } from '../../../types';
+import type { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {

@@ -6,7 +6,7 @@ import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialUIAppBar from '@material-ui/core/AppBar';
 
-import { Classes } from '../../types';
+import type { Classes } from '../../types';
 import styles from './styles';
 
 type Props = {

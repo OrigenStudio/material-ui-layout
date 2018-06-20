@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 
 import DrawerItem from './DrawerItem';
 
-import { Classes } from '../../../types';
+import type { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {

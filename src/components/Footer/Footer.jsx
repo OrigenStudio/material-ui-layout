@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import capitalize from 'lodash/capitalize';
 
-import { Classes } from '../../types';
+import type { Classes } from '../../types';
 import styles from './styles';
 
 type Props = {

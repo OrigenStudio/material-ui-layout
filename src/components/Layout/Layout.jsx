@@ -9,7 +9,7 @@ import Drawer from '@material-ui/core/Drawer';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import controllable from 'react-controllables';
 
-import { Classes } from '../../types';
+import type { Classes } from '../../types';
 import styles from './styles';
 
 import AppBar from '../AppBar';

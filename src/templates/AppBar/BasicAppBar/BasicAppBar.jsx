@@ -13,7 +13,7 @@ import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-import { Classes } from '../../../types';
+import type { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {
