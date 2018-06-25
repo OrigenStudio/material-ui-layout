@@ -10,4 +10,6 @@ export { default as BasicFooter } from './templates/Footer/BasicFooter';
 export { default as BasicDrawer } from './templates/Drawer/BasicDrawer';
 export { default as StandardDrawer } from './templates/Drawer/StandardDrawer';
 
+export { default as withPadding } from './hocs/withPadding';
+
 export default Layout;
