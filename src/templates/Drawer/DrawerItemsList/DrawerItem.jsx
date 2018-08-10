@@ -1,26 +1,40 @@
 // @flow
 
-import React, { PureComponent } from 'react';
+import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
-type P = {};
+type Item = {
+  iconName?: string,
+  icon?: any, // Not the best solution
+  onClick?: Function,
+  label: string,
+  href?: string,
+};
 
-class DrawerItem extends PureComponent<P> {
+type Props = {
+  item: Item,
+  closeDrawer: Function,
+};
+
+class DrawerItem extends React.PureComponent<Props> {
   handleClick = () => {
-    this.props.item.onClick();
-    this.props.closeDrawer();
+    if (this.props.item.onClick) {
+      this.props.item.onClick();
+      this.props.closeDrawer();
+    }
   };
 
-  renderIcon = item => {
+  renderIcon = (item: Item) => {
     if (item.icon) {
       return <item.icon />;
     } else if (item.iconName) {
       return <Icon>{item.iconName}</Icon>;
     }
-    return <Icon>arrow_right</Icon>;
+    return <ArrowRightIcon />;
   };
 
   render() {
@@ -29,7 +43,7 @@ class DrawerItem extends PureComponent<P> {
       <ListItem
         button
         onClick={item.onClick ? this.handleClick : null}
-        href={item.href || null}
+        href={item.href || undefined}
         component={item.href ? 'a' : undefined}
       >
         <ListItemIcon>{this.renderIcon(item)}</ListItemIcon>

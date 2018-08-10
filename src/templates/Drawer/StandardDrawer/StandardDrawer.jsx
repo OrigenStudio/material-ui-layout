@@ -1,30 +1,49 @@
+// @flow
+
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 
 import DrawerItemsList from '../DrawerItemsList';
 
+import type { Classes } from '../../../types';
 import styles from './styles';
 
-class StandardDrawer extends React.PureComponent {
-  static propTypes = {
-    secondList: PropTypes.arrayOf(PropTypes.shape({})),
-    firstList: PropTypes.arrayOf(PropTypes.shape({})),
-    classes: PropTypes.shape({}),
-  };
+type Props = {
+  firstList: Array<Object>,
+  secondList: Array<Object>,
+  classes: Classes,
+  closeDrawer: Function,
+  closeDrawerOnClick: true | false,
+};
 
+class StandardDrawer extends React.PureComponent<Props> {
   static defaultProps = {
     firstList: null,
     secondList: null,
   };
+
   render() {
-    const { firstList, secondList, classes } = this.props;
+    const {
+      firstList, secondList, classes, closeDrawer, closeDrawerOnClick,
+    } = this.props;
     return (
       <div className={classes.wrapper}>
-        {firstList ? <DrawerItemsList items={firstList} /> : null}
+        {firstList ? (
+          <DrawerItemsList
+            items={firstList}
+            closeDrawer={closeDrawer}
+            closeDrawerOnClick={closeDrawerOnClick}
+          />
+        ) : null}
         {firstList && secondList ? <Divider /> : null}
-        {secondList ? <DrawerItemsList items={secondList} /> : null}
+        {secondList ? (
+          <DrawerItemsList
+            items={secondList}
+            closeDrawer={closeDrawer}
+            closeDrawerOnClick={closeDrawerOnClick}
+          />
+        ) : null}
       </div>
     );
   }

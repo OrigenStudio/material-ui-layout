@@ -12,11 +12,9 @@ notifications:
   slack:
     on_pull_requests: false
     template:
-      - "::::::::::::::::::::::::::::::::::::::::::::"
-      - "·········    MATERIAL-UI-LAYOUT    ·········"
-      - "            --------------------            "
+      - "MATERIAL-UI-LAYOUT"
+      - "------------------"
       - "Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{repository_slug}@%{branch} by %{author} %{result} in %{duration}"
-      - "::::::::::::::::::::::::::::::::::::::::::::"
 
     rooms:
       - origen-studio:pZY8AyN5fUuPPLw7lR6UN72v#p-open-source

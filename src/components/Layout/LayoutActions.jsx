@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 
 const LayoutActions = React.createContext({
