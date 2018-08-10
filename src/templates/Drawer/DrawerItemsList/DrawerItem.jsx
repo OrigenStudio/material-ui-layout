@@ -5,6 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Icon from '@material-ui/core/Icon';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 
 type Item = {
   iconName?: string,
@@ -33,7 +34,7 @@ class DrawerItem extends React.PureComponent<Props> {
     } else if (item.iconName) {
       return <Icon>{item.iconName}</Icon>;
     }
-    return <Icon>arrow_right</Icon>;
+    return <ArrowRightIcon />;
   };
 
   render() {
