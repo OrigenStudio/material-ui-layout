@@ -118,7 +118,6 @@ class Layout extends React.PureComponent<Props> {
     const classes = { ...defaultClasses, ...overrideClasses };
 
     const smallScreen: boolean = isWidthDown('xs', width);
-
     const mainLeftShift =
       !smallScreen &&
       (leftDrawerType === 'permanent' || (leftDrawerOpen && leftDrawerType === 'persistent'));
@@ -242,7 +241,7 @@ class Layout extends React.PureComponent<Props> {
   }
 }
 
-export default controllable(compose(withWidth())(Layout), withStyles(styles), [
+export default controllable(compose(withWidth(), withStyles(styles))(Layout), [
   'leftDrawerOpen',
   'rightDrawerOpen',
 ]);
