@@ -5,6 +5,7 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialUIAppBar from '@material-ui/core/AppBar';
+import type { Position, Color } from '@material-ui/core/AppBar/AppBar';
 
 import type { Classes } from '../../types';
 import styles from './styles';
@@ -12,8 +13,8 @@ import styles from './styles';
 type Props = {
   classes: Classes,
   children: React.Element<any>,
-  position: string,
-  color: string,
+  position: Position,
+  color: Color,
   className: string,
 };
 

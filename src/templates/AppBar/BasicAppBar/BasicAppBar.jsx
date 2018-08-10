@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import compose from 'recompose/compose';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 import type { Classes } from '../../../types';
 import styles from './styles';
@@ -23,7 +24,7 @@ type Props = {
   logo: string,
   toggleLeftDrawer: Function,
   menuIconAlways: true | false,
-  width: string,
+  width: Breakpoint,
   onLogoClick: Function,
 };
 
@@ -99,4 +100,4 @@ class BasicAppBar extends React.PureComponent<Props> {
   }
 }
 
-export default compose(withStyles(styles), withWidth())(BasicAppBar);
+export default compose(withWidth(), withStyles(styles))(BasicAppBar);

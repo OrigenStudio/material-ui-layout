@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import controllable from 'react-controllables';
+import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 import type { Classes } from '../../types';
 import styles from './styles';
@@ -39,7 +40,7 @@ type Props = {
   rightDrawerType: string,
   rightDrawerUnder: true | false,
   rightDrawerProps: Object,
-  width: string,
+  width: Breakpoint,
   usingTwoRowAppBar: true | false,
 };
 
@@ -116,7 +117,7 @@ class Layout extends React.PureComponent<Props> {
     // use classes instead of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
-    const smallScreen: Boolean = isWidthDown('xs', width);
+    const smallScreen: boolean = isWidthDown('xs', width);
 
     const mainLeftShift =
       !smallScreen &&
@@ -241,7 +242,7 @@ class Layout extends React.PureComponent<Props> {
   }
 }
 
-export default controllable(compose(withStyles(styles), withWidth())(Layout), [
+export default controllable(compose(withWidth())(Layout), withStyles(styles), [
   'leftDrawerOpen',
   'rightDrawerOpen',
 ]);
