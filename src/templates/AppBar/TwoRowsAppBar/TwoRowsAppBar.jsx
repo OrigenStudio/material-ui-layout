@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import classNames from 'classnames';
 import compose from 'recompose/compose';
+import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 import type { Classes } from '../../../types';
 import styles from './styles';
@@ -19,8 +20,8 @@ type Props = {
   bottomLeftContent: React.Node,
   bottomCenterContent: React.Node,
   bottomRightContent: React.Node,
-  width: string,
-  smallScreenWidth: string,
+  width: Breakpoint,
+  smallScreenWidth: Breakpoint,
 };
 
 // TODO find a way to better overwrite the items styles
@@ -118,4 +119,4 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
   }
 }
 
-export default compose(withStyles(styles), withWidth())(TwoRowsAppBar);
+export default compose(withWidth(), withStyles(styles))(TwoRowsAppBar);
