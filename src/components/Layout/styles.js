@@ -113,6 +113,7 @@ const styles = (theme: Object): Object => ({
   drawerPaperUnder: {
     zIndex: '1000',
   },
+  footer: {},
 });
 
 export default styles;
