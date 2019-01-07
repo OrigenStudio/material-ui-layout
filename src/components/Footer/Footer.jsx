@@ -11,11 +11,16 @@ import styles from './styles';
 type Props = {
   classes: Classes,
   children: React.Element<any>,
-  color: string,
-  className: string,
+  color?: 'inherit' | 'default' | 'primary' | 'secondary',
+  className?: string,
 };
 
 class Footer extends React.PureComponent<Props> {
+  static defaultProps = {
+    classes: {},
+    color: 'inherit',
+    className: '',
+  };
   render() {
     const {
       classes, color, className: classNameProp, children,
