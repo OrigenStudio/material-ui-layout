@@ -140,6 +140,11 @@ class Layout extends React.PureComponent<Props> {
       [`${classes.mainLeftRightShift}`]: mainLeftShift && mainRightShift,
     });
 
+    const footerClassnames: string = classNames(
+      classes.footer,
+      footerProps ? footerProps.className : '',
+    );
+
     const appBarLeftShift =
       !smallScreen &&
       (!leftDrawerUnder &&
@@ -235,7 +240,11 @@ class Layout extends React.PureComponent<Props> {
         >
           <main className={mainClassnames}>{children}</main>
         </LayoutActions.Provider>
-        {footerContent ? <Footer {...footerProps}>{footerContent}</Footer> : null}
+        {footerContent ? (
+          <Footer {...footerProps} className={footerClassnames}>
+            {footerContent}
+          </Footer>
+        ) : null}
       </div>
     );
   }
