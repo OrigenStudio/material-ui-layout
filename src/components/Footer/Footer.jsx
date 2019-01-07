@@ -9,7 +9,7 @@ import type { Classes } from '../../types';
 import styles from './styles';
 
 type Props = {
-  classes?: Classes,
+  classes: Classes,
   children: React.Element<any>,
   color?: 'inherit' | 'default' | 'primary' | 'secondary',
   className?: string,
