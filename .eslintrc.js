@@ -6,6 +6,7 @@ module.exports = {
     graphql: true,
   },
   rules: {
-    'react/prefer-stateless-function': 'warning',
+    'react/prefer-stateless-function': 1,
+    'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: true }],
   },
 };
