@@ -18,6 +18,7 @@ import Footer from '../Footer';
 import LayoutActions from './LayoutActions';
 
 type Props = {
+  title: String,
   classes: Classes,
   overrideClasses: Classes,
   children: React.Node,
