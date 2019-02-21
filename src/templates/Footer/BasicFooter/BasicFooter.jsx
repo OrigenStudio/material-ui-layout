@@ -1,6 +1,6 @@
 // @flow
 
-import _ from 'lodash';
+import map from 'lodash/map';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -51,7 +51,7 @@ class BasicFooter extends React.PureComponent<Props> {
         </Grid>
         <Grid item xs={12} md={4}>
           <Grid container direction="row" spacing={0} justify="center">
-            {_.map(links, link => (
+            {map(links, link => (
               <Button href={link.href} color="inherit" key={link.label}>
                 {link.label}
               </Button>
