@@ -1,6 +1,6 @@
 {
   "name": "material-ui-layout",
-  "version": "0.1.0-rc.9-beta",
+  "version": "1.0.1",
   "description": "Layout components for material-ui",
   "main": "./lib/index.js",
   "scripts": {
