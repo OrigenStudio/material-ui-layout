@@ -51,8 +51,8 @@
     "prettier": "^1.11.1"
   },
   "peerDependencies": {
-    "react": "^16.3.0",
-    "react-dom": "^16.3.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "dependencies": {
     "@material-ui/core": "^4.0.1",
