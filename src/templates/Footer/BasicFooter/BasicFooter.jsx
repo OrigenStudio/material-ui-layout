@@ -30,7 +30,7 @@ class BasicFooter extends React.PureComponent<Props> {
       return <img src={logo} alt={title} className={classes.logoImage} />;
     }
     return (
-      <Typography variant="title" color="inherit" className={classes.flex}>
+      <Typography variant="h6" color="inherit" className={classes.flex}>
         {title}
       </Typography>
     );
@@ -44,7 +44,7 @@ class BasicFooter extends React.PureComponent<Props> {
       <Grid container alignItems="flex-end" justify="space-around" spacing={2}>
         <Grid item xs={12}>
           <div className={classes.message}>
-            <Typography variant="display3" color="inherit">
+            <Typography variant="h2" color="inherit">
               {bigMessage}
             </Typography>
           </div>
@@ -60,7 +60,7 @@ class BasicFooter extends React.PureComponent<Props> {
         </Grid>
         <Grid item xs={12} md={4}>
           <Grid container direction="column" alignItems="center" spacing={0}>
-            <Typography variant="body1" color="inherit">
+            <Typography variant="body2" color="inherit">
               {smallMessage}
             </Typography>
             <Typography variant="caption" color="inherit">
