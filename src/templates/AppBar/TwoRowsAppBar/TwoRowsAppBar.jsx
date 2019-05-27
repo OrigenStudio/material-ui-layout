@@ -60,12 +60,12 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
 
     return (
       <Toolbar>
-        <Grid container direction="column" className={classes.wrapper} spacing={16}>
+        <Grid container direction="column" className={classes.wrapper} spacing={2}>
           <Grid
             container
             className={classNames(classes.row, classes.topRow)}
             justify="space-between"
-            spacing={16}
+            spacing={2}
           >
             <Grid item style={style.item} xs={2} sm={4} md={3} lg={2} className={classes.left}>
               {topLeftContent}
@@ -91,7 +91,7 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
             container
             className={classNames(classes.row, classes.bottomRow)}
             justify="space-between"
-            spacing={16}
+            spacing={2}
           >
             <Grid item style={style.item} xs={2} sm={4} md={3} lg={2} className={classes.left}>
               {bottomLeftContent}
