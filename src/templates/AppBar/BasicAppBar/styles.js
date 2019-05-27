@@ -9,7 +9,7 @@ const styles = (theme: Object): Object => ({
     flex: 1,
   },
   titleButton: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   logo: {
     flex: 1,
