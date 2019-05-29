@@ -18,7 +18,7 @@ import Footer from '../Footer';
 import LayoutActions from './LayoutActions';
 
 type Props = {
-  title: String,
+  title: string,
   classes: Classes,
   overrideClasses: Classes,
   children: React.Node,
@@ -251,7 +251,11 @@ class Layout extends React.PureComponent<Props> {
   }
 }
 
-export default controllable(compose(withWidth(), withStyles(styles))(Layout), [
-  'leftDrawerOpen',
-  'rightDrawerOpen',
-]);
+export default controllable(
+  // $FlowFixMe
+  compose(
+    withWidth(),
+    withStyles(styles),
+  )(Layout),
+  ['leftDrawerOpen', 'rightDrawerOpen'],
+);
