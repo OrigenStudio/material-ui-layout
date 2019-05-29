@@ -2823,7 +2823,7 @@ declare module '@material-ui/core/Hidden' {
     xlUp?: boolean,
     xsDown?: boolean,
     xsUp?: boolean,
-    children: React.Node,
+    children: React$Node,
   |};
 
   declare export default React$ComponentType<HiddenProps>;
