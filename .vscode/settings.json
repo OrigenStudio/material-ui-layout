@@ -1,5 +1,7 @@
 {
+  "editor.tabSize": 2,    
   "prettier.eslintIntegration": true,
-  // Path to flow binary. On Windows use '\\' as directory separator
-  "flow.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
+  "flow.useNPMPackagedFlow": true,
+  "javascript.validate.enable": false,
+  "typescript.validate.enable": false,
 }
