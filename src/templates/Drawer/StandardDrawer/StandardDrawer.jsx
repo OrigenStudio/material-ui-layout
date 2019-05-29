@@ -24,7 +24,13 @@ class StandardDrawer extends React.PureComponent<Props> {
   };
 
   render() {
-    const { firstList, secondList, classes, closeDrawer, closeDrawerOnClick } = this.props;
+    const {
+      firstList,
+      secondList,
+      classes,
+      closeDrawer,
+      closeDrawerOnClick,
+    } = this.props;
     return (
       <div className={classes.wrapper}>
         {firstList ? (

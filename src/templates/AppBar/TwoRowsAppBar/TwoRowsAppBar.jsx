@@ -22,7 +22,6 @@ type Props = {
   bottomLeftContent: React.Node,
   bottomCenterContent: React.Node,
   bottomRightContent: React.Node,
-  width: Breakpoint,
   smallScreenWidth: Breakpoint,
 };
 
@@ -54,12 +53,13 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
       bottomLeftContent,
       bottomCenterContent,
       bottomRightContent,
-      width,
       smallScreenWidth = 'xs',
     } = this.props;
 
     const theme: Theme = useTheme();
-    const smallScreen: boolean = useMediaQuery(theme.breakpoints.down('xs'));
+    const smallScreen: boolean = useMediaQuery(
+      theme.breakpoints.down(smallScreenWidth)
+    );
 
     return (
       <Toolbar>

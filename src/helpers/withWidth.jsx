@@ -8,8 +8,10 @@ import useWidth from './useWidth';
 export type WithWidthHOC<E: {}> = HOC<{ ...$Exact<E>, width: Breakpoint }, E>;
 
 export default function withWidth<Enhanced: {}>(): WithWidthHOC<Enhanced> {
-  return (Component) => {
-    const WithWidth = (props: Enhanced) => <Component {...props} width={useWidth()} />;
+  return Component => {
+    const WithWidth = (props: Enhanced) => (
+      <Component {...props} width={useWidth()} />
+    );
     return WithWidth;
   };
 }

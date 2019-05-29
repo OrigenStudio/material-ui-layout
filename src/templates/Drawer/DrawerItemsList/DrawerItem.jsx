@@ -31,7 +31,8 @@ class DrawerItem extends React.PureComponent<Props> {
   renderIcon = (item: Item) => {
     if (item.icon) {
       return <item.icon />;
-    } else if (item.iconName) {
+    }
+    if (item.iconName) {
       return <Icon>{item.iconName}</Icon>;
     }
     return <ArrowRightIcon />;

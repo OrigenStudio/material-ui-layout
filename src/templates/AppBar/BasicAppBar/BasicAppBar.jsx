@@ -14,7 +14,6 @@ import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
 import type { Theme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 import type { Classes } from '../../../types';
 import styles from './styles';
@@ -26,7 +25,6 @@ type Props = {
   logo: string,
   toggleLeftDrawer: Function,
   menuIconAlways: true | false,
-  width: Breakpoint,
   onLogoClick: Function,
 };
 
@@ -70,7 +68,7 @@ class BasicAppBar extends React.PureComponent<Props> {
   };
 
   render() {
-    const { links, menuIconAlways, width, classes } = this.props;
+    const { links, menuIconAlways, classes } = this.props;
     const theme: Theme = useTheme();
     const smallScreen: boolean = useMediaQuery(theme.breakpoints.down('xs'));
     return (

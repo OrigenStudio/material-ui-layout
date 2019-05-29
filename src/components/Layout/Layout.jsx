@@ -1,7 +1,6 @@
 // @flow
 
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -112,7 +111,6 @@ class Layout extends React.PureComponent<Props> {
       footerContent,
       stickyFooter,
       footerProps,
-      width,
       usingTwoRowAppBar,
     } = this.props;
 

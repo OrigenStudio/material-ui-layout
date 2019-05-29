@@ -21,6 +21,7 @@ class Footer extends React.PureComponent<Props> {
     color: 'inherit',
     className: '',
   };
+
   render() {
     const { classes, color, className: classNameProp, children } = this.props;
     const className: string = classNames(

@@ -19,6 +19,7 @@ class BasicDrawer extends React.PureComponent<Props> {
   static defaultProps = {
     closeDrawerOnClick: false,
   };
+
   render() {
     const { links, classes, closeDrawer, closeDrawerOnClick } = this.props;
     return (
