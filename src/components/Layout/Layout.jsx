@@ -5,11 +5,9 @@ import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
-import useTheme from '@material-ui/core/styles/useTheme';
-import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
-import type { Theme } from '@material-ui/core/styles';
 import controllable from 'react-controllables';
-import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+
+import withIsSmallScreen from '../../helpers/withIsSmallScreen';
 
 import type { Classes } from '../../types';
 import styles from './styles';
@@ -42,8 +40,8 @@ type Props = {
   rightDrawerType: string,
   rightDrawerUnder: true | false,
   rightDrawerProps: Object,
-  width: Breakpoint,
   usingTwoRowAppBar: true | false,
+  smallScreen: boolean,
 };
 
 // FIXME remove once material-ui drawer style is fixed
@@ -112,14 +110,13 @@ class Layout extends React.PureComponent<Props> {
       stickyFooter,
       footerProps,
       usingTwoRowAppBar,
+      smallScreen,
     } = this.props;
 
     // TODO change the way to overrideClasses
     // use classes instead of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
-    const theme: Theme = useTheme();
-    const smallScreen: boolean = useMediaQuery(theme.breakpoints.down('xs'));
     const mainLeftShift =
       !smallScreen &&
       (leftDrawerType === 'permanent' ||
@@ -260,7 +257,10 @@ class Layout extends React.PureComponent<Props> {
   }
 }
 
-export default controllable(compose(withStyles(styles))(Layout), [
-  'leftDrawerOpen',
-  'rightDrawerOpen',
-]);
+export default controllable(
+  compose(
+    withIsSmallScreen(),
+    withStyles(styles)
+  )(Layout),
+  ['leftDrawerOpen', 'rightDrawerOpen']
+);
