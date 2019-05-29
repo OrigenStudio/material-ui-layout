@@ -1,12 +1,21 @@
 module.exports = {
-  extends: 'airbnb',
   parser: 'babel-eslint',
-  plugins: ['flowtype'],
-  globals: {
-    graphql: true,
+  extends: [
+    'airbnb-base',
+    'plugin:react/recommended',
+    'plugin:flowtype/recommended',
+    'plugin:prettier/recommended',
+    'prettier/flowtype',
+  ],
+  plugins: ['prettier', 'react', 'flowtype'],
+  env: {
+    jest: true,
   },
-  rules: {
-    'react/prefer-stateless-function': 1,
-    'react/default-props-match-prop-types': ['error', { allowRequiredDefaults: true }],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx'],
+      },
+    },
   },
 };
