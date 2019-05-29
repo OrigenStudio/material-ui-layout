@@ -2400,10 +2400,10 @@ flow-annotation-check@1.8.0:
     glob "7.1.1"
     load-pkg "^3.0.1"
 
-flow-bin@^0.72.0:
-  version "0.72.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.72.0.tgz#12051180fb2db7ccb728fefe67c77e955e92a44d"
-  integrity sha1-EgURgPstt8y3KP7+Z8d+lV6SpE0=
+flow-bin@^0.99.0:
+  version "0.99.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.99.0.tgz#df035be2493825ddce0b2f26d1273747465b538c"
+  integrity sha512-PjTzcOwte2mq+aP+HFCQZw/AojltOnOdtZC9iPzkWJJdPH7nYSKkZhC4dFgP24BuXsJH6yZBZ48gEKsX04UegQ==
 
 flow-coverage-report@^0.5.0:
   version "0.5.0"

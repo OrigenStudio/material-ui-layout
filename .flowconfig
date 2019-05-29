@@ -1,6 +1,6 @@
 [ignore]
-flow-typed/**
 .*/node_modules/.*
+flow-typed/**
 
 [include]
 
