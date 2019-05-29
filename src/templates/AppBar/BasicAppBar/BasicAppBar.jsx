@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from '@material-ui/core/Hidden';
 import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
+import useTheme from '@material-ui/core/styles/useTheme';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
+import type { Theme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
@@ -44,9 +46,7 @@ class BasicAppBar extends React.PureComponent<Props> {
   };
 
   renderLogo = () => {
-    const {
-      classes, title, logo, onLogoClick,
-    } = this.props;
+    const { classes, title, logo, onLogoClick } = this.props;
     if (logo) {
       return (
         <div
@@ -70,29 +70,36 @@ class BasicAppBar extends React.PureComponent<Props> {
   };
 
   render() {
-    const {
-      links, menuIconAlways, width, classes,
-    } = this.props;
+    const { links, menuIconAlways, width, classes } = this.props;
+    const theme: Theme = useTheme();
+    const smallScreen: boolean = useMediaQuery(theme.breakpoints.down('xs'));
     return (
       <Toolbar className={classes.wrapper}>
-        {menuIconAlways || isWidthDown('xs', width) ? (
-          <IconButton color="inherit" aria-label="Menu" onClick={this.handleIconClick}>
+        {menuIconAlways || smallScreen ? (
+          <IconButton
+            color="inherit"
+            aria-label="Menu"
+            onClick={this.handleIconClick}
+          >
             <MenuIcon />
           </IconButton>
         ) : null}
         {this.renderLogo()}
         <Hidden xsDown>
           <div className={classes.links}>
-            {map(links, (link: Link): React.Element<any> => (
-              <Button
-                onClick={link.onClick || null}
-                href={link.href || undefined}
-                color="inherit"
-                key={link.label}
-              >
-                {link.label}
-              </Button>
-            ))}
+            {map(
+              links,
+              (link: Link): React.Element<any> => (
+                <Button
+                  onClick={link.onClick || null}
+                  href={link.href || undefined}
+                  color="inherit"
+                  key={link.label}
+                >
+                  {link.label}
+                </Button>
+              )
+            )}
           </div>
         </Hidden>
       </Toolbar>
@@ -100,4 +107,4 @@ class BasicAppBar extends React.PureComponent<Props> {
   }
 }
 
-export default compose(withWidth(), withStyles(styles))(BasicAppBar);
+export default compose(withStyles<string, *>(styles))(BasicAppBar);

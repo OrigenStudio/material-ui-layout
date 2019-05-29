@@ -4,7 +4,9 @@ import * as React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
+import useTheme from '@material-ui/core/styles/useTheme';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
+import type { Theme } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import compose from 'recompose/compose';
 import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
@@ -56,18 +58,32 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
       smallScreenWidth = 'xs',
     } = this.props;
 
-    const smallScreen = isWidthDown(smallScreenWidth, width);
+    const theme: Theme = useTheme();
+    const smallScreen: boolean = useMediaQuery(theme.breakpoints.down('xs'));
 
     return (
       <Toolbar>
-        <Grid container direction="column" className={classes.wrapper} spacing={2}>
+        <Grid
+          container
+          direction="column"
+          className={classes.wrapper}
+          spacing={2}
+        >
           <Grid
             container
             className={classNames(classes.row, classes.topRow)}
             justify="space-between"
             spacing={2}
           >
-            <Grid item style={style.item} xs={2} sm={4} md={3} lg={2} className={classes.left}>
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.left}
+            >
               {topLeftContent}
             </Grid>
             <Grid
@@ -83,7 +99,15 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
             >
               {topCenterContent}
             </Grid>
-            <Grid item style={style.item} xs={2} sm={4} md={3} lg={2} className={classes.right}>
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.right}
+            >
               {topRightContent}
             </Grid>
           </Grid>
@@ -93,7 +117,15 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
             justify="space-between"
             spacing={2}
           >
-            <Grid item style={style.item} xs={2} sm={4} md={3} lg={2} className={classes.left}>
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.left}
+            >
               {bottomLeftContent}
             </Grid>
             <Grid
@@ -109,7 +141,15 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
             >
               {bottomCenterContent}
             </Grid>
-            <Grid item style={style.item} xs={2} sm={4} md={3} lg={2} className={classes.right}>
+            <Grid
+              item
+              style={style.item}
+              xs={2}
+              sm={4}
+              md={3}
+              lg={2}
+              className={classes.right}
+            >
               {bottomRightContent}
             </Grid>
           </Grid>
@@ -119,4 +159,4 @@ class TwoRowsAppBar extends React.PureComponent<Props> {
   }
 }
 
-export default compose(withWidth(), withStyles(styles))(TwoRowsAppBar);
+export default compose(withStyles<string, *>(styles))(TwoRowsAppBar);

@@ -6,7 +6,9 @@ import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
-import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
+import useTheme from '@material-ui/core/styles/useTheme';
+import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
+import type { Theme } from '@material-ui/core/styles';
 import controllable from 'react-controllables';
 import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
@@ -118,14 +120,17 @@ class Layout extends React.PureComponent<Props> {
     // use classes instead of overrideClasses as material-ui
     const classes = { ...defaultClasses, ...overrideClasses };
 
-    const smallScreen: boolean = isWidthDown('xs', width);
+    const theme: Theme = useTheme();
+    const smallScreen: boolean = useMediaQuery(theme.breakpoints.down('xs'));
     const mainLeftShift =
       !smallScreen &&
-      (leftDrawerType === 'permanent' || (leftDrawerOpen && leftDrawerType === 'persistent'));
+      (leftDrawerType === 'permanent' ||
+        (leftDrawerOpen && leftDrawerType === 'persistent'));
 
     const mainRightShift =
       !smallScreen &&
-      (rightDrawerType === 'permanent' || (rightDrawerOpen && rightDrawerType === 'persistent'));
+      (rightDrawerType === 'permanent' ||
+        (rightDrawerOpen && rightDrawerType === 'persistent'));
 
     const mainClassnames: string = classNames(classes.main, {
       [`${classes.mainFixedAppBar}`]:
@@ -143,18 +148,20 @@ class Layout extends React.PureComponent<Props> {
 
     const footerClassnames: string = classNames(
       classes.footer,
-      footerProps ? footerProps.className : '',
+      footerProps ? footerProps.className : ''
     );
 
     const appBarLeftShift =
       !smallScreen &&
       (!leftDrawerUnder &&
-        ((leftDrawerOpen && leftDrawerType === 'persistent') || leftDrawerType === 'permanent'));
+        ((leftDrawerOpen && leftDrawerType === 'persistent') ||
+          leftDrawerType === 'permanent'));
 
     const appBarRightShift =
       !smallScreen &&
       (!rightDrawerUnder &&
-        ((rightDrawerOpen && rightDrawerType === 'persistent') || rightDrawerType === 'permanent'));
+        ((rightDrawerOpen && rightDrawerType === 'persistent') ||
+          rightDrawerType === 'permanent'));
 
     const appBarClassnames = classNames(classes.appBar, {
       [`${classes.appBarShift}`]: appBarLeftShift || appBarRightShift,
@@ -178,17 +185,17 @@ class Layout extends React.PureComponent<Props> {
     // FIXME find a better way to inject the closeDrawer prop
     const leftDrawerContentWithProps = leftDrawerContent
       ? React.cloneElement(leftDrawerContent, {
-        closeDrawer: this.handleLeftDrawerClose,
-        closeDrawerOnClick: smallScreen || leftDrawerType === 'temporary',
-        ...leftDrawerContent.props, // This feels a bit of an antipattern, investigate
-      })
+          closeDrawer: this.handleLeftDrawerClose,
+          closeDrawerOnClick: smallScreen || leftDrawerType === 'temporary',
+          ...leftDrawerContent.props, // This feels a bit of an antipattern, investigate
+        })
       : leftDrawerContent;
     const rightDrawerContentWithProps = rightDrawerContent
       ? React.cloneElement(rightDrawerContent, {
-        closeDrawer: this.handleRightDrawerClose,
-        closeDrawerOnClick: smallScreen || rightDrawerType === 'temporary',
-        ...rightDrawerContent.props, // This feels a bit of an antipattern, investigate
-      })
+          closeDrawer: this.handleRightDrawerClose,
+          closeDrawerOnClick: smallScreen || rightDrawerType === 'temporary',
+          ...rightDrawerContent.props, // This feels a bit of an antipattern, investigate
+        })
       : rightDrawerContent;
 
     return (
@@ -213,7 +220,9 @@ class Layout extends React.PureComponent<Props> {
             {...leftDrawerProps}
           >
             {/* add a header to move content down if screen is not small and under the appbar */}
-            {!smallScreen && leftDrawerUnder ? <div className={drawerHeaderClassnames} /> : null}
+            {!smallScreen && leftDrawerUnder ? (
+              <div className={drawerHeaderClassnames} />
+            ) : null}
             {leftDrawerContentWithProps}
           </Drawer>
         ) : null}
@@ -227,7 +236,9 @@ class Layout extends React.PureComponent<Props> {
             {...rightDrawerProps}
           >
             {/* add a header to move content down if screen is not small and under the appbar */}
-            {!smallScreen && rightDrawerUnder ? <div className={drawerHeaderClassnames} /> : null}
+            {!smallScreen && rightDrawerUnder ? (
+              <div className={drawerHeaderClassnames} />
+            ) : null}
             {rightDrawerContentWithProps}
           </Drawer>
         ) : null}
@@ -251,11 +262,7 @@ class Layout extends React.PureComponent<Props> {
   }
 }
 
-export default controllable(
-  // $FlowFixMe
-  compose(
-    withWidth(),
-    withStyles(styles),
-  )(Layout),
-  ['leftDrawerOpen', 'rightDrawerOpen'],
-);
+export default controllable(compose(withStyles(styles))(Layout), [
+  'leftDrawerOpen',
+  'rightDrawerOpen',
+]);
