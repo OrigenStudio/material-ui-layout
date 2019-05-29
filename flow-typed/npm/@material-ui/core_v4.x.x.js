@@ -3455,6 +3455,22 @@ declare module '@material-ui/core/FormHelperText/FormHelperText' {
   declare export * from '@material-ui/core/FormHelperText'
 }
 
+declare module '@material-ui/core/Toolbar' {
+  declare module.exports: any;
+}
+declare module '@material-ui/core/List' {
+  declare module.exports: any;
+}
+declare module '@material-ui/core/ListItem' {
+  declare module.exports: any;
+}
+declare module '@material-ui/core/ListItemIcon' {
+  declare module.exports: any;
+}
+declare module '@material-ui/core/ListItemText' {
+  declare module.exports: any;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 declare module '@material-ui/core' {
