@@ -2823,6 +2823,7 @@ declare module '@material-ui/core/Hidden' {
     xlUp?: boolean,
     xsDown?: boolean,
     xsUp?: boolean,
+    children: React.Node,
   |};
 
   declare export default React$ComponentType<HiddenProps>;
@@ -3469,6 +3470,35 @@ declare module '@material-ui/core/ListItemIcon' {
 }
 declare module '@material-ui/core/ListItemText' {
   declare module.exports: any;
+}
+
+declare module '@material-ui/core/useMediaQuery' {
+  declare export interface MuiMediaQueryListEvent {
+    matches: boolean;
+  }
+
+  declare export interface MuiMediaQueryList {
+    matches: boolean;
+    addListener: (listener: MuiMediaQueryListListener) => void;
+    removeListener: (listener: MuiMediaQueryListListener) => void;
+  }
+
+  declare export type MuiMediaQueryListListener = (
+    event: MuiMediaQueryListEvent
+  ) => void;
+
+  declare export interface Options {
+    defaultMatches?: boolean;
+    noSsr?: boolean;
+    ssrMatchMedia?: (query: string) => MuiMediaQueryList;
+  }
+
+  declare type UseMediaQuery = (query: string, options?: Options) => boolean;
+
+  declare export default UseMediaQuery;
+}
+declare module '@material-ui/core/useMediaQuery/useMediaQueryTheme' {
+  declare export { default } from '@material-ui/core/useMediaQuery';
 }
 
 ///////////////////////////////////////////////////////////////////////////////
