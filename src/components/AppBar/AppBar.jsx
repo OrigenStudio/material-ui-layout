@@ -18,11 +18,19 @@ type Props = {
 class AppBar extends React.PureComponent<Props> {
   render() {
     const {
-      children, position, classes, color, className, ...other
+      children,
+      position,
+      classes,
+      color,
+      className,
+      ...other
     } = this.props;
+
+    // $FlowFixMe
+    const newChildren = React.cloneElement(children, { ...other });
     return (
       <MaterialUIAppBar position={position} color={color} className={className}>
-        {React.cloneElement(children, { ...other })}
+        {newChildren}
       </MaterialUIAppBar>
     );
   }
