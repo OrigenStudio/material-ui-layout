@@ -10,8 +10,8 @@ import type { Classes } from '../../../types';
 import styles from './styles';
 
 type Props = {
-  firstList: Array<Object>,
-  secondList: Array<Object>,
+  firstList?: Array<Object>,
+  secondList?: Array<Object>,
   classes: Classes,
   closeDrawer: Function,
   closeDrawerOnClick: true | false,
@@ -19,14 +19,12 @@ type Props = {
 
 class StandardDrawer extends React.PureComponent<Props> {
   static defaultProps = {
-    firstList: null,
-    secondList: null,
+    firstList: undefined,
+    secondList: undefined,
   };
 
   render() {
-    const {
-      firstList, secondList, classes, closeDrawer, closeDrawerOnClick,
-    } = this.props;
+    const { firstList, secondList, classes, closeDrawer, closeDrawerOnClick } = this.props;
     return (
       <div className={classes.wrapper}>
         {firstList ? (
@@ -49,4 +47,4 @@ class StandardDrawer extends React.PureComponent<Props> {
   }
 }
 
-export default withStyles(styles)(StandardDrawer);
+export default withStyles<string, *>(styles)(StandardDrawer);

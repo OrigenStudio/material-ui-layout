@@ -20,9 +20,7 @@ class BasicDrawer extends React.PureComponent<Props> {
     closeDrawerOnClick: false,
   };
   render() {
-    const {
-      links, classes, closeDrawer, closeDrawerOnClick,
-    } = this.props;
+    const { links, classes, closeDrawer, closeDrawerOnClick } = this.props;
     return (
       <div className={classes.wrapper}>
         <DrawerItemsList
@@ -35,4 +33,4 @@ class BasicDrawer extends React.PureComponent<Props> {
   }
 }
 
-export default withStyles(styles)(BasicDrawer);
+export default withStyles<string, *>(styles)(BasicDrawer);
