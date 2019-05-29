@@ -3,19 +3,16 @@
 // TODO Is this component required anymore?
 
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import MaterialUIAppBar from '@material-ui/core/AppBar';
-import type { Position, Color } from '@material-ui/core/AppBar/AppBar';
+import type { AppBarProps } from '@material-ui/core/AppBar';
 
 import type { Classes } from '../../types';
-import styles from './styles';
 
 type Props = {
   classes: Classes,
   children: React.Element<any>,
-  position: Position,
-  color: Color,
   className: string,
+  ...AppBarProps,
 };
 
 class AppBar extends React.PureComponent<Props> {
@@ -31,4 +28,4 @@ class AppBar extends React.PureComponent<Props> {
   }
 }
 
-export default withStyles(styles)(AppBar);
+export default AppBar;
