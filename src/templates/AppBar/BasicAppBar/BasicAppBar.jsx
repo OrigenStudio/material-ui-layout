@@ -62,7 +62,7 @@ class BasicAppBar extends React.PureComponent<Props> {
     }
     return (
       <ButtonBase onClick={onLogoClick} className={classes.titleButton}>
-        <Typography variant="title" color="inherit" className={classes.flex}>
+        <Typography variant="h6" color="inherit" className={classes.flex}>
           {title}
         </Typography>
       </ButtonBase>
