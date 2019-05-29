@@ -22,18 +22,16 @@ class Footer extends React.PureComponent<Props> {
     className: '',
   };
   render() {
-    const {
-      classes, color, className: classNameProp, children,
-    } = this.props;
+    const { classes, color, className: classNameProp, children } = this.props;
     const className: string = classNames(
       classes.footer,
       {
         [classes[`color${capitalize(color)}`]]: color !== 'inherit',
       },
-      classNameProp,
+      classNameProp
     );
     return <div className={className}>{children}</div>;
   }
 }
 
-export default withStyles(styles)(Footer);
+export default withStyles<string, *>(styles)(Footer);
