@@ -1,6 +1,8 @@
 // @flow
 
-const styles = (theme: Object): Object => {
+import type { Theme } from '@material-ui/core/styles';
+
+const styles = (theme: Theme): Object => {
   const backgroundColorDefault: string =
     theme.palette.type === 'light' ? theme.palette.grey[100] : theme.palette.grey[900];
   return {
