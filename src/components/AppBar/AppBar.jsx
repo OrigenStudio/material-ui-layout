@@ -6,16 +6,18 @@ import * as React from 'react';
 import MaterialUIAppBar from '@material-ui/core/AppBar';
 import type { AppBarProps } from '@material-ui/core/AppBar';
 
-import type { Classes } from '../../types';
-
 type Props = {
-  classes: Classes,
+  classes?: $ElementType<AppBarProps, 'classes'>,
   children: React.Element<any>,
   className: string,
   ...AppBarProps,
 };
 
 class AppBar extends React.PureComponent<Props> {
+  static defaultProps = {
+    classes: {},
+  };
+
   render() {
     const {
       children,
@@ -29,7 +31,12 @@ class AppBar extends React.PureComponent<Props> {
     // $FlowFixMe
     const newChildren = React.cloneElement(children, { ...other });
     return (
-      <MaterialUIAppBar position={position} color={color} className={className}>
+      <MaterialUIAppBar
+        position={position}
+        color={color}
+        className={className}
+        classes={classes}
+      >
         {newChildren}
       </MaterialUIAppBar>
     );

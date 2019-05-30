@@ -32,131 +32,129 @@ const style = {
   },
 };
 
-class TwoRowsAppBar extends React.PureComponent<Props> {
-  static defaultProps = {
-    classes: {},
-    topLeftContent: null,
-    topCenterContent: null,
-    topRightContent: null,
-    bottomLeftContent: null,
-    bottomCenterContent: null,
-    bottomRightContent: null,
-    smallScreenWidth: 'xs',
-  };
+const TwoRowsAppBar = ({
+  classes,
+  topLeftContent,
+  topCenterContent,
+  topRightContent,
+  bottomLeftContent,
+  bottomCenterContent,
+  bottomRightContent,
+  smallScreenWidth = 'xs',
+}: Props): React.Node => {
+  const theme: Theme = useTheme();
+  const smallScreen: boolean = useMediaQuery(
+    theme.breakpoints.down(smallScreenWidth)
+  );
 
-  render() {
-    const {
-      classes,
-      topLeftContent,
-      topCenterContent,
-      topRightContent,
-      bottomLeftContent,
-      bottomCenterContent,
-      bottomRightContent,
-      smallScreenWidth = 'xs',
-    } = this.props;
-
-    const theme: Theme = useTheme();
-    const smallScreen: boolean = useMediaQuery(
-      theme.breakpoints.down(smallScreenWidth)
-    );
-
-    return (
-      <Toolbar>
+  return (
+    <Toolbar>
+      <Grid
+        container
+        direction="column"
+        className={classes.wrapper}
+        spacing={2}
+      >
         <Grid
           container
-          direction="column"
-          className={classes.wrapper}
+          className={classNames(classes.row, classes.topRow)}
+          justify="space-between"
           spacing={2}
         >
           <Grid
-            container
-            className={classNames(classes.row, classes.topRow)}
-            justify="space-between"
-            spacing={2}
+            item
+            style={style.item}
+            xs={2}
+            sm={4}
+            md={3}
+            lg={2}
+            className={classes.left}
           >
-            <Grid
-              item
-              style={style.item}
-              xs={2}
-              sm={4}
-              md={3}
-              lg={2}
-              className={classes.left}
-            >
-              {topLeftContent}
-            </Grid>
-            <Grid
-              item
-              style={style.item}
-              xs={8}
-              sm={4}
-              md={6}
-              lg={8}
-              className={classNames(classes.topCenter, {
-                [`${classes.centerBig}`]: !smallScreen,
-              })}
-            >
-              {topCenterContent}
-            </Grid>
-            <Grid
-              item
-              style={style.item}
-              xs={2}
-              sm={4}
-              md={3}
-              lg={2}
-              className={classes.right}
-            >
-              {topRightContent}
-            </Grid>
+            {topLeftContent}
           </Grid>
           <Grid
-            container
-            className={classNames(classes.row, classes.bottomRow)}
-            justify="space-between"
-            spacing={2}
+            item
+            style={style.item}
+            xs={8}
+            sm={4}
+            md={6}
+            lg={8}
+            className={classNames(classes.topCenter, {
+              [`${classes.centerBig}`]: !smallScreen,
+            })}
           >
-            <Grid
-              item
-              style={style.item}
-              xs={2}
-              sm={4}
-              md={3}
-              lg={2}
-              className={classes.left}
-            >
-              {bottomLeftContent}
-            </Grid>
-            <Grid
-              item
-              style={style.item}
-              xs={8}
-              sm={4}
-              md={6}
-              lg={8}
-              className={classNames(classes.bottomCenter, {
-                [`${classes.centerBig}`]: !smallScreen,
-              })}
-            >
-              {bottomCenterContent}
-            </Grid>
-            <Grid
-              item
-              style={style.item}
-              xs={2}
-              sm={4}
-              md={3}
-              lg={2}
-              className={classes.right}
-            >
-              {bottomRightContent}
-            </Grid>
+            {topCenterContent}
+          </Grid>
+          <Grid
+            item
+            style={style.item}
+            xs={2}
+            sm={4}
+            md={3}
+            lg={2}
+            className={classes.right}
+          >
+            {topRightContent}
           </Grid>
         </Grid>
-      </Toolbar>
-    );
-  }
-}
+        <Grid
+          container
+          className={classNames(classes.row, classes.bottomRow)}
+          justify="space-between"
+          spacing={2}
+        >
+          <Grid
+            item
+            style={style.item}
+            xs={2}
+            sm={4}
+            md={3}
+            lg={2}
+            className={classes.left}
+          >
+            {bottomLeftContent}
+          </Grid>
+          <Grid
+            item
+            style={style.item}
+            xs={8}
+            sm={4}
+            md={6}
+            lg={8}
+            className={classNames(classes.bottomCenter, {
+              [`${classes.centerBig}`]: !smallScreen,
+            })}
+          >
+            {bottomCenterContent}
+          </Grid>
+          <Grid
+            item
+            style={style.item}
+            xs={2}
+            sm={4}
+            md={3}
+            lg={2}
+            className={classes.right}
+          >
+            {bottomRightContent}
+          </Grid>
+        </Grid>
+      </Grid>
+    </Toolbar>
+  );
+};
 
-export default compose(withStyles<string, *>(styles))(TwoRowsAppBar);
+TwoRowsAppBar.defaultProps = {
+  classes: {},
+  topLeftContent: null,
+  topCenterContent: null,
+  topRightContent: null,
+  bottomLeftContent: null,
+  bottomCenterContent: null,
+  bottomRightContent: null,
+  smallScreenWidth: 'xs',
+};
+
+export default compose(withStyles<string, *>(styles))(
+  React.memo<Props>(TwoRowsAppBar)
+);
