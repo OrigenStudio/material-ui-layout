@@ -7,7 +7,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier/flowtype',
   ],
-  plugins: ['prettier', 'react', 'flowtype'],
+  plugins: ['prettier', 'react', 'flowtype', 'react-hooks'],
   env: {
     jest: true,
   },
@@ -17,5 +17,9 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
     },
+  },
+  rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
   },
 };
