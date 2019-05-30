@@ -1,6 +1,6 @@
 {
   "name": "material-ui-layout",
-  "version": "4.0.0-rc.2",
+  "version": "4.0.0-rc.3",
   "description": "Layout components for material-ui",
   "main": "./lib/index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "layout",
     "react"
   ],
-  "author": "polguixe",
+  "author": "Origen Studio <hello@origen.studio>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Zetoff/material-ui-layout/issues"

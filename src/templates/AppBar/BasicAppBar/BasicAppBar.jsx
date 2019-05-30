@@ -61,16 +61,17 @@ const BasicAppBar = ({
       />
       <Hidden xsDown>
         <div className={classes.links}>
-          {links.map(link => (
-            <Button
-              key={link.label}
-              onClick={link.onClick || null}
-              href={link.href || undefined}
-              color="inherit"
-            >
-              {link.label}
-            </Button>
-          ))}
+          {links &&
+            links.map(link => (
+              <Button
+                key={link.label}
+                onClick={link.onClick || null}
+                href={link.href || undefined}
+                color="inherit"
+              >
+                {link.label}
+              </Button>
+            ))}
         </div>
       </Hidden>
     </Toolbar>
