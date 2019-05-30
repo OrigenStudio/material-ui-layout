@@ -21,7 +21,7 @@ export type Link = {
 };
 
 export type Props = {
-  links: Array<Link>,
+  links?: Array<Link>,
   classes: { [ClassKey]: string },
   title: string,
   logo: string,
@@ -80,6 +80,7 @@ const BasicAppBar = ({
 
 BasicAppBar.defaultProps = {
   menuIconAlways: false,
+  links: undefined,
 };
 
 export default withStyles<ClassKey, *>(styles)(BasicAppBar);
