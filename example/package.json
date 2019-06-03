@@ -1,0 +1,88 @@
+{
+  "name": "material-ui-layout-example",
+  "private": true,
+  "description": "Example using Material UI Layout",
+  "version": "4.0.0",
+  "author": "Origen Studio <hello@origen.studio>",
+  "dependencies": {
+    "@material-ui/core": "^4.0.1",
+    "@material-ui/styles": "^4.0.1",
+    "classnames": "^2.2.6",
+    "css-mediaquery": "^0.1.2",
+    "gatsby": "^2.2.0",
+    "gatsby-image": "^2.0.20",
+    "gatsby-plugin-layout": "^1.0.11",
+    "gatsby-plugin-manifest": "^2.0.9",
+    "gatsby-plugin-material-ui": "^2.0.1",
+    "gatsby-plugin-offline": "^2.0.16",
+    "gatsby-plugin-react-helmet": "^3.0.2",
+    "gatsby-plugin-sharp": "^2.0.14",
+    "gatsby-plugin-sitemap": "^2.0.12",
+    "gatsby-plugin-web-font-loader": "^1.0.4",
+    "gatsby-source-filesystem": "^2.0.8",
+    "gatsby-transformer-sharp": "^2.1.8",
+    "graphql": "14.2.1",
+    "material-ui-layout": "^4.0.0-rc.5",
+    "prop-types": "^15.6.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-helmet": "^5.2.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "format": "prettier --write \"src/**/*.js\"",
+    "flow": "flow",
+    "flow:coverage": "flow-coverage-report -i 'src/**/*.js' -i 'src/**/*.jsx' -x 'src/scripts/*' -x 'src/schema.flow.js' --threshold 75",
+    "eslint": "eslint src/ --ext js,jsx",
+    "test": "yarn eslint && yarn flow && yarn flow:coverage && echo \"Write more tests! -> https://gatsby.app/unit-testing\"",
+    "test:jest": "yarn jest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
+    "@babel/plugin-proposal-json-strings": "^7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "babel-eslint": "^10.0.1",
+    "cli-table": "^0.3.1",
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-flowtype": "^3.6.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.2.2",
+    "eslint-plugin-jsx-a11y": "^6.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "flow-bin": "^0.99.0",
+    "flow-coverage-report": "^0.6.1",
+    "gatsby-plugin-eslint": "^2.0.4",
+    "gatsby-plugin-flow": "^1.0.4",
+    "jest": "^24.0.0",
+    "prettier": "^1.15.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "engines": {
+    "node": "^10.15.x",
+    "yarn": "^1.13.0"
+  }
+}
