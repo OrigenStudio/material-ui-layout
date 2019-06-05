@@ -19,6 +19,8 @@ for Material-UI v4 use
 
 `npm install material-ui-layout@4.0.0-rc.5`
 
+we are currently testing it in production. Final release candidate for v4 coming soon.
+
 
 ## Examples
 
