@@ -15,6 +15,11 @@ This library uses [Material-UI](https://material-ui.com) and the layout is based
 
 `npm install material-ui-layout`
 
+for Material-UI v4 use
+
+`npm install material-ui-layout@4.0.0-rc.5`
+
+
 ## Examples
 
 Check the examples at [demo page](https://material-ui-layout.origen.studio/)
