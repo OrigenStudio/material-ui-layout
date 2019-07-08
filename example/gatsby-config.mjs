@@ -10,6 +10,7 @@ module.exports = {
     title: `Material UI Layout by Origen Studio`,
     description: `Example using Material UI Layout`,
     author: `Origen Studio <hello@origen.studio>`,
+    version: "4.0.0",
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

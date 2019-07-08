@@ -8,6 +8,15 @@ import { INITIAL_BREAKPOINT } from './constants';
 
 /* GatsbyStarterConfig: material-ui theme */
 let theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#E72476',
+    },
+    secondary: {
+      main: '#2FA7CD',
+      contrastText: '#FFFFFF',
+    },
+  },
   props: {
     MuiWithWidth: { initialWidth: INITIAL_BREAKPOINT },
     MuiUseMediaQuery: {
