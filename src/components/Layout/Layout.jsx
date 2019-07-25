@@ -5,11 +5,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import classnames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
 
 import styles from './styles';
 import useIsBreakpointDown from '../../hooks/useIsBreakpointDown';
 import Footer from '../Footer';
+import AppBar from '../AppBar';
 import LayoutActions from './LayoutActions';
 
 type ClassKey = $Keys<$Call<typeof styles, any>>;
@@ -186,6 +186,8 @@ const Layout = ({
         {appBarContent ? (
           <AppBar
             position={appBarPosition}
+            toggleLeftDrawer={toggleLeftDrawer}
+            toggleRightDrawer={toggleRightDrawer}
             className={appBarClassnames}
             {...appBarProps}
           >
