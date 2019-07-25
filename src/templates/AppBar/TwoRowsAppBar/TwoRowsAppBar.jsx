@@ -8,7 +8,6 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
 import type { Theme } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import compose from 'recompose/compose';
 import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
 import type { Classes } from '../../../types';
@@ -155,6 +154,4 @@ TwoRowsAppBar.defaultProps = {
   smallScreenWidth: 'xs',
 };
 
-export default compose(withStyles<string, *>(styles))(
-  React.memo<Props>(TwoRowsAppBar)
-);
+export default withStyles<string, *>(styles)(React.memo<Props>(TwoRowsAppBar));
