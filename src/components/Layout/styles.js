@@ -44,10 +44,10 @@ const styles = (theme: Object): Object => ({
     }),
   },
   mainFixedAppBar: {
-    marginTop: `${theme.mixins.toolbar.minHeight}px`,
+    marginTop: theme.mixins.toolbar.minHeight,
   },
   mainFixedTwoRowAppBar: {
-    marginTop: `${theme.mixins.toolbar.minHeight * 2}px`,
+    marginTop: theme.mixins.toolbar.minHeight * 2,
   },
   mainGrow: {
     flex: 1,
@@ -59,19 +59,17 @@ const styles = (theme: Object): Object => ({
   },
   drawerHeader: theme.mixins.toolbar,
   drawerHeaderTwoRowAppBar: {
-    minHeight: `${theme.mixins.toolbar.minHeight * 2}px`,
+    minHeight: theme.mixins.toolbar.minHeight * 2,
   },
   [theme.breakpoints.up('sm')]: {
     mainFixedAppBar: {
-      marginTop: `${
-        theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight
-      }px`,
+      marginTop: theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight,
     },
     mainFixedTwoRowAppBar: {
-      marginTop: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight *
-        2}px`,
+      marginTop: theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2,
     },
     mainGrow: {
+      // eslint-disable-next-line prettier/prettier
       height: `calc(100vh - ${
         theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight
       }px)`,
@@ -81,8 +79,7 @@ const styles = (theme: Object): Object => ({
         .minHeight * 2}px)`,
     },
     drawerHeaderTwoRowAppBar: {
-      minHeight: `${theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight *
-        2}px`,
+      minHeight: theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2,
     },
   },
   mainStickyFooter: {

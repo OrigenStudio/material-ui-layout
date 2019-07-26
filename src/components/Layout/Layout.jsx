@@ -1,25 +1,22 @@
 // @flow
 
 import * as React from 'react';
-import compose from 'recompose/compose';
-import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
+import withStyles from '@material-ui/core/styles/withStyles';
+import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
+import classnames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
-import controllable from 'react-controllables';
+import AppBar from '@material-ui/core/AppBar';
 
-import withIsSmallScreen from '../../helpers/withIsSmallScreen';
-
-import type { Classes } from '../../types';
 import styles from './styles';
-
-import AppBar from '../AppBar';
+import useIsBreakpointDown from '../../hooks/useIsBreakpointDown';
 import Footer from '../Footer';
 import LayoutActions from './LayoutActions';
 
+type ClassKey = $Keys<$Call<typeof styles, any>>;
+
 type Props = {
   title: string,
-  classes: Classes,
-  overrideClasses: Classes,
+  classes: { [ClassKey]: string },
   children: React.Node,
   appBarPosition: string,
   appBarContent: React.Element<any>,
@@ -28,20 +25,16 @@ type Props = {
   stickyFooter: true | false,
   footerContent: React.Element<any>,
   footerProps: Object,
-  leftDrawerOpen: true | false,
-  onLeftDrawerOpenChange: boolean => void,
   leftDrawerContent: React.Element<any>,
   leftDrawerType: string,
   leftDrawerUnder: true | false,
   leftDrawerProps: Object,
-  rightDrawerOpen: true | false,
-  onRightDrawerOpenChange: boolean => void,
   rightDrawerContent: React.Element<any>,
   rightDrawerType: string,
   rightDrawerUnder: true | false,
   rightDrawerProps: Object,
   usingTwoRowAppBar: true | false,
-  smallScreen: boolean,
+  breakpoint: Breakpoint,
 };
 
 // FIXME remove once material-ui drawer style is fixed
@@ -50,166 +43,159 @@ const isDocked = type => type === 'permanent' || type === 'persistent';
 // TODO refactor all smallScreen logic
 // TODO smallScreen logic should be named xSmallScreen logic
 
-class Layout extends React.PureComponent<Props> {
-  static defaultProps = {
-    title: '',
-    appBarPosition: 'fixed',
-    stickyFooter: false,
-    leftDrawerOpen: false,
-    leftDrawerUnder: false,
-    rightDrawerOpen: false,
-    rightDrawerUnder: false,
-    mainGrow: true,
-    usingTwoRowAppBar: false,
-  };
+const Layout = ({
+  classes,
+  children,
+  appBarContent,
+  appBarPosition,
+  appBarProps,
+  mainGrow,
+  leftDrawerContent,
+  leftDrawerType,
+  leftDrawerUnder,
+  leftDrawerProps,
+  rightDrawerContent,
+  rightDrawerType,
+  rightDrawerUnder,
+  rightDrawerProps,
+  footerContent,
+  stickyFooter,
+  footerProps,
+  usingTwoRowAppBar,
+  breakpoint,
+}: Props) => {
+  const smallScreen = useIsBreakpointDown(breakpoint);
 
-  handleLeftDrawerClose = () => {
-    if (!this.props.onLeftDrawerOpenChange) return;
+  const [leftDrawerOpen, setLeftDrawerOpen] = React.useState<boolean>(false);
+  const [rightDrawerOpen, setRightDrawerOpen] = React.useState<boolean>(false);
 
-    this.props.onLeftDrawerOpenChange(false);
-  };
+  const handleLeftDrawerClose = React.useCallback(() => {
+    if (!setLeftDrawerOpen) return;
+    setLeftDrawerOpen(false);
+  }, [setLeftDrawerOpen]);
 
-  toggleLeftDrawer = () => {
-    if (!this.props.onLeftDrawerOpenChange) return;
+  const toggleLeftDrawer = React.useCallback(() => {
+    if (!setLeftDrawerOpen) return;
+    setLeftDrawerOpen(!leftDrawerOpen);
+  }, [leftDrawerOpen, setLeftDrawerOpen]);
 
-    this.props.onLeftDrawerOpenChange(!this.props.leftDrawerOpen);
-  };
+  const handleRightDrawerClose = React.useCallback(() => {
+    if (!setRightDrawerOpen) return;
+    setRightDrawerOpen(false);
+  }, [setRightDrawerOpen]);
 
-  handleRightDrawerClose = () => {
-    if (!this.props.onRightDrawerOpenChange) return;
+  const toggleRightDrawer = React.useCallback(() => {
+    if (!setRightDrawerOpen) return;
+    setRightDrawerOpen(!rightDrawerOpen);
+  }, [setRightDrawerOpen, rightDrawerOpen]);
 
-    this.props.onRightDrawerOpenChange(false);
-  };
+  const layoutActions = React.useMemo(
+    () => ({
+      handleLeftDrawerClose,
+      toggleLeftDrawer,
+      handleRightDrawerClose,
+      toggleRightDrawer,
+    }),
+    [
+      handleLeftDrawerClose,
+      toggleLeftDrawer,
+      handleRightDrawerClose,
+      toggleRightDrawer,
+    ]
+  );
 
-  toggleRightDrawer = () => {
-    if (!this.props.onRightDrawerOpenChange) return;
+  const mainLeftShift =
+    !smallScreen &&
+    (leftDrawerType === 'permanent' ||
+      (leftDrawerOpen && leftDrawerType === 'persistent'));
 
-    this.props.onRightDrawerOpenChange(!this.props.rightDrawerOpen);
-  };
+  const mainRightShift =
+    !smallScreen &&
+    (rightDrawerType === 'permanent' ||
+      (rightDrawerOpen && rightDrawerType === 'persistent'));
 
-  render() {
-    const {
-      classes: defaultClasses,
-      overrideClasses,
-      children,
-      appBarContent,
-      appBarPosition,
-      appBarProps,
-      mainGrow,
-      leftDrawerContent,
-      leftDrawerOpen,
-      leftDrawerType,
-      leftDrawerUnder,
-      leftDrawerProps,
-      rightDrawerContent,
-      rightDrawerOpen,
-      rightDrawerType,
-      rightDrawerUnder,
-      rightDrawerProps,
-      footerContent,
-      stickyFooter,
-      footerProps,
-      usingTwoRowAppBar,
-      smallScreen,
-    } = this.props;
+  const mainClassnames = classnames(classes.main, {
+    [`${classes.mainFixedAppBar}`]:
+      appBarContent && appBarPosition === 'fixed' && !usingTwoRowAppBar,
+    [`${classes.mainFixedTwoRowAppBar}`]:
+      appBarContent && appBarPosition === 'fixed' && usingTwoRowAppBar,
+    [`${classes.mainGrow}`]: mainGrow && !usingTwoRowAppBar,
+    [`${classes.mainGrowTwoRowAppBar}`]: mainGrow && usingTwoRowAppBar,
+    [`${classes.mainStickyFooter}`]: stickyFooter,
+    [`${classes.mainShift}`]: mainLeftShift || mainRightShift,
+    [`${classes.mainLeftShift}`]: mainLeftShift,
+    [`${classes.mainRightShift}`]: mainRightShift,
+    [`${classes.mainLeftRightShift}`]: mainLeftShift && mainRightShift,
+  });
 
-    // TODO change the way to overrideClasses
-    // use classes instead of overrideClasses as material-ui
-    const classes = { ...defaultClasses, ...overrideClasses };
+  const footerClassnames = classnames(
+    classes.footer,
+    footerProps ? footerProps.className : ''
+  );
 
-    const mainLeftShift =
-      !smallScreen &&
-      (leftDrawerType === 'permanent' ||
-        (leftDrawerOpen && leftDrawerType === 'persistent'));
+  const appBarLeftShift =
+    !smallScreen &&
+    (!leftDrawerUnder &&
+      ((leftDrawerOpen && leftDrawerType === 'persistent') ||
+        leftDrawerType === 'permanent'));
 
-    const mainRightShift =
-      !smallScreen &&
-      (rightDrawerType === 'permanent' ||
-        (rightDrawerOpen && rightDrawerType === 'persistent'));
+  const appBarRightShift =
+    !smallScreen &&
+    (!rightDrawerUnder &&
+      ((rightDrawerOpen && rightDrawerType === 'persistent') ||
+        rightDrawerType === 'permanent'));
 
-    const mainClassnames: string = classNames(classes.main, {
-      [`${classes.mainFixedAppBar}`]:
-        appBarContent && appBarPosition === 'fixed' && !usingTwoRowAppBar,
-      [`${classes.mainFixedTwoRowAppBar}`]:
-        appBarContent && appBarPosition === 'fixed' && usingTwoRowAppBar,
-      [`${classes.mainGrow}`]: mainGrow && !usingTwoRowAppBar,
-      [`${classes.mainGrowTwoRowAppBar}`]: mainGrow && usingTwoRowAppBar,
-      [`${classes.mainStickyFooter}`]: stickyFooter,
-      [`${classes.mainShift}`]: mainLeftShift || mainRightShift,
-      [`${classes.mainLeftShift}`]: mainLeftShift,
-      [`${classes.mainRightShift}`]: mainRightShift,
-      [`${classes.mainLeftRightShift}`]: mainLeftShift && mainRightShift,
-    });
+  const appBarClassnames = classnames(classes.appBar, {
+    [`${classes.appBarShift}`]: appBarLeftShift || appBarRightShift,
+    [`${classes.appBarLeftShift}`]: appBarLeftShift,
+    [`${classes.appBarRightShift}`]: appBarRightShift,
+    [`${classes.appBarLeftRightShift}`]: appBarLeftShift && appBarRightShift,
+  });
 
-    const footerClassnames: string = classNames(
-      classes.footer,
-      footerProps ? footerProps.className : ''
-    );
+  const leftDrawerPaperClassnames = classnames(classes.drawerPaper, {
+    [`${classes.drawerPaperUnder}`]: !smallScreen && leftDrawerUnder,
+  });
+  const rightDrawerPaperClassnames = classnames(classes.drawerPaper, {
+    [`${classes.drawerPaperUnder}`]: !smallScreen && rightDrawerUnder,
+    [`${classes.rightDrawerDockedFix}`]: isDocked(rightDrawerType), // FIXME remove once material-ui drawer style is fixed
+  });
+  const drawerHeaderClassnames = classnames({
+    [`${classes.drawerHeader}`]: !usingTwoRowAppBar,
+    [`${classes.drawerHeaderTwoRowAppBar}`]: usingTwoRowAppBar,
+  });
 
-    const appBarLeftShift =
-      !smallScreen &&
-      (!leftDrawerUnder &&
-        ((leftDrawerOpen && leftDrawerType === 'persistent') ||
-          leftDrawerType === 'permanent'));
+  // FIXME find a better way to inject the closeDrawer prop
+  const leftDrawerContentWithProps = leftDrawerContent
+    ? React.cloneElement(leftDrawerContent, {
+        closeDrawer: handleLeftDrawerClose,
+        closeDrawerOnClick: smallScreen || leftDrawerType === 'temporary',
+        ...leftDrawerContent.props, // This feels a bit of an antipattern, investigate
+      })
+    : leftDrawerContent;
+  const rightDrawerContentWithProps = rightDrawerContent
+    ? React.cloneElement(rightDrawerContent, {
+        closeDrawer: handleRightDrawerClose,
+        closeDrawerOnClick: smallScreen || rightDrawerType === 'temporary',
+        ...rightDrawerContent.props, // This feels a bit of an antipattern, investigate
+      })
+    : rightDrawerContent;
 
-    const appBarRightShift =
-      !smallScreen &&
-      (!rightDrawerUnder &&
-        ((rightDrawerOpen && rightDrawerType === 'persistent') ||
-          rightDrawerType === 'permanent'));
-
-    const appBarClassnames = classNames(classes.appBar, {
-      [`${classes.appBarShift}`]: appBarLeftShift || appBarRightShift,
-      [`${classes.appBarLeftShift}`]: appBarLeftShift,
-      [`${classes.appBarRightShift}`]: appBarRightShift,
-      [`${classes.appBarLeftRightShift}`]: appBarLeftShift && appBarRightShift,
-    });
-
-    const leftDrawerPaperClassnames = classNames(classes.drawerPaper, {
-      [`${classes.drawerPaperUnder}`]: !smallScreen && leftDrawerUnder,
-    });
-    const rightDrawerPaperClassnames = classNames(classes.drawerPaper, {
-      [`${classes.drawerPaperUnder}`]: !smallScreen && rightDrawerUnder,
-      [`${classes.rightDrawerDockedFix}`]: isDocked(rightDrawerType), // FIXME remove once material-ui drawer style is fixed
-    });
-    const drawerHeaderClassnames = classNames({
-      [`${classes.drawerHeader}`]: !usingTwoRowAppBar,
-      [`${classes.drawerHeaderTwoRowAppBar}`]: usingTwoRowAppBar,
-    });
-
-    // FIXME find a better way to inject the closeDrawer prop
-    const leftDrawerContentWithProps = leftDrawerContent
-      ? React.cloneElement(leftDrawerContent, {
-          closeDrawer: this.handleLeftDrawerClose,
-          closeDrawerOnClick: smallScreen || leftDrawerType === 'temporary',
-          ...leftDrawerContent.props, // This feels a bit of an antipattern, investigate
-        })
-      : leftDrawerContent;
-    const rightDrawerContentWithProps = rightDrawerContent
-      ? React.cloneElement(rightDrawerContent, {
-          closeDrawer: this.handleRightDrawerClose,
-          closeDrawerOnClick: smallScreen || rightDrawerType === 'temporary',
-          ...rightDrawerContent.props, // This feels a bit of an antipattern, investigate
-        })
-      : rightDrawerContent;
-
-    return (
+  return (
+    <LayoutActions.Provider value={layoutActions}>
       <div className={classes.layout}>
         {appBarContent ? (
           <AppBar
             position={appBarPosition}
-            toggleLeftDrawer={this.toggleLeftDrawer}
-            toggleRightDrawer={this.toggleRightDrawer}
             className={appBarClassnames}
             {...appBarProps}
           >
             {appBarContent}
           </AppBar>
         ) : null}
-        {leftDrawerContent ? (
+        {leftDrawerContentWithProps ? (
           <Drawer
             open={leftDrawerOpen}
-            onClose={this.handleLeftDrawerClose}
+            onClose={handleLeftDrawerClose}
             variant={!smallScreen ? leftDrawerType : 'temporary'}
             classes={{ paper: leftDrawerPaperClassnames }}
             {...leftDrawerProps}
@@ -221,11 +207,11 @@ class Layout extends React.PureComponent<Props> {
             {leftDrawerContentWithProps}
           </Drawer>
         ) : null}
-        {rightDrawerContent ? (
+        {rightDrawerContentWithProps ? (
           <Drawer
             anchor="right"
             open={rightDrawerOpen}
-            onClose={this.handleRightDrawerClose}
+            onClose={handleRightDrawerClose}
             variant={!smallScreen ? rightDrawerType : 'temporary'}
             classes={{ paper: rightDrawerPaperClassnames }}
             {...rightDrawerProps}
@@ -237,30 +223,27 @@ class Layout extends React.PureComponent<Props> {
             {rightDrawerContentWithProps}
           </Drawer>
         ) : null}
-        <LayoutActions.Provider
-          value={{
-            toggleLeftDrawer: this.toggleLeftDrawer,
-            toggleRightDrawer: this.toggleRightDrawer,
-            handleLeftDrawerClose: this.handleLeftDrawerClose,
-            handleRightDrawerClose: this.handleRightDrawerClose,
-          }}
-        >
-          <main className={mainClassnames}>{children}</main>
-        </LayoutActions.Provider>
+        <main className={mainClassnames}>{children}</main>
         {footerContent ? (
           <Footer {...footerProps} className={footerClassnames}>
             {footerContent}
           </Footer>
         ) : null}
       </div>
-    );
-  }
-}
+    </LayoutActions.Provider>
+  );
+};
 
-export default controllable(
-  compose(
-    withIsSmallScreen(),
-    withStyles(styles)
-  )(Layout),
-  ['leftDrawerOpen', 'rightDrawerOpen']
-);
+Layout.defaultProps = {
+  title: '',
+  appBarPosition: 'fixed',
+  stickyFooter: false,
+  leftDrawerOpen: false,
+  leftDrawerUnder: false,
+  rightDrawerOpen: false,
+  rightDrawerUnder: false,
+  mainGrow: true,
+  usingTwoRowAppBar: false,
+};
+
+export default withStyles<ClassKey, *>(styles)(Layout);
