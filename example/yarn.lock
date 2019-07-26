@@ -8787,10 +8787,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-material-ui-layout@^4.0.0-rc.8:
-  version "4.0.0-rc.8"
-  resolved "https://registry.yarnpkg.com/material-ui-layout/-/material-ui-layout-4.0.0-rc.8.tgz#08df98add2567d1b330e3f27e73e78cb9da8a2c6"
-  integrity sha512-TYfKJCJWG3cPy7EAZc1kxKeofBRk4/xGmLa652kqzhUp7afBraNuT4DQS1jLo6pkgNEfLoi/as3c26H6KtjwZQ==
+material-ui-layout@^4.0.0-rc.9:
+  version "4.0.0-rc.9"
+  resolved "https://registry.yarnpkg.com/material-ui-layout/-/material-ui-layout-4.0.0-rc.9.tgz#d5af67574b7cc24be6b0bf1cf6aaf3fcfdba6d79"
+  integrity sha512-y6j4xYgmFt8BgBrXlxFnPQpAiXhskVH4oD38SA3rEiOnvgUMKxHNCnFYDdxsXLVWjItluYsFiRL26BNSrUhFlA==
   dependencies:
     classnames "^2.2.5"
     lodash "^4.17.4"
