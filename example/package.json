@@ -26,7 +26,7 @@
     "gatsby-source-filesystem": "^2.1.6",
     "gatsby-transformer-sharp": "^2.2.4",
     "graphql": "14.2.1",
-    "material-ui-layout": "file:.yalc/material-ui-layout",
+    "material-ui-layout": "^4.0.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
