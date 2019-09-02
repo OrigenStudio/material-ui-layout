@@ -69,6 +69,7 @@ const styles = (theme: Object): Object => ({
       marginTop: theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2,
     },
     mainGrow: {
+      // eslint-disable-next-line prettier/prettier
       minHeight: `calc(100vh - ${
         theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight
       }px)`,
