@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "material-ui-layout": {
+      "signature": "56adaadb48f9fb7143ab1630087bc206",
+      "file": true,
+      "replaced": "^4.0.0-rc.9"
+    }
+  }
+}
