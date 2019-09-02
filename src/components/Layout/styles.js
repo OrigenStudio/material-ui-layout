@@ -51,11 +51,11 @@ const styles = (theme: Object): Object => ({
   },
   mainGrow: {
     flex: 1,
-    height: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    minHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
   },
   mainGrowTwoRowAppBar: {
     flex: 1,
-    height: `calc(100vh - ${theme.mixins.toolbar.minHeight * 2}px)`,
+    minHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight * 2}px)`,
   },
   drawerHeader: theme.mixins.toolbar,
   drawerHeaderTwoRowAppBar: {
@@ -69,14 +69,14 @@ const styles = (theme: Object): Object => ({
       marginTop: theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2,
     },
     mainGrow: {
-      // eslint-disable-next-line prettier/prettier
-      height: `calc(100vh - ${
+      minHeight: `calc(100vh - ${
         theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight
       }px)`,
     },
     mainGrowTwoRowAppBar: {
-      height: `calc(100vh - ${theme.mixins.toolbar[theme.breakpoints.up('sm')]
-        .minHeight * 2}px)`,
+      minHeight: `calc(100vh - ${theme.mixins.toolbar[
+        theme.breakpoints.up('sm')
+      ].minHeight * 2}px)`,
     },
     drawerHeaderTwoRowAppBar: {
       minHeight: theme.mixins.toolbar[theme.breakpoints.up('sm')].minHeight * 2,
