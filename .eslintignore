@@ -1,1 +1,3 @@
 packages/_buffer
+flow-typed/**
+lib/**

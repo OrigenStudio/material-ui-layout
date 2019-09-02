@@ -1,6 +1,7 @@
 // @flow
+import type { Theme } from '@material-ui/core/styles';
 
-const styles = (theme: Object): Object => ({
+const styles = (theme: Theme) => ({
   wrapper: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -9,7 +10,7 @@ const styles = (theme: Object): Object => ({
     flex: 1,
   },
   titleButton: {
-    padding: theme.spacing.unit,
+    padding: theme.spacing(1),
   },
   logo: {
     flex: 1,
@@ -28,3 +29,5 @@ const styles = (theme: Object): Object => ({
 });
 
 export default styles;
+
+export type ClassKey = $Keys<$Call<typeof styles, Theme>>;

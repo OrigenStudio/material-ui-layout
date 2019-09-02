@@ -19,9 +19,7 @@ type Props = {
 
 class DrawerItemsList extends React.PureComponent<Props> {
   render() {
-    const {
-      items, classes, closeDrawer, closeDrawerOnClick,
-    } = this.props;
+    const { items, classes, closeDrawer, closeDrawerOnClick } = this.props;
     return (
       <List className={classes.list}>
         {map(items, item => (
@@ -36,4 +34,4 @@ class DrawerItemsList extends React.PureComponent<Props> {
   }
 }
 
-export default withStyles(styles)(DrawerItemsList);
+export default withStyles<string, *>(styles)(DrawerItemsList);
