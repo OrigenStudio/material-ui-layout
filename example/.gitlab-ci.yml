@@ -1,0 +1,100 @@
+image: node:10
+
+cache:
+  paths:
+    - node_modules/
+    - public/
+    - .cache/
+
+stages:
+  - setup
+  - test
+  - build
+  - post-build-test
+  - deploy
+
+setup:
+  stage: setup
+  script:
+    - yarn
+  only:
+    - master
+    - triggers
+    - merge_requests
+    - develop
+
+test:
+  stage: test
+  script:
+    - yarn test
+  only:
+    - merge_requests
+    - develop
+    - master
+
+build:
+  stage: build
+  script:
+    - node_modules/.bin/gatsby build
+  artifacts:
+    paths:
+      - public
+  only:
+    - merge_requests
+    - develop
+    - master
+    - triggers
+
+post-build-test:
+  stage: post-build-test
+  script:
+    - yarn test
+#   - yarn test:lighthouse
+  dependencies:
+    - build
+  only:
+    - merge_requests
+    - develop
+    - master
+
+preview-merge-request:
+  stage: deploy
+  when: manual
+  script:
+    - node_modules/.bin/netlify deploy --message "Successful *Preview* of commit *$CI_COMMIT_TITLE* in merge request *$CI_MERGE_REQUEST_TITLE* from *$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME* to  *$CI_MERGE_REQUEST_TARGET_BRANCH_NAME*"
+  dependencies:
+    - build
+  only:
+    - merge_requests
+
+preview-staging:
+  stage: deploy
+  when: manual
+  script:
+    - node_modules/.bin/netlify deploy --message "Successful *Staging Preview* of commit *$CI_COMMIT_TITLE*"
+  dependencies:
+    - build
+  only:
+    - develop
+
+deploy-production:
+  stage: deploy
+  script:
+    - node_modules/.bin/netlify deploy --prod --message "Successful *Production deploy* of commit *$CI_COMMIT_TITLE*"
+    - yarn purge-production-cache ## Make sure is configured properly --> Check documentation
+  dependencies:
+    - build
+  only:
+    - master
+  except:
+    - triggers
+
+deploy-production-trigger:
+  stage: deploy
+  script:
+    - node_modules/.bin/netlify deploy --prod --message "Successful *Production deploy* triggered by the *API*, $CI_PIPELINE_SOURCE from this pipeline $CI_PIPELINE_URL"
+    - yarn purge-production-cache ## Make sure is configured properly --> Check documentation
+  dependencies:
+    - build
+  only:
+    - triggers
