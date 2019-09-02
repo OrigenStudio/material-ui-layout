@@ -5,11 +5,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 import classnames from 'classnames';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
 
 import styles from './styles';
 import useIsBreakpointDown from '../../hooks/useIsBreakpointDown';
 import Footer from '../Footer';
+import AppBar from '../AppBar';
 import LayoutActions from './LayoutActions';
 
 type ClassKey = $Keys<$Call<typeof styles, any>>;
@@ -21,19 +21,23 @@ type Props = {
   appBarPosition: string,
   appBarContent: React.Element<any>,
   appBarProps: Object,
-  mainGrow: true | false,
-  stickyFooter: true | false,
+  mainGrow: boolean,
+  stickyFooter: boolean,
   footerContent: React.Element<any>,
   footerProps: Object,
+  leftDrawerOpen: boolean,
+  onLeftDrawerOpenChange: boolean => void,
   leftDrawerContent: React.Element<any>,
   leftDrawerType: string,
-  leftDrawerUnder: true | false,
+  leftDrawerUnder: boolean,
   leftDrawerProps: Object,
+  rightDrawerOpen: boolean,
+  onRightDrawerOpenChange: boolean => void,
   rightDrawerContent: React.Element<any>,
   rightDrawerType: string,
-  rightDrawerUnder: true | false,
+  rightDrawerUnder: boolean,
   rightDrawerProps: Object,
-  usingTwoRowAppBar: true | false,
+  usingTwoRowAppBar: boolean,
   breakpoint: Breakpoint,
 };
 
@@ -43,6 +47,15 @@ const isDocked = type => type === 'permanent' || type === 'persistent';
 // TODO refactor all smallScreen logic
 // TODO smallScreen logic should be named xSmallScreen logic
 
+const useDrawerState = (
+  open: boolean | void,
+  setOpen: void | (boolean => void)
+) => {
+  const state = React.useState<boolean>(false);
+
+  return open === undefined || !setOpen ? state : [open, setOpen];
+};
+
 const Layout = ({
   classes,
   children,
@@ -50,10 +63,14 @@ const Layout = ({
   appBarPosition,
   appBarProps,
   mainGrow,
+  leftDrawerOpen: props$leftDrawerOpen,
+  onLeftDrawerOpenChange,
   leftDrawerContent,
   leftDrawerType,
   leftDrawerUnder,
   leftDrawerProps,
+  rightDrawerOpen: props$rightDrawerOpen,
+  onRightDrawerOpenChange,
   rightDrawerContent,
   rightDrawerType,
   rightDrawerUnder,
@@ -66,8 +83,14 @@ const Layout = ({
 }: Props) => {
   const smallScreen = useIsBreakpointDown(breakpoint);
 
-  const [leftDrawerOpen, setLeftDrawerOpen] = React.useState<boolean>(false);
-  const [rightDrawerOpen, setRightDrawerOpen] = React.useState<boolean>(false);
+  const [leftDrawerOpen, setLeftDrawerOpen] = useDrawerState(
+    props$leftDrawerOpen,
+    onLeftDrawerOpenChange
+  );
+  const [rightDrawerOpen, setRightDrawerOpen] = useDrawerState(
+    props$rightDrawerOpen,
+    onRightDrawerOpenChange
+  );
 
   const handleLeftDrawerClose = React.useCallback(() => {
     if (!setLeftDrawerOpen) return;
@@ -186,6 +209,8 @@ const Layout = ({
         {appBarContent ? (
           <AppBar
             position={appBarPosition}
+            toggleLeftDrawer={toggleLeftDrawer}
+            toggleRightDrawer={toggleRightDrawer}
             className={appBarClassnames}
             {...appBarProps}
           >
@@ -246,4 +271,4 @@ Layout.defaultProps = {
   usingTwoRowAppBar: false,
 };
 
-export default withStyles<ClassKey, *>(styles)(Layout);
+export default withStyles<ClassKey, *>(styles)(React.memo<Props>(Layout));

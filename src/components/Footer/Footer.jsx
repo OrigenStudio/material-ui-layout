@@ -35,4 +35,4 @@ Footer.defaultProps = {
   className: '',
 };
 
-export default withStyles<string, *>(styles)(Footer);
+export default withStyles<string, *>(styles)(React.memo<Props>(Footer));
