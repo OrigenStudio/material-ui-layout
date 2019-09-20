@@ -10,13 +10,12 @@ export type Props = {
   data: Object,
 };
 
-const LayoutControllerPage = ({ data }: Props) =>
-  console.log(useTheme()) || (
-    <LayoutExample
-      title={data.site.siteMetadata.title}
-      version={data.site.siteMetadata.version}
-    />
-  );
+const LayoutControllerPage = ({ data }: Props) => (
+  <LayoutExample
+    title={data.site.siteMetadata.title}
+    version={data.site.siteMetadata.version}
+  />
+);
 
 export default LayoutControllerPage;
 
