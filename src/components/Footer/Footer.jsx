@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 import capitalize from 'lodash/capitalize';
 
@@ -35,4 +35,4 @@ Footer.defaultProps = {
   className: '',
 };
 
-export default withStyles<string, *>(styles)(React.memo<Props>(Footer));
+export default withStyles<string, *, *>(styles)(React.memo<Props>(Footer));

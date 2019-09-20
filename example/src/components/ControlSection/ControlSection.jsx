@@ -4,7 +4,7 @@ import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import styles, { type ClassKey } from './styles';
 
@@ -37,4 +37,4 @@ const ControlSection = ({
   </Grid>
 );
 
-export default withStyles<ClassKey, *>(styles)(ControlSection);
+export default withStyles<ClassKey, *, *>(styles)(ControlSection);

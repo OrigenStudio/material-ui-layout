@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from '@material-ui/core/Hidden';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
 import type { Theme } from '@material-ui/core/styles';
@@ -83,4 +83,4 @@ BasicAppBar.defaultProps = {
   links: undefined,
 };
 
-export default withStyles<ClassKey, *>(styles)(BasicAppBar);
+export default withStyles<ClassKey, *, *>(styles)(BasicAppBar);

@@ -3,9 +3,9 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import okaidia from 'react-syntax-highlighter/dist/esm/styles/prism/okaidia';
 import classNames from 'classnames';
 
 // TODO Use gatsby methods
@@ -120,4 +120,4 @@ const LandingSection = ({ classes, title, version }: Props) => (
   </div>
 );
 
-export default withStyles<ClassKey, *>(styles)(LandingSection);
+export default withStyles<ClassKey, *, *>(styles)(LandingSection);

@@ -101,4 +101,4 @@ PageWrapper.defaultProps = {
   guttersV: false,
 };
 
-export default withStyles<ClassKey, *>(styles)(PageWrapper);
+export default withStyles<ClassKey, *, *>(styles)(PageWrapper);

@@ -52,7 +52,7 @@ const HomePage = ({ classes, data }: Props) => {
   );
 };
 
-export default withStyles<ClassKey, *>(styles)(HomePage);
+export default withStyles<ClassKey, *, *>(styles)(HomePage);
 
 export const query = graphql`
   query HomePageQuery {

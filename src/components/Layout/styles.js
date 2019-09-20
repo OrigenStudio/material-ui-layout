@@ -50,11 +50,11 @@ const styles = (theme: Object): Object => ({
     marginTop: theme.mixins.toolbar.minHeight * 2,
   },
   mainGrow: {
-    flex: 1,
+    flex: [[1, 0, 'auto']],
     minHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
   },
   mainGrowTwoRowAppBar: {
-    flex: 1,
+    flex: [[1, 0, 'auto']],
     minHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight * 2}px)`,
   },
   drawerHeader: theme.mixins.toolbar,
@@ -84,7 +84,7 @@ const styles = (theme: Object): Object => ({
     },
   },
   mainStickyFooter: {
-    flex: 1,
+    flex: [[1, 0, 'auto']],
   },
   mainShift: {
     transition: theme.transitions.create(['margin', 'width'], {

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import BasicDrawer from 'material-ui-layout/lib/templates/Drawer/BasicDrawer';
 import Layout from 'material-ui-layout';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { navigate } from 'gatsby-link';
 
 import AppBarSimple from '../AppBarSimple';
@@ -43,4 +43,4 @@ const BasicLayout = ({ classes, title, children }: Props) => (
   </Layout>
 );
 
-export default withStyles<ClassKey, *>(styles)(BasicLayout);
+export default withStyles<ClassKey, *, *>(styles)(BasicLayout);

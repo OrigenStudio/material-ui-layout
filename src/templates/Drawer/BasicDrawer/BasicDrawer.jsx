@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import DrawerItemsList from '../DrawerItemsList';
 
@@ -34,4 +34,4 @@ class BasicDrawer extends React.PureComponent<Props> {
   }
 }
 
-export default withStyles<string, *>(styles)(BasicDrawer);
+export default withStyles<string, *, *>(styles)(BasicDrawer);

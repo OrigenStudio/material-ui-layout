@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
 import type { Theme } from '@material-ui/core/styles';
@@ -154,4 +154,6 @@ TwoRowsAppBar.defaultProps = {
   smallScreenWidth: 'xs',
 };
 
-export default withStyles<string, *>(styles)(React.memo<Props>(TwoRowsAppBar));
+export default withStyles<string, *, *>(styles)(
+  React.memo<Props>(TwoRowsAppBar)
+);
