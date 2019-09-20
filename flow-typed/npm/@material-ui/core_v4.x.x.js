@@ -1,8 +1,22 @@
 declare module '@material-ui/core/@@utils' {
   // Utilities used in this definition:
 
+  declare export type $$If<X: boolean, Then, Else = empty> = $Call<
+    ((true, Then, Else) => Then) & ((false, Then, Else) => Else),
+    X,
+    Then,
+    Else
+  >;
+
   // Currently the flow.js do not support `Pick` operator
   declare export type $$Pick<NamesMap, Obj> = $Diff<Obj, $Diff<Obj, NamesMap>>;
+}
+declare module '@material-ui/core/@@popper.js' {
+  declare export type ReferenceObject = {
+    clientHeight: number,
+    clientWidth: number,
+    getBoundingClientRect(): ClientRect,
+  };
 }
 declare module '@material-ui/core/@@JSS' {
   declare export type GenerateId = (rule: {}, sheet?: mixed) => string;
@@ -237,6 +251,9 @@ declare module '@material-ui/core/@@csstype' {
   declare type MinWidthProperty<TLength> = Globals | TLength | string;
 
   declare export type Properties<TLength> = {
+    // add indexer property so css selectors, media queries or other css
+    // rules can be specified and used recursively
+    [cssRule: string]: string | number | Properties<TLength>,
     alignContent?: AlignContentProperty,
     alignItems?: AlignItemsProperty,
     alignSelf?: AlignSelfProperty,
@@ -284,7 +301,10 @@ declare module '@material-ui/core/@@dom' {
   declare export type CSS$Properties = Properties<string | number>;
 
   // At the moment there is no possibility to withdraw the React types for Html Element.
-  // ... in the future will be replaced with exact types for a specific element (div, li, inout, ...)
+  // ... in the future will be replaced with exact types for a specific element (div, li, inout, a, ...)
+  declare export type SVGElementAttributes = {};
+  declare export type HTMLTableSectionAttributes = {};
+  declare export type HTMLTableRowAttributes = {};
   declare export type HTMLImageAttributes = {};
   declare export type HTMLDivAttributes = {};
   declare export type HTMLInputAttributes = {};
@@ -294,8 +314,9 @@ declare module '@material-ui/core/@@dom' {
   declare export type HTMLLIAttributes = {};
   declare export type HTMLElementAttributes = {};
   declare export type HTMLParagraphAttributes = {};
+  declare export type HTMLAnchorAttributes = {};
 }
-declare module '@material-ui/core/transitions/transition/@@react-transition-group/Transition' {
+declare module '@material-ui/core/@@react-transition-group' {
   // The version `2.9.1` based on this: //
   // https://github.com/mui-org/material-ui/blob/d0c7b070156b30908cee2b9c657469a3d6f406b3/packages/material-ui/package.json#L44
 
@@ -429,7 +450,7 @@ declare module '@material-ui/core/OverridableComponent' {
 
   declare export type OverridableComponent<M: OverridableTypeMap> = {
     (props: DefaultComponentProps<M>): React$Node,
-    // TODO: readme issue 1
+    // TODO more info: README.md Issue 1
     // <Component: React$ElementType>(
     //   props: { component?: Component } & OverrideProps<M, Component>
     // ): React$Node,
@@ -456,9 +477,9 @@ declare module '@material-ui/core/OverridableComponent' {
   /**
    * props if `component={Component}` is NOT used
    */
-  declare export type DefaultComponentProps<
-    M: OverridableTypeMap
-  > = BaseProps<M> &
+  declare export type DefaultComponentProps<M: OverridableTypeMap> = BaseProps<
+    M
+  > &
     $Diff<
       React$ElementConfig<$ElementType<M, 'defaultComponent'>>,
       BaseProps<M>
@@ -471,7 +492,10 @@ declare module '@material-ui/core/OverridableComponent' {
     M,
     'props'
   > &
-    CommonProps<M>;
+    CommonProps<M> & {
+      // TODO more info: README.md Issue 1
+      component?: React$ElementType,
+    };
 
   /**
    * props that are valid for material-ui components
@@ -488,7 +512,7 @@ declare module '@material-ui/core/transitions' {
     TransitionStatus as BaseTransitionStatus,
     TransitionProps as BaseTransitionProps,
     TransitionActions,
-  } from '@material-ui/core/transitions/transition/@@react-transition-group/Transition';
+  } from '@material-ui/core/@@react-transition-group';
   import type { CSSProperties } from '@material-ui/core/styles/withStyles';
   import type { $$Pick } from '@material-ui/core/@@utils';
 
@@ -751,7 +775,7 @@ declare module '@material-ui/core/styles/createBreakpoints' {
   declare export default (options: BreakpointsOptions) => Breakpoints;
 }
 declare module '@material-ui/core/styles/createSpacing' {
-  declare export type SpacingArgument = number | string;
+  declare export type SpacingArgument = number;
 
   declare export type Spacing = {
     (value1: SpacingArgument): number,
@@ -897,7 +921,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     direction?: Direction,
     mixins?: MixinsOptions,
     overrides?: Overrides,
-    palette?: PaletteOptions,
+    palette?: PaletteOptions | Palette,
     props?: ComponentsProps,
     shadows?: Shadows,
     spacing?: SpacingOptions,
@@ -906,20 +930,21 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     zIndex?: ZIndexOptions,
   |};
 
-  declare export type Theme = {|
-    shape: Shape,
+  declare export type Theme = {
     breakpoints: Breakpoints,
     direction: Direction,
     mixins: Mixins,
-    overrides?: Overrides,
     palette: Palette,
-    props?: ComponentsProps,
     shadows: Shadows,
+    shape: Shape,
     spacing: Spacing,
     transitions: Transitions,
     typography: Typography,
     zIndex: ZIndex,
-  |};
+
+    overrides?: Overrides,
+    props?: ComponentsProps,
+  };
 
   declare export default (options?: ThemeOptions) => Theme;
 }
@@ -1032,7 +1057,7 @@ declare module '@material-ui/core/styles/createStyles' {
   import type { StyleRules } from '@material-ui/core/styles/withStyles';
 
   declare export default {
-    <C: string>(styles: StyleRules<C>): StyleRules<C>,
+    <P: {}, C: string>(styles: StyleRules<P, C>): StyleRules<P, C>,
   };
 }
 declare module '@material-ui/core/styles/createTypography' {
@@ -1102,23 +1127,41 @@ declare module '@material-ui/core/styles/createTypography' {
   ) => Typography;
 }
 declare module '@material-ui/core/styles/makeStyles' {
-  import type {
-    ClassKeyOfStyles,
-    ClassNameMap,
-    PropsOfStyles,
-    Styles,
-    WithStylesOptions,
-  } from '@material-ui/core/styles/withStyles';
+  import type { Theme } from '@material-ui/core/styles/createMuiTheme';
+  import type { StyleRules } from '@material-ui/core/styles/withStyles';
 
-  declare export type StylesHook<S: Styles<*, *>> = (
-    props: PropsOfStyles<S>
-  ) => ClassNameMap<ClassKeyOfStyles<S>>;
+  declare export type StylesHook<Props, Stl> = (
+    props?: { +classes?: { [$Keys<Stl>]: string } } & Props
+  ) => $ObjMap<Stl, () => string>;
+
+  declare export type MakeStylesOptions = {|
+    flip?: boolean,
+    name?: string,
+    defaultTheme?: Theme,
+  |};
 
   declare export default {
-    <Theme: mixed, Props: {}, ClassKey: string>(
-      styles: Styles<Theme, Props, ClassKey>,
-      options?: WithStylesOptions<Theme>
-    ): StylesHook<Styles<Theme, Props, ClassKey>>,
+    <Props, Thm: Theme, Stl: StyleRules<Props, string>>(
+      callback: (theme: Thm) => Stl,
+      ...rest: Array<empty>
+    ): StylesHook<Props, Stl>,
+
+    <Props, Thm: Theme, Stl: StyleRules<Props, string>>(
+      callback: (theme: Thm) => Stl,
+      options: MakeStylesOptions,
+      ...rest: Array<empty>
+    ): StylesHook<Props, Stl>,
+
+    <Props, Stl: StyleRules<Props, string>>(
+      styles: Stl,
+      ...rest: Array<empty>
+    ): StylesHook<Props, Stl>,
+
+    <Props, Stl: StyleRules<Props, string>>(
+      styles: Stl,
+      options: MakeStylesOptions,
+      ...rest: Array<empty>
+    ): StylesHook<Props, Stl>,
   };
 }
 declare module '@material-ui/core/styles/overrides' {
@@ -1181,59 +1224,118 @@ declare module '@material-ui/core/styles/useTheme' {
 declare module '@material-ui/core/styles/withStyles' {
   import type { StyleSheetFactoryOptions } from '@material-ui/core/@@JSS';
   import type { CSS$Properties } from '@material-ui/core/@@dom';
-  import type { Theme } from '@material-ui/core/styles/createMuiTheme';
+  import type { $$If } from '@material-ui/core/@@utils';
+  import type { Theme as MuiTheme } from '@material-ui/core/styles/createMuiTheme';
 
   declare export type CSSProperties = CSS$Properties;
 
-  declare export type StyleRules<ClassKey: string> = {
-    [ClassKey]: CSSProperties,
+  declare export type CSSStyleRuleBase =
+    | void
+    | string
+    | number
+    | $ReadOnlyArray<CSSStyleRuleBase>;
+
+  declare export type CSSStyleRule<Props> =
+    | CSSStyleRuleBase
+    // TODO: remove `$Shape`, README.md Issue 3
+    | $Shape<{ [string]: CSSStyleRule<Props> }>
+    | ((props: Props) => CSSStyleRule<Props>);
+
+  declare export type StyleRule<Props> =
+    // TODO: remove `$Shape`, README.md Issue 3
+    | $Shape<{ [string]: CSSStyleRule<Props> }>
+    | ((props: Props) => StyleRule<Props>);
+
+  declare export type StyleRules<Props, ClassKey> = {
+    +[ClassKey]: StyleRule<Props>,
   };
 
-  declare export type StyleRulesCallback<ClassKey: string> = (
+  declare export type StyleRulesCallback<Theme, Props, ClassKey> = (
     theme: Theme
-  ) => StyleRules<ClassKey>;
+  ) => StyleRules<Props, ClassKey>;
 
-  declare export type Styles<ClassKey: string> =
-    | StyleRules<ClassKey>
-    | StyleRulesCallback<ClassKey>;
-
-  declare type _PropsOfStyles<Props: {}, S: Styles<any, Props, any>> = Props;
-  declare type _ClassKeyOfStyles<
-    ClassKey: string,
-    S: Styles<any, any, ClassKey>
-  > = ClassKey;
-
-  declare export type PropsOfStyles<S: Styles<*, *, *>> = _PropsOfStyles<*, S>;
-  declare export type ClassKeyOfStyles<S: Styles<*, *, *>> = _ClassKeyOfStyles<
-    *
-  >;
+  declare export type Styles<Theme, Props, ClassKey> =
+    | StyleRules<Props, ClassKey>
+    | StyleRulesCallback<Theme, Props, ClassKey>;
 
   declare export type WithStylesOptions = StyleSheetFactoryOptions & {
     flip?: boolean,
     name?: string,
   };
 
-  declare export type ClassNameMap<Keys: string> = { [Keys]: string };
+  declare export type ClassNameMap<Keys> = { [Keys]: string };
 
-  declare export type StyledComponentProps<ClassesKeys: string> = {
+  declare export type StyledComponentProps<ClassesKeys> = {
     classes?: ClassNameMap<ClassesKeys>,
     innerRef?: React$Ref<any>,
   };
 
+  declare export type ClassKeyOfStyles$ClassKey<ClassKey: string> = ClassKey;
+
+  declare export type ClassKeyOfStyles$Rules<
+    Rules: StyleRules<any, any>
+  > = $Keys<Rules>;
+
+  declare export type ClassKeyOfStyles$RulesCallback<
+    RulesCallback: StyleRulesCallback<any, any, any>
+  > = ClassKeyOfStyles$Rules<$Call<RulesCallback, any>>;
+
+  declare export type WithStyles$ClassKey<
+    ClassKey: string,
+    IncludeTheme: boolean = false
+  > = {
+    classes: ClassNameMap<ClassKeyOfStyles$ClassKey<ClassKey>>,
+    ...$Exact<$$If<IncludeTheme, { theme: MuiTheme }, {}>>,
+  };
+
+  declare export type WithStyles$Rules<
+    Rules: StyleRules<any, any>,
+    IncludeTheme: boolean = false
+  > = {
+    classes: ClassNameMap<ClassKeyOfStyles$Rules<Rules>>,
+    ...$Exact<$$If<IncludeTheme, { theme: MuiTheme }, {}>>,
+  };
+
+  declare export type WithStyles$RulesCallback<
+    RulesCallback: StyleRulesCallback<any, any, any>,
+    IncludeTheme: boolean = false
+  > = {
+    classes: ClassNameMap<ClassKeyOfStyles$RulesCallback<RulesCallback>>,
+    ...$Exact<$$If<IncludeTheme, { theme: MuiTheme }, {}>>,
+  };
+
+  declare export type WithStyles<
+    ClassKeyOrStyles:
+      | string
+      | StyleRules<any, any>
+      | StyleRulesCallback<any, any, any>,
+    IncludeTheme: boolean = false
+  > = WithStyles$ClassKey<ClassKeyOrStyles, IncludeTheme> &
+    WithStyles$Rules<ClassKeyOrStyles, IncludeTheme> &
+    WithStyles$RulesCallback<ClassKeyOrStyles, IncludeTheme>;
+
   declare export default {
-    <ClassKey: string, Options: WithStylesOptions & { withTheme: true }>(
-      style: Styles<ClassKey>,
+    <
+      ClassKey: string,
+      Options: WithStylesOptions & { withTheme: true },
+      Props: {}
+    >(
+      style: Styles<MuiTheme, Props, ClassKey>,
       options?: Options
-    ): <Comp: React$ComponentType<*>>(
+    ): <Comp: React$ComponentType<Props>>(
       Component: Comp
     ) => React$ComponentType<
       $Diff<React$ElementConfig<Comp>, { classes: any, theme: any }> &
         StyledComponentProps<ClassKey>
     >,
-    <ClassKey: string, Options: WithStylesOptions & { withTheme?: false }>(
-      style: Styles<ClassKey>,
+    <
+      ClassKey: string,
+      Options: WithStylesOptions & { withTheme?: false },
+      Props: {}
+    >(
+      style: Styles<MuiTheme, Props, ClassKey>,
       options?: Options
-    ): <Comp: React$ComponentType<*>>(
+    ): <Comp: React$ComponentType<Props>>(
       Component: Comp
     ) => React$ComponentType<
       $Diff<React$ElementConfig<Comp>, { classes: any }> &
@@ -1286,7 +1388,6 @@ declare module '@material-ui/core/styles/MuiThemeProvider' {
 declare module '@material-ui/core/styles' {
   declare export * from '@material-ui/core/styles/colorManipulator'
   declare export {
-    default as createMuiTheme,
     Theme,
     Direction,
   } from '@material-ui/core/styles/createMuiTheme';
@@ -1296,29 +1397,16 @@ declare module '@material-ui/core/styles' {
     SimplePaletteColorOptions,
   } from '@material-ui/core/styles/createPalette';
   declare export {
-    default as createStyles,
-  } from '@material-ui/core/styles/createStyles';
-  declare export {
     TypographyStyle,
   } from '@material-ui/core/styles/createTypography';
-  declare export {
-    default as makeStyles,
-  } from '@material-ui/core/styles/makeStyles';
   declare export { ComponentsPropsList } from '@material-ui/core/styles/props';
   declare export * from '@material-ui/core/styles/transitions'
   declare export {
-    default as useTheme,
-  } from '@material-ui/core/styles/useTheme';
-  declare export {
-    default as withStyles,
     StyleRules,
     StyleRulesCallback,
     StyledComponentProps,
   } from '@material-ui/core/styles/withStyles';
-  declare export {
-    default as withTheme,
-    WithTheme,
-  } from '@material-ui/core/styles/withTheme';
+  declare export { WithTheme } from '@material-ui/core/styles/withTheme';
   declare export {
     default as MuiThemeProvider,
   } from '@material-ui/core/styles/MuiThemeProvider';
@@ -1531,80 +1619,31 @@ declare module '@material-ui/core/BottomNavigation/BottomNavigation' {
 }
 
 declare module '@material-ui/core/Box' {
-  import type { $$Pick } from '@material-ui/core/@@utils';
   import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
-  import type { CSSProperties } from '@material-ui/core/styles/withStyles';
 
-  declare type PropsByCSSProperties = {
-    ...$$Pick<
-      {
-        alignContent: any,
-        alignItems: any,
-        alignSelf: any,
-        border: any,
-        borderBottom: any,
-        borderColor: any,
-        borderLeft: any,
-        borderRadius: any,
-        borderRight: any,
-        borderTop: any,
-        bottom: any,
-        boxShadow: any,
-        color: any,
-        cursor: any,
-        display: any,
-        flex: any,
-        flexDirection: any,
-        flexGrow: any,
-        flexShrink: any,
-        flexWrap: any,
-        fontFamily: any,
-        fontSize: any,
-        fontWeight: any,
-        height: any,
-        justifyContent: any,
-        left: any,
-        maxHeight: any,
-        maxWidth: any,
-        minHeight: any,
-        minWidth: any,
-        overflowX: any,
-        overflowY: any,
-        position: any,
-        right: any,
-        textAlign: any,
-        top: any,
-        width: any,
-        zIndex: any,
-      },
-      CSSProperties
-    >,
+  declare export type BoxProps = HTMLDivAttributes & {
+    component?: React$ElementType,
+    // styled API
+    clone?: boolean,
+    // Box specific props
+    bgcolor?: string,
+    displayPrint?: string,
+    m?: string | number,
+    mb?: string | number,
+    ml?: string | number,
+    mr?: string | number,
+    mt?: string | number,
+    mx?: string | number,
+    my?: string | number,
+    order?: string | number,
+    p?: string | number,
+    pb?: string | number,
+    pl?: string | number,
+    pr?: string | number,
+    pt?: string | number,
+    px?: string | number,
+    py?: string | number,
   };
-
-  declare export type BoxProps = PropsByCSSProperties &
-    HTMLDivAttributes & {
-      component?: React$ElementType,
-      // styled API
-      clone?: boolean,
-      // Box specific props
-      bgcolor?: string,
-      displayPrint?: string,
-      m?: string | number,
-      mb?: string | number,
-      ml?: string | number,
-      mr?: string | number,
-      mt?: string | number,
-      mx?: string | number,
-      my?: string | number,
-      order?: string | number,
-      p?: string | number,
-      pb?: string | number,
-      pl?: string | number,
-      pr?: string | number,
-      pt?: string | number,
-      px?: string | number,
-      py?: string | number,
-    };
 
   declare export default React$ComponentType<BoxProps>;
 }
@@ -1958,7 +1997,7 @@ declare module '@material-ui/core/ButtonBase' {
   };
 
   /*
-   TODO: readme issue 1
+   TODO more info: README.md Issue 1
   ((props: { href: string } & OverrideProps<ExtendButtonBaseTypeMap<M>, 'a'>) => React$Node);
   */
   declare export type ExtendButtonBase<
@@ -1969,11 +2008,13 @@ declare module '@material-ui/core/ButtonBase' {
     classKey: $ElementType<M, 'classKey'>,
   }>;
 
-  declare type ButtonBase = OverridableComponent<{
+  declare export type ButtonBaseTypeMap = {
     props: ButtonBaseOwnProps,
     defaultComponent: 'button',
     classKey: ButtonBaseClassKey,
-  }>;
+  };
+
+  declare type ButtonBase = OverridableComponent<ButtonBaseTypeMap>;
 
   declare export type ButtonBaseProps = ButtonBaseOwnProps;
 
@@ -2012,6 +2053,7 @@ declare module '@material-ui/core/Button' {
 
   declare type OwnProps = {
     color?: PropTypes$Color,
+    disableFocusRipple?: boolean,
     fullWidth?: boolean,
     // TODO: `ButtonBaseOwnProps` already include `href` attribute, but as hack
     // href?: string,
@@ -2042,8 +2084,8 @@ declare module '@material-ui/core/Button/Button' {
 }
 
 declare module '@material-ui/core/BottomNavigationAction' {
-  import type { StandardProps } from '@material-ui/core/flow-types';
-  import type { ButtonBaseProps } from '@material-ui/core/ButtonBase';
+  import type { SimplifiedPropsOf } from '@material-ui/core/OverridableComponent';
+  import type { ExtendButtonBase } from '@material-ui/core/ButtonBase';
 
   declare export type BottomNavigationActionClassKey =
     | 'root'
@@ -2052,9 +2094,8 @@ declare module '@material-ui/core/BottomNavigationAction' {
     | 'wrapper'
     | 'label';
 
-  declare export type BottomNavigationActionProps = StandardProps<
-    BottomNavigationActionClassKey,
-    {
+  declare type BottomNavigationAction = ExtendButtonBase<{
+    props: {
       icon?: string | React$Element<any>,
       label?: React$Node,
       onChange?: (event: {}, value: mixed) => mixed,
@@ -2063,35 +2104,40 @@ declare module '@material-ui/core/BottomNavigationAction' {
       showLabel?: boolean,
       value?: mixed,
     },
-    ButtonBaseProps,
-    { onChange: any }
+    defaultComponent: 'button',
+    classKey: BottomNavigationActionClassKey,
+  }>;
+
+  declare export type BottomNavigationActionProps = SimplifiedPropsOf<
+    BottomNavigationAction
   >;
 
-  declare export default React$ComponentType<BottomNavigationActionProps>;
+  declare export default BottomNavigationAction;
 }
 declare module '@material-ui/core/BottomNavigationAction/BottomNavigationAction' {
   declare export * from '@material-ui/core/BottomNavigationAction'
 }
 
 declare module '@material-ui/core/CardActionArea' {
-  import type { StandardProps } from '@material-ui/core/flow-types';
-  import type { ButtonBaseProps } from '@material-ui/core/ButtonBase';
+  import type { SimplifiedPropsOf } from '@material-ui/core/OverridableComponent';
+  import type { ExtendButtonBase } from '@material-ui/core/ButtonBase';
 
   declare export type CardActionAreaClassKey =
     | 'root'
     | 'focusVisible'
     | 'focusHighlight';
 
-  declare export type CardActionAreaProps = StandardProps<
-    CardActionAreaClassKey,
-    {
+  declare type CardActionArea = ExtendButtonBase<{
+    props: {
       focusVisibleClassName?: string,
     },
-    ButtonBaseProps,
-    void
-  >;
+    defaultComponent: 'button',
+    classKey: CardActionAreaClassKey,
+  }>;
 
-  declare export default React$ComponentType<CardActionAreaProps>;
+  declare export type CardActionAreaProps = SimplifiedPropsOf<CardActionArea>;
+
+  declare export default CardActionArea;
 }
 declare module '@material-ui/core/CardActionArea/CardActionArea' {
   declare export * from '@material-ui/core/CardActionArea'
@@ -2236,6 +2282,7 @@ declare module '@material-ui/core/Chip' {
 
   declare export type ChipClassKey =
     | 'root'
+    | 'sizeSmall'
     | 'colorPrimary'
     | 'colorSecondary'
     | 'clickable'
@@ -2248,14 +2295,18 @@ declare module '@material-ui/core/Chip' {
     | 'outlinedPrimary'
     | 'outlinedSecondary'
     | 'avatar'
+    | 'avatarSmall'
     | 'avatarColorPrimary'
     | 'avatarColorSecondary'
     | 'avatarChildren'
     | 'icon'
+    | 'iconSmall'
     | 'iconColorPrimary'
     | 'iconColorSecondary'
     | 'label'
+    | 'labelSmall'
     | 'deleteIcon'
+    | 'deleteIconSmall'
     | 'deleteIconColorPrimary'
     | 'deleteIconColorSecondary'
     | 'deleteIconOutlinedColorPrimary'
@@ -2271,6 +2322,7 @@ declare module '@material-ui/core/Chip' {
       label?: React$Node,
       onDelete?: mixed => mixed,
       variant?: 'default' | 'outlined',
+      size?: 'small' | 'medium',
     },
     defaultComponent: 'div',
     classKey: ChipClassKey,
@@ -2489,6 +2541,352 @@ declare module '@material-ui/core/Slide' {
 }
 declare module '@material-ui/core/Slide/Slide' {
   declare export * from '@material-ui/core/Slide'
+}
+
+declare module '@material-ui/core/Snackbar' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { SnackbarContentProps } from '@material-ui/core/SnackbarContent';
+  import type {
+    TransitionHandlerProps,
+    TransitionProps,
+  } from '@material-ui/core/transitions/transition';
+  import type { ClickAwayListenerProps } from '@material-ui/core/ClickAwayListener';
+
+  declare export type SnackbarClassKey =
+    | 'root'
+    | 'anchorOriginTopCenter'
+    | 'anchorOriginBottomCenter'
+    | 'anchorOriginTopRight'
+    | 'anchorOriginBottomRight'
+    | 'anchorOriginTopLeft'
+    | 'anchorOriginBottomLeft';
+
+  declare export type SnackbarOrigin = {|
+    horizontal: 'left' | 'center' | 'right',
+    vertical: 'top' | 'bottom',
+  |};
+
+  declare export type SnackbarProps = StandardProps<
+    SnackbarClassKey,
+    {
+      action?: $ElementType<SnackbarContentProps, 'action'>,
+      anchorOrigin?: SnackbarOrigin,
+      autoHideDuration?: number | null,
+      ClickAwayListenerProps?: $Shape<ClickAwayListenerProps>,
+      ContentProps?: { ...$Shape<SnackbarContentProps> },
+      disableWindowBlurListener?: boolean,
+      message?: $ElementType<SnackbarContentProps, 'message'>,
+      onClose?: (event: SyntheticEvent<any>, reason: string) => void,
+      onMouseEnter?: MouseEventHandler,
+      onMouseLeave?: MouseEventHandler,
+      open: boolean,
+      resumeHideDuration?: number,
+      TransitionComponent?: React$ComponentType<TransitionProps>,
+      transitionDuration?: $ElementType<TransitionProps, 'timeout'>,
+      TransitionProps?: TransitionProps,
+    },
+    $Shape<TransitionHandlerProps>,
+    void
+  >;
+  declare export default React$ComponentType<SnackbarProps>;
+}
+declare module '@material-ui/core/Snackbar/Snackbar' {
+  declare export * from '@material-ui/core/Snackbar'
+}
+
+declare module '@material-ui/core/SnackbarContent' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { PaperProps } from '@material-ui/core/Paper';
+
+  declare export type SnackbarContentClassKey = 'root' | 'message' | 'action';
+  declare export type SnackbarContentProps = StandardProps<
+    SnackbarContentClassKey,
+    {
+      action?: React$Node,
+      message?: React$Node,
+    },
+    PaperProps,
+    void
+  >;
+
+  declare export default React$ComponentType<SnackbarContentProps>;
+}
+declare module '@material-ui/core/SnackbarContent/SnackbarContent' {
+  declare export * from '@material-ui/core/SnackbarContent'
+}
+
+declare module '@material-ui/core/Step' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { Orientation } from '@material-ui/core/Stepper';
+
+  declare export type StepClasskey =
+    | 'root'
+    | 'horizontal'
+    | 'vertical'
+    | 'alternativeLabel';
+
+  declare export type StepProps = StandardProps<
+    StepClasskey,
+    {
+      active?: boolean,
+      alternativeLabel?: boolean,
+      children?: React$Node,
+      completed?: boolean,
+      connector?: React$Element<any>,
+      disabled?: boolean,
+      index?: number,
+      last?: boolean,
+      orientation?: Orientation,
+    },
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<StepProps>;
+}
+declare module '@material-ui/core/Step/Step' {
+  declare export * from '@material-ui/core/Step'
+}
+
+declare module '@material-ui/core/StepButton' {
+  import type { SimplifiedPropsOf } from '@material-ui/core/OverridableComponent';
+  import type {
+    ButtonBaseTypeMap,
+    ExtendButtonBase,
+  } from '@material-ui/core/ButtonBase';
+  import type { Orientation } from '@material-ui/core/Stepper';
+
+  declare export type StepButtonClassKey = 'root' | 'vertical' | 'touchRipple';
+
+  declare export type StepButtonIcon =
+    | React$ElementType
+    | string
+    | number
+    | null;
+
+  declare var StepButton: ExtendButtonBase<{
+    props: {
+      active?: boolean,
+      alternativeLabel?: boolean,
+      completed?: boolean,
+      disabled?: boolean,
+      icon?: StepButtonIcon,
+      last?: boolean,
+      optional?: React$Node,
+      orientation?: Orientation,
+    },
+    defaultComponent: $ElementType<ButtonBaseTypeMap, 'defaultComponent'>,
+    classKey: StepButtonClassKey,
+  }>;
+
+  declare export type StepButtonProps = SimplifiedPropsOf<typeof StepButton>;
+
+  declare export default React$ComponentType<StepButtonProps>;
+}
+declare module '@material-ui/core/StepButton/StepButton' {
+  declare export * from '@material-ui/core/StepButton'
+}
+
+declare module '@material-ui/core/StepConnector' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { Orientation } from '@material-ui/core/Stepper';
+
+  declare export type StepConnectorClasskey =
+    | 'root'
+    | 'horizontal'
+    | 'vertical'
+    | 'alternativeLabel'
+    | 'active'
+    | 'completed'
+    | 'disabled'
+    | 'line'
+    | 'lineHorizontal'
+    | 'lineVertical';
+
+  declare export type StepConnectorProps = StandardProps<
+    StepConnectorClasskey,
+    {
+      active?: boolean,
+      alternativeLabel?: boolean,
+      completed?: boolean,
+      disabled?: boolean,
+      index?: number,
+      orientation?: Orientation,
+    },
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<StepConnectorProps>;
+}
+declare module '@material-ui/core/StepConnector/StepConnector' {
+  declare export * from '@material-ui/core/StepConnector'
+}
+
+declare module '@material-ui/core/StepContent' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { Orientation } from '@material-ui/core/Stepper';
+  import type { TransitionProps } from '@material-ui/core/transitions/transition';
+
+  declare export type StepContentClasskey = 'root' | 'last' | 'transition';
+
+  declare export type StepContentProps = StandardProps<
+    StepContentClasskey,
+    {
+      active?: boolean,
+      alternativeLabel?: boolean,
+      children: React$Node,
+      completed?: boolean,
+      last?: boolean,
+      optional?: boolean,
+      orientation?: Orientation,
+      TransitionComponent?: React$ComponentType<TransitionProps>,
+      transitionDuration?: $ElementType<TransitionProps, 'timeout'> | 'auto',
+      TransitionProps?: TransitionProps,
+    },
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<StepContentProps>;
+}
+declare module '@material-ui/core/StepContent/StepContent' {
+  declare export * from '@material-ui/core/StepContent'
+}
+
+declare module '@material-ui/core/StepIcon' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+
+  declare export type StepIconClassKey =
+    | 'root'
+    | 'text'
+    | 'active'
+    | 'completed'
+    | 'error';
+
+  declare export type StepIconProps = StandardProps<
+    StepIconClassKey,
+    {
+      active?: boolean,
+      completed?: boolean,
+      error?: boolean,
+      icon: React$Node,
+    },
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<StepIconProps>;
+}
+declare module '@material-ui/core/StepIcon/StepIcon' {
+  declare export * from '@material-ui/core/StepIcon'
+}
+
+declare module '@material-ui/core/StepLabel' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { Orientation } from '@material-ui/core/Stepper';
+  import type { StepButtonIcon } from '@material-ui/core/StepButton';
+  import type { StepIconProps } from '@material-ui/core/StepIcon';
+
+  declare export type StepLabelClassKey =
+    | 'root'
+    | 'horizontal'
+    | 'vertical'
+    | 'active'
+    | 'completed'
+    | 'alternativeLabel'
+    | 'error'
+    | 'disabled'
+    | 'label'
+    | 'iconContainer'
+    | 'labelContainer';
+
+  declare export type StepLabelProps = StandardProps<
+    StepLabelClassKey,
+    {
+      active?: boolean,
+      alternativeLabel?: boolean,
+      children: React$Node,
+      completed?: boolean,
+      disabled?: boolean,
+      error?: boolean,
+      icon?: StepButtonIcon,
+      last?: boolean,
+      optional?: React$Node,
+      orientation?: Orientation,
+      StepIconComponent?: React$ElementType,
+      StepIconProps?: $Shape<StepIconProps>,
+    },
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<StepLabelProps>;
+}
+declare module '@material-ui/core/StepLabel/StepLabel' {
+  declare export * from '@material-ui/core/StepLabel'
+}
+
+declare module '@material-ui/core/Stepper' {
+  import type { PaperProps } from '@material-ui/core/Paper';
+  import type { StandardProps } from '@material-ui/core/flow-types';
+
+  declare export type StepperClassKey =
+    | 'root'
+    | 'horizontal'
+    | 'vertical'
+    | 'alternativeLabel';
+
+  declare export type Orientation = 'horizontal' | 'vertical';
+
+  declare export type StepperProps = StandardProps<
+    StepperClassKey,
+    {
+      activeStep?: number,
+      alternativeLabel?: boolean,
+      children: React$Node,
+      connector?: React$ElementType | React$Node,
+      nonLinear?: boolean,
+      orientation?: Orientation,
+    },
+    PaperProps,
+    void
+  >;
+
+  declare export default React$ComponentType<StepperProps>;
+}
+declare module '@material-ui/core/Stepper/Stepper' {
+  declare export * from '@material-ui/core/Stepper'
+}
+
+declare module '@material-ui/core/SwipeableDrawer' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { DrawerProps, DrawerClassKey } from '@material-ui/core/Drawer';
+
+  declare export type SwipeableDrawerClassKey = DrawerClassKey;
+
+  declare export type SwipeableDrawerProps = StandardProps<
+    SwipeableDrawerClassKey,
+    {
+      disableBackdropTransition?: boolean,
+      disableDiscovery?: boolean,
+      disableSwipeToOpen?: boolean,
+      hysteresis?: number,
+      minFlingVelocity?: number,
+      onClose: (event: {}, expanded: boolean) => mixed,
+      onOpen: (event: {}, expanded: boolean) => mixed,
+      open: boolean,
+      SwipeAreaProps?: {},
+      swipeAreaWidth?: number,
+    },
+    DrawerProps<React$ElementType>,
+    { onClose: any, open: any }
+  >;
+
+  declare export default React$ComponentType<SwipeableDrawerProps>;
+}
+declare module '@material-ui/core/SwipeableDrawer/SwipeableDrawer' {
+  declare export * from '@material-ui/core/SwipeableDrawer'
 }
 
 declare module '@material-ui/core/Drawer' {
@@ -2810,6 +3208,8 @@ declare module '@material-ui/core/Hidden' {
   import type { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
 
   declare export type HiddenProps = {|
+    children?: React$Node,
+    className?: string,
     implementation?: 'js' | 'css',
     initialWidth?: Breakpoint,
     only?: Breakpoint | Array<Breakpoint>,
@@ -2823,7 +3223,6 @@ declare module '@material-ui/core/Hidden' {
     xlUp?: boolean,
     xsDown?: boolean,
     xsUp?: boolean,
-    children: React$Node,
   |};
 
   declare export default React$ComponentType<HiddenProps>;
@@ -3140,6 +3539,7 @@ declare module '@material-ui/core/IconButton' {
   declare type IconButton = ExtendButtonBase<{
     props: {
       color?: PropTypes$Color,
+      disableFocusRipple?: boolean,
       edge?: 'start' | 'end' | false,
       size?: 'small' | 'medium',
     },
@@ -3158,9 +3558,13 @@ declare module '@material-ui/core/IconButton/IconButton' {
 declare module '@material-ui/core/internal/SwitchBase' {
   import type { HTMLInputAttributes } from '@material-ui/core/@@dom';
   import type { StandardProps } from '@material-ui/core/flow-types';
-  import type { IconButtonProps } from '@material-ui/core/IconButton';
+  import type {
+    IconButtonProps,
+    IconButtonClassKey,
+  } from '@material-ui/core/IconButton';
 
   declare export type SwitchBaseClassKey =
+    | IconButtonClassKey
     | 'root'
     | 'checked'
     | 'disabled'
@@ -3232,9 +3636,9 @@ declare module '@material-ui/core/Checkbox/Checkbox' {
 }
 
 declare module '@material-ui/core/ExpansionPanelSummary' {
-  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { SimplifiedPropsOf } from '@material-ui/core/OverridableComponent';
   import type { IconButtonProps } from '@material-ui/core/IconButton';
-  import type { ButtonBaseProps } from '@material-ui/core/ButtonBase';
+  import type { ExtendButtonBase } from '@material-ui/core/ButtonBase';
 
   declare export type ExpansionPanelSummaryClassKey =
     | 'root'
@@ -3244,19 +3648,22 @@ declare module '@material-ui/core/ExpansionPanelSummary' {
     | 'content'
     | 'expandIcon';
 
-  declare export type ExpansionPanelSummaryProps = StandardProps<
-    ExpansionPanelSummaryClassKey,
-    {
+  declare type ExpansionPanelSummary = ExtendButtonBase<{
+    props: {
       expanded?: boolean,
       expandIcon?: React$Node,
       IconButtonProps?: { ...IconButtonProps },
       onChange?: ({}) => mixed,
     },
-    ButtonBaseProps,
-    void
+    defaultComponent: 'div',
+    classKey: ExpansionPanelSummaryClassKey,
+  }>;
+
+  declare export type ExpansionPanelSummaryProps = SimplifiedPropsOf<
+    ExpansionPanelSummary
   >;
 
-  declare export default React$ComponentType<ExpansionPanelSummaryProps>;
+  declare export default ExpansionPanelSummary;
 }
 declare module '@material-ui/core/ExpansionPanelSummary/ExpansionPanelSummary' {
   declare export * from '@material-ui/core/ExpansionPanelSummary'
@@ -3281,6 +3688,7 @@ declare module '@material-ui/core/Fab' {
   declare type Fab = ExtendButtonBase<{
     props: {
       color?: PropTypes$Color,
+      disableFocusRipple?: boolean,
       size?: 'small' | 'medium' | 'large',
       variant?: 'round' | 'extended',
     },
@@ -3334,6 +3742,7 @@ declare module '@material-ui/core/FormControl' {
   import type { PropTypes$Margin } from '@material-ui/core/flow-types';
   import type {
     OverridableComponent,
+    OverridableTypeMap,
     SimplifiedPropsOf,
   } from '@material-ui/core/OverridableComponent';
 
@@ -3343,17 +3752,31 @@ declare module '@material-ui/core/FormControl' {
     | 'marginDense'
     | 'fullWidth';
 
+  declare export type FormControlOwnProps = {
+    disabled?: boolean,
+    error?: boolean,
+    fullWidth?: boolean,
+    margin?: PropTypes$Margin,
+    onBlur?: ({}) => mixed,
+    onFocus?: ({}) => mixed,
+    required?: boolean,
+    variant?: 'standard' | 'outlined' | 'filled',
+  };
+
+  /*
+   TODO more info: README.md Issue 1
+  ((props: { href: string } & OverrideProps<ExtendButtonBFormControl<M>, 'a'>) => React$Node);
+  */
+  declare export type ExtendFormControl<
+    M: OverridableTypeMap
+  > = OverridableComponent<{
+    props: FormControlOwnProps & $ElementType<M, 'props'>,
+    defaultComponent: $ElementType<M, 'defaultComponent'>,
+    classKey: $ElementType<M, 'classKey'>,
+  }>;
+
   declare type FormControl = OverridableComponent<{
-    props: {
-      disabled?: boolean,
-      error?: boolean,
-      fullWidth?: boolean,
-      margin?: PropTypes$Margin,
-      onBlur?: ({}) => mixed,
-      onFocus?: ({}) => mixed,
-      required?: boolean,
-      variant?: 'standard' | 'outlined' | 'filled',
-    },
+    props: FormControlOwnProps,
     defaultComponent: 'div',
     classKey: FormControlClassKey,
   }>;
@@ -3456,42 +3879,1204 @@ declare module '@material-ui/core/FormHelperText/FormHelperText' {
   declare export * from '@material-ui/core/FormHelperText'
 }
 
-declare module '@material-ui/core/Toolbar' {
-  declare module.exports: any;
+declare module '@material-ui/core/LinearProgress' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+
+  declare export type LinearProgressClassKey =
+    | 'root'
+    | 'colorPrimary'
+    | 'colorSecondary'
+    | 'determinate'
+    | 'indeterminate'
+    | 'buffer'
+    | 'query'
+    | 'dashed'
+    | 'dashedColorPrimary'
+    | 'dashedColorSecondary'
+    | 'bar'
+    | 'barColorPrimary'
+    | 'barColorSecondary'
+    | 'bar1Indeterminate'
+    | 'bar2Indeterminate'
+    | 'bar1Determinate'
+    | 'bar1Buffer'
+    | 'bar2Buffer';
+
+  declare export type LinearProgressProps = StandardProps<
+    LinearProgressClassKey,
+    {
+      color?: 'primary' | 'secondary',
+      value?: number,
+      valueBuffer?: number,
+      variant?: 'determinate' | 'indeterminate' | 'buffer' | 'query',
+    },
+    HTMLDivAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<LinearProgressProps>;
 }
+declare module '@material-ui/core/LinearProgress/LinearProgress' {
+  declare export * from '@material-ui/core/LinearProgress'
+}
+
+declare module '@material-ui/core/Link' {
+  import type { HTMLAnchorAttributes } from '@material-ui/core/@@dom';
+  import type {
+    OverridableComponent,
+    SimplifiedPropsOf,
+  } from '@material-ui/core/OverridableComponent';
+  import type { TypographyProps } from '@material-ui/core/Typography';
+
+  declare export type LinkClassKey =
+    | 'root'
+    | 'button'
+    | 'focusVisible'
+    | 'underlineAlways'
+    | 'underlineHover'
+    | 'underlineNone';
+
+  declare type Link = OverridableComponent<{
+    props: LinkBaseProps & {
+      TypographyClasses?: $ElementType<TypographyProps, 'classes'>,
+      underline?: 'none' | 'hover' | 'always',
+    },
+    defaultComponent: 'a',
+    classKey: LinkClassKey,
+  }>;
+
+  declare export type LinkBaseProps = $Diff<
+    TypographyProps,
+    { component: any, classes: any }
+  > &
+    HTMLAnchorAttributes;
+
+  declare export type LinkProps = SimplifiedPropsOf<Link>;
+
+  declare export default Link;
+}
+declare module '@material-ui/core/Link/Link' {
+  declare export * from '@material-ui/core/Link'
+}
+
 declare module '@material-ui/core/List' {
-  declare module.exports: any;
+  import type {
+    OverridableComponent,
+    SimplifiedPropsOf,
+  } from '@material-ui/core/OverridableComponent';
+
+  declare export type ListClassKey = 'root' | 'padding' | 'dense' | 'subheader';
+
+  declare type List = OverridableComponent<{
+    props: {
+      dense?: boolean,
+      disablePadding?: boolean,
+      subheader?: React$Element<any>,
+    },
+    defaultComponent: 'ul',
+    classKey: ListClassKey,
+  }>;
+
+  declare export type ListProps = SimplifiedPropsOf<List>;
+
+  declare export default List;
 }
-declare module '@material-ui/core/ListItem' {
-  declare module.exports: any;
+declare module '@material-ui/core/List/List' {
+  declare export * from '@material-ui/core/List'
 }
+
+declare module '@material-ui/core/ListItemAvatar' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+
+  declare export type ListItemAvatarClassKey = 'root' | 'icon';
+
+  declare export type ListItemAvatarProps = StandardProps<
+    ListItemAvatarClassKey,
+    {},
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<ListItemAvatarProps>;
+}
+declare module '@material-ui/core/ListItemAvatar/ListItemAvatar' {
+  declare export * from '@material-ui/core/ListItemAvatar'
+}
+
 declare module '@material-ui/core/ListItemIcon' {
-  declare module.exports: any;
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+  declare export type ListItemIconClassKey = 'root';
+
+  declare export type ListItemIconProps = StandardProps<
+    ListItemIconClassKey,
+    {},
+    HTMLDivAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<ListItemIconProps>;
 }
+declare module '@material-ui/core/ListItemIcon/ListItemIcon' {
+  declare export * from '@material-ui/core/ListItemIcon'
+}
+
 declare module '@material-ui/core/ListItemText' {
-  declare module.exports: any;
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+  import type { TypographyProps } from '@material-ui/core/Typography';
+
+  declare export type ListItemTextClassKey =
+    | 'root'
+    | 'multiline'
+    | 'dense'
+    | 'inset'
+    | 'primary'
+    | 'secondary';
+
+  declare export type ListItemTextProps = StandardProps<
+    ListItemTextClassKey,
+    {
+      disableTypography?: boolean,
+      inset?: boolean,
+      primary?: React$Node,
+      primaryTypographyProps?: { ...TypographyProps },
+      secondary?: React$Node,
+      secondaryTypographyProps?: { ...TypographyProps },
+    },
+    HTMLDivAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<ListItemTextProps>;
+}
+declare module '@material-ui/core/ListItemText/ListItemText' {
+  declare export * from '@material-ui/core/ListItemText'
+}
+
+declare module '@material-ui/core/ListItemSecondaryAction' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+
+  declare export type ListItemSecondaryActionClassKey = 'root';
+
+  declare export type ListItemSecondaryActionProps = StandardProps<
+    ListItemSecondaryActionClassKey,
+    {},
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<ListItemSecondaryActionProps>;
+}
+declare module '@material-ui/core/ListItemSecondaryAction/ListItemSecondaryAction' {
+  declare export * from '@material-ui/core/ListItemSecondaryAction'
+}
+
+declare module '@material-ui/core/ListSubheader' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+
+  declare export type ListSubheaderClassKey =
+    | 'root'
+    | 'colorPrimary'
+    | 'colorInherit'
+    | 'inset'
+    | 'sticky'
+    | 'gutters';
+
+  declare export type ListSubheaderProps = StandardProps<
+    ListSubheaderClassKey,
+    {
+      color?: 'default' | 'primary' | 'inherit',
+      component?: React$ElementType,
+      disableGutters?: boolean,
+      disableSticky?: boolean,
+      inset?: boolean,
+    },
+    HTMLDivAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<ListSubheaderProps>;
+}
+declare module '@material-ui/core/ListSubheader/ListSubheader' {
+  declare export * from '@material-ui/core/ListSubheader'
+}
+
+declare module '@material-ui/core/MobileStepper' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { PaperProps } from '@material-ui/core/Paper';
+  import type { LinearProgressProps } from '@material-ui/core/LinearProgress';
+
+  declare export type MobileStepperClassKey =
+    | 'root'
+    | 'positionBottom'
+    | 'positionTop'
+    | 'positionStatic'
+    | 'dots'
+    | 'dot'
+    | 'dotActive'
+    | 'progress';
+
+  declare export type MobileStepperProps = StandardProps<
+    MobileStepperClassKey,
+    {
+      backButton: React$Element<any>,
+      nextButton: React$Element<any>,
+      steps: number,
+      activeStep?: number,
+      position?: 'bottom' | 'top' | 'static',
+      variant?: 'text' | 'dots' | 'progress',
+      LinearProgressProps?: { ...LinearProgressProps },
+    },
+    PaperProps,
+    void
+  >;
+
+  declare export default React$ComponentType<MobileStepperProps>;
+}
+declare module '@material-ui/core/MobileStepper/MobileStepper' {
+  declare export * from '@material-ui/core/MobileStepper'
+}
+
+declare module '@material-ui/core/OutlinedInput' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { InputBaseProps } from '@material-ui/core/InputBase';
+
+  declare export type OutlinedInputClassKey =
+    | 'root'
+    | 'focused'
+    | 'disabled'
+    | 'adornedStart'
+    | 'adornedEnd'
+    | 'error'
+    | 'multiline'
+    | 'notchedOutline'
+    | 'input'
+    | 'inputMarginDense'
+    | 'inputMultiline'
+    | 'inputAdornedStart'
+    | 'inputAdornedEnd';
+
+  declare export type OutlinedInputProps = StandardProps<
+    OutlinedInputClassKey,
+    {
+      notched?: boolean,
+      labelWidth: number,
+    },
+    InputBaseProps,
+    void
+  >;
+
+  declare export default React$ComponentType<OutlinedInputProps>;
+}
+declare module '@material-ui/core/OutlinedInput/OutlinedInput' {
+  declare export * from '@material-ui/core/OutlinedInput'
+}
+
+declare module '@material-ui/core/Radio' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type {
+    SwitchBaseProps,
+    SwitchBaseClassKey,
+  } from '@material-ui/core/internal/SwitchBase';
+
+  declare export type RadioClassKey =
+    | SwitchBaseClassKey
+    | 'colorPrimary'
+    | 'colorSecondary';
+
+  declare export type RadioProps = StandardProps<
+    RadioClassKey,
+    {
+      checkedIcon?: React$Node,
+      color?: 'primary' | 'secondary' | 'default',
+      icon?: React$Node,
+    },
+    SwitchBaseProps,
+    {
+      checkedIcon: any,
+      color: any,
+      icon: any,
+    }
+  >;
+
+  declare export default React$ComponentType<RadioProps>;
+}
+declare module '@material-ui/core/Radio/Radio' {
+  declare export * from '@material-ui/core/Radio'
+}
+
+declare module '@material-ui/core/RadioGroup' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type {
+    FormGroupProps,
+    FormGroupClassKey,
+  } from '@material-ui/core/FormGroup';
+
+  declare export type RadioGroupClassKey = FormGroupClassKey;
+
+  declare export type RadioGroupProps = StandardProps<
+    RadioGroupClassKey,
+    {
+      name?: string,
+      onChange?: (event: {}, value: string) => void,
+      value?: string,
+    },
+    FormGroupProps,
+    { onChange: any }
+  >;
+
+  declare export default React$ComponentType<RadioGroupProps>;
+}
+declare module '@material-ui/core/RadioGroup/RadioGroup' {
+  declare export * from '@material-ui/core/RadioGroup'
+}
+
+declare module '@material-ui/core/Zoom' {
+  import type { Theme } from '@material-ui/core/styles/createMuiTheme';
+  import type { TransitionProps } from '@material-ui/core/transitions/transition';
+
+  declare export type ZoomProps = TransitionProps & {
+    ref?: React$Ref<mixed>,
+    theme?: Theme,
+  };
+
+  declare export default React$ComponentType<ZoomProps>;
+}
+declare module '@material-ui/core/Zoom/Zoom' {
+  declare export * from '@material-ui/core/Zoom'
+}
+
+declare module '@material-ui/core/Tooltip' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+  import type { TransitionProps } from '@material-ui/core/transitions/transition';
+
+  declare export type TooltipClassKey =
+    | 'popper'
+    | 'popperInteractive'
+    | 'tooltip'
+    | 'touch'
+    | 'tooltipPlacementLeft'
+    | 'tooltipPlacementRight'
+    | 'tooltipPlacementTop'
+    | 'tooltipPlacementBottom';
+
+  declare export type TooltipProps = StandardProps<
+    TooltipClassKey,
+    {
+      children: React$Element<any>,
+      disableFocusListener?: boolean,
+      disableHoverListener?: boolean,
+      disableTouchListener?: boolean,
+      enterDelay?: number,
+      enterTouchDelay?: number,
+      id?: string,
+      interactive?: boolean,
+      leaveDelay?: number,
+      leaveTouchDelay?: number,
+      onClose?: (event: {}) => void,
+      onOpen?: (event: {}) => void,
+      open?: boolean,
+      placement?:
+        | 'bottom-end'
+        | 'bottom-start'
+        | 'bottom'
+        | 'left-end'
+        | 'left-start'
+        | 'left'
+        | 'right-end'
+        | 'right-start'
+        | 'right'
+        | 'top-end'
+        | 'top-start'
+        | 'top',
+      PopperProps?: {},
+      title: React$Node,
+      TransitionComponent?: React$ComponentType<any>,
+      TransitionProps?: TransitionProps,
+    },
+    HTMLDivAttributes,
+    { title: any }
+  >;
+
+  declare export default React$ComponentType<TooltipProps>;
+}
+declare module '@material-ui/core/Tooltip/Tooltip' {
+  declare export * from '@material-ui/core/Tooltip'
+}
+
+declare module '@material-ui/core/Toolbar' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+
+  declare export type ToolbarClassKey =
+    | 'root'
+    | 'gutters'
+    | 'regular'
+    | 'dense';
+
+  declare export type ToolbarProps = StandardProps<
+    ToolbarClassKey,
+    {
+      component?: React$ElementType,
+      disableGutters?: boolean,
+      variant?: 'regular' | 'dense',
+    },
+    HTMLDivAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<ToolbarProps>;
+}
+declare module '@material-ui/core/Toolbar/Toolbar' {
+  declare export * from '@material-ui/core/Toolbar'
+}
+
+declare module '@material-ui/core/SvgIcon' {
+  import type {
+    StandardProps,
+    PropTypes$Color,
+  } from '@material-ui/core/flow-types';
+  import type { SVGElementAttributes } from '@material-ui/core/@@dom';
+
+  declare export type SvgIconClassKey =
+    | 'root'
+    | 'colorSecondary'
+    | 'colorAction'
+    | 'colorDisabled'
+    | 'colorError'
+    | 'colorPrimary'
+    | 'fontSizeInherit'
+    | 'fontSizeSmall'
+    | 'fontSizeLarge';
+
+  declare export type SvgIconProps = StandardProps<
+    SvgIconClassKey,
+    {
+      color?: PropTypes$Color | 'action' | 'disabled' | 'error',
+      component?: React$ElementType,
+      fontSize?: 'inherit' | 'default' | 'small' | 'large',
+      htmlColor?: string,
+      shapeRendering?: string,
+      titleAccess?: string,
+      viewBox?: string,
+    },
+    SVGElementAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<SvgIconProps>;
+}
+declare module '@material-ui/core/SvgIcon/SvgIcon' {
+  declare export * from '@material-ui/core/SvgIcon'
+}
+
+declare module '@material-ui/core/Switch' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type {
+    SwitchBaseProps,
+    SwitchBaseClassKey,
+  } from '@material-ui/core/internal/SwitchBase';
+
+  declare export type SwitchClassKey =
+    | SwitchBaseClassKey
+    | 'switchBase'
+    | 'colorPrimary'
+    | 'colorSecondary'
+    | 'thumb'
+    | 'track';
+
+  declare export type SwitchProps = StandardProps<
+    SwitchClassKey,
+    {
+      checkedIcon?: React$Node,
+      color?: 'primary' | 'secondary' | 'default',
+      icon?: React$Node,
+    },
+    SwitchBaseProps,
+    {
+      checkedIcon: any,
+      color: any,
+      icon: any,
+    }
+  >;
+
+  declare export default React$ComponentType<SwitchProps>;
+}
+
+declare module '@material-ui/core/Switch/Switch' {
+  declare export * from '@material-ui/core/Switch'
+}
+
+declare module '@material-ui/core/Tab' {
+  import type { ExtendButtonBase } from '@material-ui/core/ButtonBase';
+  import type { SimplifiedPropsOf } from '@material-ui/core/OverridableComponent';
+
+  declare export type TabClassKey =
+    | 'root'
+    | 'labelIcon'
+    | 'textColorInherit'
+    | 'textColorPrimary'
+    | 'textColorSecondary'
+    | 'selected'
+    | 'disabled'
+    | 'fullWidth'
+    | 'wrapped'
+    | 'wrapper';
+
+  declare type Tab = ExtendButtonBase<{
+    props: {
+      disableFocusRipple?: boolean,
+      fullWidth?: boolean,
+      icon?: string | React$Element<any>,
+      label?: React$Node,
+      onChange?: (event: SyntheticEvent<>, value: mixed) => mixed,
+      onClick?: (event: SyntheticEvent<>) => mixed,
+      selected?: boolean,
+      textColor?: string | 'secondary' | 'primary' | 'inherit',
+      value?: mixed,
+      wrapped?: boolean,
+    },
+    defaultComponent: 'div',
+    classKey: TabClassKey,
+  }>;
+
+  declare export type TabsProps = SimplifiedPropsOf<Tab>;
+
+  declare export default Tab;
+}
+declare module '@material-ui/core/Tab/Tab' {
+  declare export * from '@material-ui/core/Tab'
+}
+
+// TODO: Tabs
+declare module '@material-ui/core/Tabs' {
+  declare export type TabsProps = any;
+
+  declare export default React$ComponentType<TabsProps>;
+}
+declare module '@material-ui/core/Tabs/Tabs' {
+  declare export * from '@material-ui/core/Tabs'
+}
+
+declare module '@material-ui/core/Table' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+
+  declare export type TableClassKey = 'root';
+
+  declare export type Padding = 'default' | 'checkbox' | 'none';
+  declare export type Size = 'small' | 'medium';
+
+  declare export type TableProps = StandardProps<
+    TableClassKey,
+    {
+      component?: React$ElementType,
+      padding?: Padding,
+      size?: Size,
+    },
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<TableProps>;
+}
+declare module '@material-ui/core/Table/Table' {
+  declare export * from '@material-ui/core/Table'
+}
+
+declare module '@material-ui/core/TableCell' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+
+  declare export type TableCellClassKey =
+    | 'root'
+    | 'head'
+    | 'body'
+    | 'footer'
+    | 'alignLeft'
+    | 'alignCenter'
+    | 'alignRight'
+    | 'alignJustify'
+    | 'sizeSmall'
+    | 'paddingCheckbox'
+    | 'paddingNone';
+
+  declare export type Padding = 'default' | 'checkbox' | 'none';
+  declare export type Size = 'small' | 'medium';
+  declare export type SortDirection = 'asc' | 'desc' | false;
+
+  declare export type TableCellProps = StandardProps<
+    TableCellClassKey,
+    {
+      align?: 'inherit' | 'left' | 'center' | 'right' | 'justify',
+      component?: React$ElementType,
+      padding?: Padding,
+      size?: Size,
+      sortDirection?: SortDirection,
+      variant?: 'head' | 'body' | 'footer',
+    },
+    {},
+    void
+  >;
+
+  declare export default React$ComponentType<TableCellProps>;
+}
+declare module '@material-ui/core/TableCell/TableCell' {
+  declare export * from '@material-ui/core/TableCell'
+}
+
+// TODO: TablePagination
+declare module '@material-ui/core/TablePagination' {
+  declare export type TablePaginationProps = any;
+
+  declare export default React$ComponentType<TablePaginationProps>;
+}
+declare module '@material-ui/core/TablePagination/TablePagination' {
+  declare export * from '@material-ui/core/TablePagination'
+}
+
+declare module '@material-ui/core/TableSortLabel' {
+  import type { SimplifiedPropsOf } from '@material-ui/core/OverridableComponent';
+  import type { ExtendButtonBase } from '@material-ui/core/ButtonBase';
+
+  declare export type TableSortLabelClassKey =
+    | 'root'
+    | 'active'
+    | 'icon'
+    | 'iconDirectionDesc'
+    | 'iconDirectionAsc';
+
+  declare type TableSortLabel = ExtendButtonBase<{
+    props: {
+      active?: boolean,
+      direction?: 'asc' | 'desc',
+      hideSortIcon?: boolean,
+      IconComponent?: React$ComponentType<any>,
+    },
+    defaultComponent: 'span',
+    classKey: TableSortLabelClassKey,
+  }>;
+
+  declare export type TableSortLabelProps = SimplifiedPropsOf<TableSortLabel>;
+
+  declare export default TableSortLabel;
+}
+declare module '@material-ui/core/TableSortLabel/TableSortLabel' {
+  declare export * from '@material-ui/core/TableSortLabel'
+}
+
+declare module '@material-ui/core/TableRow' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLTableRowAttributes } from '@material-ui/core/@@dom';
+
+  declare export type TableRowClassKey =
+    | 'root'
+    | 'selected'
+    | 'hover'
+    | 'head'
+    | 'footer';
+
+  declare export type TableRowProps = StandardProps<
+    TableRowClassKey,
+    {
+      component?: React$ElementType,
+      hover?: boolean,
+      selected?: boolean,
+    },
+    HTMLTableRowAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<TableRowProps>;
+}
+declare module '@material-ui/core/TableRow/TableRow' {
+  declare export * from '@material-ui/core/TableRow'
+}
+
+declare module '@material-ui/core/TableHead' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLTableSectionAttributes } from '@material-ui/core/@@dom';
+
+  declare export type TableHeadClassKey = 'root';
+
+  declare export type TableHeadProps = StandardProps<
+    TableHeadClassKey,
+    {
+      component?: React$ElementType,
+    },
+    HTMLTableSectionAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<TableHeadProps>;
+}
+declare module '@material-ui/core/TableHead/TableHead' {
+  declare export * from '@material-ui/core/TableHead'
+}
+
+declare module '@material-ui/core/TableFooter' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLTableSectionAttributes } from '@material-ui/core/@@dom';
+
+  declare export type TableFooterClassKey = 'root';
+
+  declare export type TableFooterProps = StandardProps<
+    TableFooterClassKey,
+    {
+      component?: React$ElementType,
+    },
+    HTMLTableSectionAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<TableFooterProps>;
+}
+declare module '@material-ui/core/TableFooter/TableFooter' {
+  declare export * from '@material-ui/core/TableFooter'
+}
+
+declare module '@material-ui/core/TableBody' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { HTMLTableSectionAttributes } from '@material-ui/core/@@dom';
+
+  declare export type TableBodyClassKey = 'root';
+
+  declare export type TableBodyProps = StandardProps<
+    TableBodyClassKey,
+    {
+      component?: React$ElementType,
+    },
+    HTMLTableSectionAttributes,
+    void
+  >;
+
+  declare export default React$ComponentType<TableBodyProps>;
+}
+declare module '@material-ui/core/TableBody/TableBody' {
+  declare export * from '@material-ui/core/TableBody'
+}
+
+declare module '@material-ui/core/TextField' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type {
+    OverrideProps,
+    OverridableComponent,
+  } from '@material-ui/core/OverridableComponent';
+  import type {
+    FormControlOwnProps,
+    FormControlClassKey,
+    ExtendFormControl,
+  } from '@material-ui/core/FormControl';
+  import type { FormHelperTextProps } from '@material-ui/core/FormHelperText';
+  import type { InputLabelProps } from '@material-ui/core/InputLabel';
+  import type { InputProps as StandardInputProps } from '@material-ui/core/Input';
+  import type { FilledInputProps } from '@material-ui/core/FilledInput';
+  import type { OutlinedInputProps } from '@material-ui/core/OutlinedInput';
+  import type { SelectProps } from '@material-ui/core/Select';
+
+  declare export type TextFieldClassKey = FormControlClassKey;
+
+  declare type FormControlProps = $Diff<
+    FormControlOwnProps,
+    {
+      onChange: any,
+      defaultValue: any,
+    }
+  >;
+
+  declare type OwnProps = {
+    autoComplete?: string,
+    autoFocus?: boolean,
+    defaultValue?: mixed,
+    FormHelperTextProps?: FormHelperTextProps,
+    helperText?: React$Node,
+    InputLabelProps?: InputLabelProps,
+    label?: React$Node,
+    multiline?: boolean,
+    name?: string,
+    onChange?: (event: Event) => mixed,
+    placeholder?: string,
+    rows?: string | number,
+    rowsMax?: string | number,
+    select?: boolean,
+    SelectProps?: SelectProps,
+    type?: string,
+    value?: mixed,
+    // TODO: refine this types so they apply based on the provided `variant`
+    InputProps?: FilledInputProps | FilledInputProps | OutlinedInputProps,
+    inputProps?:
+      | $ElementType<FilledInputProps, 'inputProps'>
+      | $ElementType<FilledInputProps, 'inputProps'>
+      | $ElementType<OutlinedInputProps, 'inputProps'>,
+  };
+
+  declare export type TextFieldProps<
+    DefaultComponent: React$ElementType = 'div',
+    Props: {} = {}
+  > = OverrideProps<
+    {
+      props: Props & OwnProps & FormControlProps,
+      defaultComponent: DefaultComponent,
+      classKey: TextFieldClassKey,
+    },
+    DefaultComponent
+  >;
+
+  declare export default OverridableComponent<{
+    props: FormControlProps & OwnProps,
+    defaultComponent: 'div',
+    classKey: TextFieldClassKey,
+  }>;
+}
+declare module '@material-ui/core/TextField/TextField' {
+  declare export * from '@material-ui/core/TextField'
+}
+
+declare module '@material-ui/core/Popover' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { PaperProps } from '@material-ui/core/Paper';
+  import type { ModalProps } from '@material-ui/core/Modal';
+  import type {
+    TransitionHandlerProps,
+    TransitionProps,
+  } from '@material-ui/core/transitions/transition';
+
+  declare export type PopoverOrigin = {
+    horizontal: 'left' | 'center' | 'right' | number,
+    vertical: 'top' | 'center' | 'bottom' | number,
+  };
+
+  declare export type PopoverPosition = {
+    top: number,
+    left: number,
+  };
+  declare export type PopoverReference = 'anchorEl' | 'anchorPosition' | 'none';
+  declare export type PopoverActions = {
+    updatePosition(): void,
+  };
+
+  declare export type PopoverClassKey = 'paper';
+
+  declare export type PopoverProps = StandardProps<
+    PopoverClassKey,
+    {
+      action?: (actions: PopoverActions) => mixed,
+      anchorEl?: null | Element | ((element: Element) => Element),
+      anchorOrigin?: PopoverOrigin,
+      anchorPosition?: PopoverPosition,
+      anchorReference?: PopoverReference,
+      children?: React$Node,
+      elevation?: number,
+      getContentAnchorEl?: null | ((element: Element) => Element),
+      marginThreshold?: number,
+      modal?: boolean,
+      ModalClasses?: $ElementType<ModalProps<'div'>, 'classes'>,
+      PaperProps?: $Shape<PaperProps>,
+      role?: string,
+      transformOrigin?: PopoverOrigin,
+      TransitionComponent?: React$ElementType,
+      transitionDuration?: $ElementType<TransitionProps, 'timeout'> | 'auto',
+      TransitionProps?: TransitionProps,
+    },
+    ModalProps<'div'> & { ...TransitionHandlerProps },
+    { children: any }
+  >;
+
+  declare export default React$ComponentType<PopoverProps>;
+}
+declare module '@material-ui/core/Popover/Popover' {
+  declare export * from '@material-ui/core/Popover'
+}
+
+declare module '@material-ui/core/ListItem' {
+  import type {
+    OverridableComponent,
+    SimplifiedPropsOf,
+  } from '@material-ui/core/OverridableComponent';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+
+  declare export type ListItemClassKey =
+    | 'root'
+    | 'container'
+    | 'focusVisible'
+    | 'default'
+    | 'dense'
+    | 'disabled'
+    | 'divider'
+    | 'gutters'
+    | 'button'
+    | 'secondaryAction'
+    | 'selected';
+
+  declare type ListItem = OverridableComponent<{
+    props: {
+      alignItems?: 'flex-start' | 'center',
+      autoFocus?: boolean,
+      button?: boolean,
+      ContainerComponent?: React$ElementType,
+      ContainerProps?: HTMLDivAttributes,
+      dense?: boolean,
+      disabled?: boolean,
+      disableGutters?: boolean,
+      divider?: boolean,
+      focusVisibleClassName?: string,
+      selected?: boolean,
+    },
+    defaultComponent: 'li',
+    classKey: ListItemClassKey,
+  }>;
+
+  declare export type ListItemProps = SimplifiedPropsOf<ListItem>;
+
+  declare export default ListItem;
+}
+declare module '@material-ui/core/ListItem/ListItem' {
+  declare export * from '@material-ui/core/ListItem'
+}
+
+declare module '@material-ui/core/MenuList' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { ListClassKey, ListProps } from '@material-ui/core/List';
+
+  declare export type MenuListClassKey = ListClassKey;
+
+  declare export type MenuListProps = StandardProps<
+    MenuListClassKey,
+    {
+      autoFocus?: boolean,
+      disableListWrap?: boolean,
+      onKeyDown?: ({}) => mixed,
+    },
+    // TODO: hack to force inherit list props
+    { ...$Exact<ListProps> },
+    {
+      onKeyDown: any,
+    }
+  >;
+
+  declare export default React$ComponentType<MenuListProps>;
+}
+declare module '@material-ui/core/MenuList/MenuList' {
+  declare export * from '@material-ui/core/MenuList'
+}
+
+declare module '@material-ui/core/MenuItem' {
+  import type {
+    OverridableComponent,
+    SimplifiedPropsOf,
+  } from '@material-ui/core/OverridableComponent';
+  import type { ListItemProps } from '@material-ui/core/ListItem';
+
+  declare export type MenuItemClassKey = 'root' | 'gutters' | 'selected';
+
+  declare export type MenuItem = OverridableComponent<{
+    props: ListItemProps,
+    defaultComponent: 'li',
+    classKey: MenuItemClassKey,
+  }>;
+
+  declare export type MenuItemProps = SimplifiedPropsOf<MenuItem>;
+
+  declare export default MenuItem;
+}
+declare module '@material-ui/core/MenuItem/MenuItem' {
+  declare export * from '@material-ui/core/MenuItem'
+}
+
+declare module '@material-ui/core/Popper' {
+  import type { ReferenceObject } from '@material-ui/core/@@popper.js';
+  import type { PortalProps } from '@material-ui/core/Portal';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+  import type { TransitionProps } from '@material-ui/core/transitions/transition';
+
+  declare export type PopperPlacementType =
+    | 'bottom-end'
+    | 'bottom-start'
+    | 'bottom'
+    | 'left-end'
+    | 'left-start'
+    | 'left'
+    | 'right-end'
+    | 'right-start'
+    | 'right'
+    | 'top-end'
+    | 'top-start'
+    | 'top';
+
+  declare export type PopperProps<Container> = {
+    open: boolean,
+    children:
+      | React$Node
+      | (({
+          placement: PopperPlacementType,
+          TransitionProps?: TransitionProps,
+        }) => React$Node),
+
+    transition?: boolean,
+    anchorEl?: null | Element | ReferenceObject | (() => Element),
+    // Copied from: container?: $ElementType<PortalProps<Container>, 'container'>,
+    container?: React$ElementRef<Container> | null,
+    disablePortal?: $ElementType<PortalProps<'div'>, 'disablePortal'>,
+    keepMounted?: boolean,
+    modifiers?: {},
+    placement?: PopperPlacementType,
+    popperOptions?: {},
+  } & HTMLDivAttributes;
+
+  declare export default class Popper<
+    Container: React$ElementType
+  > extends React$Component<PopperProps<Container>> {}
+}
+declare module '@material-ui/core/Popper/Popper' {
+  declare export * from '@material-ui/core/Popper'
+}
+
+declare module '@material-ui/core/RootRef' {
+  declare export type RootRefProps<T> = {
+    rootRef?: React$Ref<T>,
+  };
+
+  declare export default class RootRef<T> extends React$Component<
+    RootRefProps<T>
+  > {}
+}
+declare module '@material-ui/core/RootRef/RootRef' {
+  declare export * from '@material-ui/core/RootRef'
+}
+
+declare module '@material-ui/core/Menu' {
+  import type { PopoverProps } from '@material-ui/core/Popover';
+  import type { MenuListProps } from '@material-ui/core/MenuList';
+  import type { PaperProps } from '@material-ui/core/Paper';
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type {
+    TransitionHandlerProps,
+    TransitionProps,
+  } from '@material-ui/core/transitions/transition';
+
+  declare export type MenuClassKey = 'paper';
+
+  declare export type MenuProps = StandardProps<
+    MenuClassKey,
+    {
+      autoFocus?: boolean,
+      disableAutoFocusItem?: boolean,
+      MenuListProps?: { ...MenuListProps },
+      PaperProps?: { ...PaperProps },
+      PopoverClasses?: $ElementType<PopoverProps, 'classes'>,
+      transitionDuration?: $ElementType<TransitionProps, 'timeout'> | 'auto',
+      variant?: 'menu' | 'selectedMenu',
+    },
+    PopoverProps & { ...TransitionHandlerProps },
+    void
+  >;
+
+  declare export default React$ComponentType<MenuProps>;
+}
+declare module '@material-ui/core/Menu/Menu' {
+  declare export * from '@material-ui/core/Menu'
+}
+
+declare module '@material-ui/core/Select/SelectInput' {
+  import type { MenuProps } from '@material-ui/core/Menu';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+
+  declare export interface SelectInputProps {
+    autoWidth: boolean;
+    value: mixed;
+
+    inputRef?: (
+      ref: HTMLSelectElement | { node: HTMLInputElement, value: mixed }
+    ) => void;
+    name?: string;
+    IconComponent?: React$ElementType;
+    MenuProps?: $Shape<MenuProps>;
+    onBlur?: ({}) => mixed;
+    onChange?: (event: {}, child: React$Node) => mixed;
+    onClose?: ({}) => mixed;
+    onFocus?: ({}) => mixed;
+    onOpen?: ({}) => mixed;
+    renderValue?: (value: mixed) => React$Node;
+    autoFocus?: boolean;
+    disabled?: boolean;
+    multiple: boolean;
+    native: boolean;
+    open?: boolean;
+    readOnly?: boolean;
+    tabIndex?: number;
+    variant?: 'standard' | 'outlined' | 'filled';
+    SelectDisplayProps?: HTMLDivAttributes;
+  }
+
+  declare export default React$ComponentType<SelectInputProps>;
+}
+declare module '@material-ui/core/Select' {
+  import type { StandardProps } from '@material-ui/core/flow-types';
+  import type { InputProps } from '@material-ui/core/Input';
+  import type { MenuProps } from '@material-ui/core/Menu';
+  import type { HTMLDivAttributes } from '@material-ui/core/@@dom';
+
+  declare export type SelectClassKey =
+    | 'root'
+    | 'select'
+    | 'selectMenu'
+    | 'disabled'
+    | 'icon'
+    | 'filled'
+    | 'outlined';
+
+  declare export type SelectProps = StandardProps<
+    SelectClassKey,
+    {
+      value?: mixed,
+      variant?: 'standard' | 'outlined' | 'filled',
+
+      autoWidth?: boolean,
+      displayEmpty?: boolean,
+      multiple?: boolean,
+      native?: boolean,
+      open?: boolean,
+      input?: React$Node,
+      IconComponent?: React$ElementType,
+      MenuProps?: $Shape<MenuProps>,
+      SelectDisplayProps?: HTMLDivAttributes,
+      renderValue?: (value: mixed) => React$Node,
+      onClose?: (event: {}) => mixed,
+      onOpen?: (event: {}) => mixed,
+      onChange?: (event: {}, child: React$Node) => mixed,
+    },
+    InputProps,
+    { value: any, onChange: any }
+  >;
+
+  declare export default React$ComponentType<SelectProps>;
+}
+declare module '@material-ui/core/Select/Select' {
+  declare export * from '@material-ui/core/Select'
 }
 
 declare module '@material-ui/core/useMediaQuery' {
-  declare export interface MuiMediaQueryListEvent {
-    matches: boolean;
-  }
+  declare type MuiMediaQueryListEvent = {|
+    matches: boolean,
+  |};
 
-  declare export interface MuiMediaQueryList {
-    matches: boolean;
-    addListener: (listener: MuiMediaQueryListListener) => void;
-    removeListener: (listener: MuiMediaQueryListListener) => void;
-  }
+  declare type MuiMediaQueryList = {|
+    matches: boolean,
+    addListener?: (listener: MuiMediaQueryListListener) => void,
+    removeListener?: (listener: MuiMediaQueryListListener) => void,
+  |};
 
   declare export type MuiMediaQueryListListener = (
     event: MuiMediaQueryListEvent
   ) => void;
 
-  declare export interface Options {
-    defaultMatches?: boolean;
-    noSsr?: boolean;
-    ssrMatchMedia?: (query: string) => MuiMediaQueryList;
-  }
+  declare type Options = {|
+    defaultMatches?: boolean,
+    noSsr?: boolean,
+    ssrMatchMedia?: (query: string) => MuiMediaQueryList,
+  |};
 
   declare type UseMediaQuery = (query: string, options?: Options) => boolean;
 
@@ -3499,6 +5084,28 @@ declare module '@material-ui/core/useMediaQuery' {
 }
 declare module '@material-ui/core/useMediaQuery/useMediaQueryTheme' {
   declare export { default } from '@material-ui/core/useMediaQuery';
+}
+
+declare module '@material-ui/core/useScrollTrigger' {
+  declare type Options = {|
+    disableHysteresis?: boolean,
+    target?: Node | mixed,
+    threshold?: number,
+  |};
+
+  declare type UseScrollTrigger = (options?: Options) => boolean;
+
+  declare export default UseScrollTrigger;
+}
+
+// TODO: withWidth
+declare module '@material-ui/core/withWidth' {
+  declare export default any;
+}
+
+// TODO: withMobileDialog
+declare module '@material-ui/core/withMobileDialog' {
+  declare export default any;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -3540,6 +5147,82 @@ declare module '@material-ui/core' {
   declare export { default as Checkbox } from '@material-ui/core/Checkbox';
   declare export { default as Fab } from '@material-ui/core/Fab';
   declare export { default as FormGroup } from '@material-ui/core/FormGroup';
+  declare export { default as Link } from '@material-ui/core/Link';
+  declare export { default as List } from '@material-ui/core/List';
+  declare export { default as Radio } from '@material-ui/core/Radio';
+  declare export { default as RadioGroup } from '@material-ui/core/RadioGroup';
+  declare export { default as Zoom } from '@material-ui/core/Zoom';
+  declare export { default as Tooltip } from '@material-ui/core/Tooltip';
+  declare export { default as Toolbar } from '@material-ui/core/Toolbar';
+  declare export { default as SvgIcon } from '@material-ui/core/SvgIcon';
+  declare export { default as TableRow } from '@material-ui/core/TableRow';
+  declare export { default as TableHead } from '@material-ui/core/TableHead';
+  declare export { default as TableBody } from '@material-ui/core/TableBody';
+  declare export { default as TextField } from '@material-ui/core/TextField';
+  declare export { default as Popover } from '@material-ui/core/Popover';
+  declare export { default as ListItem } from '@material-ui/core/ListItem';
+  declare export { default as MenuList } from '@material-ui/core/MenuList';
+  declare export { default as MenuItem } from '@material-ui/core/MenuItem';
+  declare export { default as Menu } from '@material-ui/core/Menu';
+  declare export { default as Popper } from '@material-ui/core/Popper';
+  declare export { default as Select } from '@material-ui/core/Select';
+  declare export { default as Snackbar } from '@material-ui/core/Snackbar';
+  declare export {
+    default as SnackbarContent,
+  } from '@material-ui/core/SnackbarContent';
+  declare export { default as Step } from '@material-ui/core/Step';
+  declare export { default as StepButton } from '@material-ui/core/StepButton';
+  declare export {
+    default as StepConnector,
+  } from '@material-ui/core/StepConnector';
+  declare export {
+    default as StepContent,
+  } from '@material-ui/core/StepContent';
+  declare export { default as StepIcon } from '@material-ui/core/StepIcon';
+  declare export { default as StepLabel } from '@material-ui/core/StepLabel';
+  declare export { default as Stepper } from '@material-ui/core/Stepper';
+  declare export {
+    default as SwipeableDrawer,
+  } from '@material-ui/core/SwipeableDrawer';
+  declare export { default as Switch } from '@material-ui/core/Switch';
+  declare export { default as Tab } from '@material-ui/core/Tab';
+  declare export { default as Tabs } from '@material-ui/core/Tabs';
+  declare export { default as Table } from '@material-ui/core/Table';
+  declare export { default as TableCell } from '@material-ui/core/TableCell';
+  declare export {
+    default as TablePagination,
+  } from '@material-ui/core/TablePagination';
+  declare export {
+    default as TableFooter,
+  } from '@material-ui/core/TableFooter';
+  declare export {
+    default as TableSortLabel,
+  } from '@material-ui/core/TableSortLabel';
+
+  declare export {
+    default as OutlinedInput,
+  } from '@material-ui/core/OutlinedInput';
+  declare export {
+    default as MobileStepper,
+  } from '@material-ui/core/MobileStepper';
+  declare export {
+    default as ListSubheader,
+  } from '@material-ui/core/ListSubheader';
+  declare export {
+    default as ListItemAvatar,
+  } from '@material-ui/core/ListItemAvatar';
+  declare export {
+    default as ListItemIcon,
+  } from '@material-ui/core/ListItemIcon';
+  declare export {
+    default as ListItemText,
+  } from '@material-ui/core/ListItemText';
+  declare export {
+    default as ListItemSecondaryAction,
+  } from '@material-ui/core/ListItemSecondaryAction';
+  declare export {
+    default as LinearProgress,
+  } from '@material-ui/core/LinearProgress';
   declare export {
     default as FormHelperText,
   } from '@material-ui/core/FormHelperText';
@@ -3626,4 +5309,38 @@ declare module '@material-ui/core' {
   declare export {
     default as BottomNavigation,
   } from '@material-ui/core/BottomNavigation';
+
+  declare export {
+    default as useMediaQuery,
+  } from '@material-ui/core/useMediaQuery';
+  declare export {
+    default as useMediaQueryTheme,
+  } from '@material-ui/core/useMediaQuery/useMediaQueryTheme';
+  declare export {
+    default as useScrollTrigger,
+  } from '@material-ui/core/useScrollTrigger';
+  declare export { default as withWidth } from '@material-ui/core/withWidth';
+  declare export {
+    default as withMobileDialog,
+  } from '@material-ui/core/withMobileDialog';
+
+  // TODO more info: README.md Issue 2
+  declare export {
+    default as createMuiTheme,
+  } from '@material-ui/core/styles/createMuiTheme';
+  declare export {
+    default as createStyles,
+  } from '@material-ui/core/styles/createStyles';
+  declare export {
+    default as makeStyles,
+  } from '@material-ui/core/styles/makeStyles';
+  declare export {
+    default as withStyles,
+  } from '@material-ui/core/styles/withStyles';
+  declare export {
+    default as useTheme,
+  } from '@material-ui/core/styles/useTheme';
+  declare export {
+    default as withTheme,
+  } from '@material-ui/core/styles/withTheme';
 }

@@ -2,7 +2,7 @@
 
 import map from 'lodash/map';
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import List from '@material-ui/core/List';
 
 import DrawerItem from './DrawerItem';
@@ -34,4 +34,4 @@ class DrawerItemsList extends React.PureComponent<Props> {
   }
 }
 
-export default withStyles<string, *>(styles)(DrawerItemsList);
+export default withStyles<string, *, *>(styles)(DrawerItemsList);

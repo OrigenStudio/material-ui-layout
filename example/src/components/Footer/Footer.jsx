@@ -2,7 +2,7 @@
 // @flow
 
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -33,4 +33,4 @@ const Footer = ({ classes }: Props) => (
   </Grid>
 );
 
-export default withStyles<ClassKey, *>(styles)(Footer);
+export default withStyles<ClassKey, *, *>(styles)(Footer);

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import okaidia from 'react-syntax-highlighter/dist/esm/styles/prism/okaidia';
 
 type Props = {
   layoutConfig: Object,

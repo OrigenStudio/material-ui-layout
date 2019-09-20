@@ -271,4 +271,4 @@ Layout.defaultProps = {
   usingTwoRowAppBar: false,
 };
 
-export default withStyles<ClassKey, *>(styles)(React.memo<Props>(Layout));
+export default withStyles<ClassKey, *, *>(styles)(React.memo<Props>(Layout));

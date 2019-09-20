@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -42,4 +42,4 @@ const BasicAppBarLogo = ({
   );
 };
 
-export default withStyles<ClassKey, *>(styles)(BasicAppBarLogo);
+export default withStyles<ClassKey, *, *>(styles)(BasicAppBarLogo);

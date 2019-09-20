@@ -4,9 +4,9 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import okaidia from 'react-syntax-highlighter/dist/esm/styles/prism/okaidia';
 import Helmet from 'react-helmet';
 import BrandingSection from '../BrandingSection';
 
@@ -93,4 +93,4 @@ const GettingStartedSection = ({ classes, title, version }: Props) => (
   </div>
 );
 
-export default withStyles<ClassKey, *>(styles)(GettingStartedSection);
+export default withStyles<ClassKey, *, *>(styles)(GettingStartedSection);

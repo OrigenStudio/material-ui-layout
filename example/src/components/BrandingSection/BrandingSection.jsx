@@ -2,7 +2,9 @@
 
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles, {
+  type WithStyles,
+} from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
 
 import styles, { type ClassKey } from './styles';
@@ -31,4 +33,4 @@ const BrandingSection = ({ classes, title, subtitle, className }: Props) => (
   </div>
 );
 
-export default withStyles<ClassKey, *>(styles)(BrandingSection);
+export default withStyles<*, *, *>(styles)(BrandingSection);

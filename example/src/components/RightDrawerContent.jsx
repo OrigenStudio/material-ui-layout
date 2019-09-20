@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import BasicDrawer from 'material-ui-layout/lib/templates/Drawer/BasicDrawer';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import companies from '../data/companies';
 
